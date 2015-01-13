@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{B9769A2C-9291-4750-901D-D47558715A46}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swasey-Net45", "src\Swasey\Swasey-Net45.csproj", "{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swasey.Tests-Net45", "tests\Swasey.Tests\Swasey.Tests-Net45.csproj", "{16520AC8-221C-4F6D-B208-F28002CE38E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16520AC8-221C-4F6D-B208-F28002CE38E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16520AC8-221C-4F6D-B208-F28002CE38E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16520AC8-221C-4F6D-B208-F28002CE38E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16520AC8-221C-4F6D-B208-F28002CE38E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
