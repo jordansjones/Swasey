@@ -71,7 +71,8 @@ namespace Swasey.Tests.Generator
             node.Name.ToString().Should().Be(GenerationTestHelper.DefaultNamespace, "because that is the namespace we defined");
         }
 
-        [Theory(DisplayName = "Generation produces a service interface"), AutoMoq]
+        [Theory(DisplayName = "Generation produces a service interface")]
+        [AutoMoq]
         public void TestGenerationProducesServiceInterface(string serviceName)
         {
             InterfaceDeclarationSyntax node = null;
@@ -84,7 +85,8 @@ namespace Swasey.Tests.Generator
             node.Identifier.ValueText.Should().Be("I" + expected, "because that is the name we defined for the service client");
         }
 
-        [Theory(DisplayName = "Generation produces a service implementation"), AutoMoq]
+        [Theory(DisplayName = "Generation produces a service implementation")]
+        [AutoMoq]
         public void TestGenerationProducesServiceImplementation(string serviceName)
         {
             ClassDeclarationSyntax node = null;
