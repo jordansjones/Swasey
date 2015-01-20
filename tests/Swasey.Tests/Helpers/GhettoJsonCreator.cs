@@ -47,28 +47,28 @@ namespace Swasey.Tests.Helpers
 
             public IJsonObjectBuilder Array(string name, Action<IJsonArrayBuilder> factory)
             {
-                Quote(name).Append(":");
+                Quote(Ensure.NotNullOrEmpty(name)).Append(":");
                 AddArray(factory);
                 return this;
             }
 
             public IJsonObjectBuilder Object(string name, Action<IJsonObjectBuilder> factory)
             {
-                Quote(name).Append(":");
+                Quote(Ensure.NotNullOrEmpty(name)).Append(":");
                 AddObject(factory);
                 return this;
             }
 
             public IJsonObjectBuilder Value(string name, string value)
             {
-                Quote(name).Append(":");
+                Quote(Ensure.NotNullOrEmpty(name)).Append(":");
                 AddValue(value);
                 return this;
             }
 
             public IJsonObjectBuilder Value(string name, int value)
             {
-                Quote(name).Append(":");
+                Quote(Ensure.NotNullOrEmpty(name)).Append(":");
                 AddValue(value);
                 return this;
             }

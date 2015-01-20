@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Swasey
 {
-    public sealed class SwaggerVersion
+    public enum SwaggerVersion
     {
+        [EnumMember(Value = "1.0")]
+        Version10,
+        
+        [EnumMember(Value = "1.1")]
+        Version11,
 
-        public static readonly SwaggerVersion Version1_2 = new SwaggerVersion();
+        [EnumMember(Value = "1.2")]
+        Version12,
 
-        public static readonly SwaggerVersion Default = Version1_2;
+        [EnumMember(Value = "2.0")]
+        Version20
 
     }
 }

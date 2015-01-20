@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Swasey.Schema
+namespace Swasey.Schema.Version12.Metadata
 {
     [DataContract]
     internal class TokenEndpoint : BaseEndpoint

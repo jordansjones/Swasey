@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Swasey.Schema
+namespace Swasey.Schema.Version12
 {
     [DataContract]
-    internal class Authorizations : Dictionary<string, Authorization>
+    internal class ApiModels : Dictionary<string, DtoModel>
     {
 
     }

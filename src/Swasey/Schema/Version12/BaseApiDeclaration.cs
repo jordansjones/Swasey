@@ -2,25 +2,21 @@
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Swasey.Schema
+using Swasey.Schema.Version12.Metadata;
+
+namespace Swasey.Schema.Version12
 {
-    [DataContract]
-    internal class ResourceListing
+    internal abstract class BaseApiDeclaration
     {
 
         [DataMember(Name = "swaggerVersion")]
-        public string SwaggerVersion { get; set; }
-
-        [DataMember(Name = "apis")]
-        public ResourceListingApi[] Apis { get; set; }
+        public SwaggerVersion SwaggerVersion { get; set; }
 
         [DataMember(Name = "apiVersion")]
         public string ApiVersion { get; set; }
 
-        [DataMember(Name = "info")]
-        public ApiInfo ApiInfo { get; set; }
-
         [DataMember(Name = "authorizations")]
         public Authorizations Authorizations { get; set; }
+
     }
 }

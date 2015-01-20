@@ -1,13 +1,15 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Linq;
+using System.Runtime.Serialization;
 
-namespace Swasey.Schema
+namespace Swasey.Schema.Version12.Metadata
 {
     [DataContract]
     internal class GrantTypes
     {
         
         [DataMember(Name = "implicit")]
-        public ImplicitGrantType Implicity { get; set; }
+        public ImplicitGrantType Implicit { get; set; }
         
         [DataMember(Name = "authorization_code")]
         public AuthorizationCodeGrantType AuthorizationCode { get; set; }
