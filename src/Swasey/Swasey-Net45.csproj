@@ -54,13 +54,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
-    <Compile Include="ClientGenerator.cs" />
+    <Compile Include="Generator\ClientGenerator.cs" />
+    <Compile Include="Generator\DefaultTemplateContext.cs" />
+    <Compile Include="Generator\GeneratorContext.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />
-    <Compile Include="Model\ParameterDefinition.cs" />
-    <Compile Include="Model\ClientDefinition.cs" />
-    <Compile Include="Model\MethodDefinition.cs" />
-    <Compile Include="Model\ResponseDefinition.cs" />
+    <Compile Include="Generator\IHandlerContext.cs" />
+    <Compile Include="Model\BasePath.cs" />
+    <Compile Include="Model\Internal\BaseDefinition.cs" />
+    <Compile Include="Model\DataType.cs" />
+    <Compile Include="Model\IOperationDefinition.cs" />
+    <Compile Include="Model\IModelMetadata.cs" />
+    <Compile Include="Model\IParameterDefinition.cs" />
+    <Compile Include="Model\IResponseDefinition.cs" />
+    <Compile Include="Model\IServiceDefinition.cs" />
+    <Compile Include="Model\Internal\ModelMetadata.cs" />
+    <Compile Include="Model\Internal\ParameterDefinition.cs" />
+    <Compile Include="Model\OperationPath.cs" />
+    <Compile Include="Model\ServicePath.cs" />
+    <Compile Include="Model\ParameterType.cs" />
+    <Compile Include="Model\ParameterName.cs" />
+    <Compile Include="Model\Internal\ServiceDefinition.cs" />
+    <Compile Include="Model\Internal\OperationDefinition.cs" />
+    <Compile Include="Model\Internal\ResponseDefinition.cs" />
+    <Compile Include="Model\QualifiedName.cs" />
     <Compile Include="Model\Services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\Version12\ApiDeclaration.cs" />
@@ -81,16 +98,19 @@
     <Compile Include="Schema\Version12\Metadata\TokenRequestEndpoint.cs" />
     <Compile Include="SwaggerVersion.cs" />
     <Compile Include="Swasey.cs" />
-    <Compile Include="Templates\TemplateFactory.cs" />
+    <Compile Include="Templates\DefaultTemplates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey-Net45.config" />
-    <EmbeddedResource Include="Templates\ServiceClientClass.mustache" />
-    <EmbeddedResource Include="Templates\_FileHeader.mustache" />
+    <EmbeddedResource Include="Templates\ServiceClientMain.hbs" />
+    <EmbeddedResource Include="Templates\FileHeader.hbs" />
+    <EmbeddedResource Include="Templates\ServiceClientInterface.hbs" />
+    <EmbeddedResource Include="Templates\ServiceClientImplementation.hbs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

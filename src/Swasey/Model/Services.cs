@@ -4,24 +4,16 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public class Services
+    internal class Services : BaseDefinition
     {
 
-        public Services(string basePath, string ns, string version)
+        public Services(IModelMetadata meta) 
+            : base(meta)
         {
-            BasePath = basePath;
-            Definitions = new List<ClientDefinition>();
-            Namespace = ns;
-            Version = version;
+            Definitions = new List<ServiceDefinition>();
         }
 
-        public string BasePath { get; private set; }
-
-        public List<ClientDefinition> Definitions { get; private set; }
-
-        public string Namespace { get; private set; }
-
-        public string Version { get; private set; }
+        public List<ServiceDefinition> Definitions { get; private set; }
 
 
     }

@@ -11,8 +11,15 @@ namespace Swasey.Tests
     {
 
         public AutoMoqAttribute()
-            : base(new Fixture()
-                       .Customize(new AutoMoqCustomization())) {}
+            : base(CreateAutoMoqFixture()) {}
 
+
+        private static Fixture CreateAutoMoqFixture()
+        {
+            var fixture = new Fixture();
+            fixture.Customize(new AutoMoqCustomization());
+            fixture.Customize<string>(x => new StringGenerator(() => Guid.NewGuid().ToString("N")) );
+            return fixture;
+        }
     }
 }
