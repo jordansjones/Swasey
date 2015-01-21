@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Swasey.Model;
-using Swasey.Templates;
 using Swasey.Tests.Helpers;
+using Swasey.Tests.Templates;
 
 using Xunit;
 using Xunit.Extensions;
@@ -103,6 +104,48 @@ namespace Swasey.Tests.Generator
             node.BaseList.Types.Should().HaveCount(1, "because the service client only implements the service client interface");
             node.BaseList.Types.First().Type.As<IdentifierNameSyntax>()
                 .Identifier.ValueText.Should().Be("I" + expected, "because that is the interface name for the service client");
+        }
+
+        [Theory(DisplayName = "Generation with operation definitions produces a service interface methods")]
+        [AutoMoq]
+        public void TestGenerationProducesServiceInterfaceMethods(string serviceName, string opName1, string opName2, string opName3)
+        {
+            var expectedOpName1 = new QualifiedName(opName1);
+            var expectedOpName2 = new QualifiedName(opName2);
+            var expectedOpName3 = new QualifiedName(opName3);
+
+            var interfaceNode = this.ServiceBuilder()
+                .WithName(serviceName)
+                .WithOperation(
+                    ob => ob.WithHttpMethod(HttpMethodType.GET)
+                        .WithName(opName1)
+                        .WithPath("/")
+                        .WithResponse(r => r.WithDataType("void"))
+                )
+                .WithOperation(
+                    ob => ob.WithHttpMethod(HttpMethodType.DELETE)
+                        .WithName(opName2)
+                        .WithDescription(string.Format("This is the summary for Operation '{0}'", opName2))
+                        .WithPath("/")
+                        .WithResponse(r => r.WithDataType("void"))
+                )
+                .WithOperation(
+                    ob => ob.WithHttpMethod(HttpMethodType.DELETE)
+                        .WithName(opName3)
+                        .WithPath("/")
+                        .WithResponse(r => r.WithDataType("void"))
+                )
+                .Build()
+                .Generate()
+                .AsSyntaxTree()
+                .GetParsedSyntaxNode<InterfaceDeclarationSyntax>()
+                .First();
+
+            interfaceNode.Members.Should().HaveCount(3, "because that is how many operations were defined");
+
+            (interfaceNode.Members[0] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName1.ToString());
+            (interfaceNode.Members[1] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName2.ToString());
+            (interfaceNode.Members[2] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName3.ToString());
         }
 
     }

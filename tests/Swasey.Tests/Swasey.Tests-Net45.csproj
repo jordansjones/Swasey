@@ -41,6 +41,9 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Handlebars">
+      <HintPath>..\..\packages\Handlebars.Net.1.2.0\lib\Handlebars.dll</HintPath>
+    </Reference>
     <Reference Include="Jil">
       <HintPath>..\..\packages\Jil.2.7.0\lib\net45\Jil.dll</HintPath>
     </Reference>
@@ -67,7 +70,8 @@
     <Reference Include="Ploeh.AutoFixture.AutoMoq">
       <HintPath>..\..\packages\AutoFixture.AutoMoq.3.22.0\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture.Xunit">
+    <Reference Include="Ploeh.AutoFixture.Xunit, Version=3.22.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AutoFixture.Xunit.3.22.0\lib\net40\Ploeh.AutoFixture.Xunit.dll</HintPath>
     </Reference>
     <Reference Include="Sigil">
@@ -116,9 +120,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceListingVesion12.resx</DependentUpon>
     </Compile>
+    <Compile Include="Templates\DefaultTemplates.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Templates\FileHeader.template" />
+    <EmbeddedResource Include="Templates\ServiceClientImplementation.template" />
+    <EmbeddedResource Include="Templates\ServiceClientInterface.template" />
+    <EmbeddedResource Include="Templates\ServiceClientMain.template" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Swasey\Swasey-Net45.csproj">

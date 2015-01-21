@@ -43,6 +43,10 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
+        public string Description { get; set; }
+
+        public bool HasDescription { get { return !string.IsNullOrWhiteSpace(Description); } }
+
         public bool HasParameters
         {
             get { return Parameters.Any(); }

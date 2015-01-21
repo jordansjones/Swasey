@@ -13,6 +13,10 @@ namespace Swasey.Model
 
         QualifiedName Name { get; }
 
+        bool HasDescription { get; }
+
+        string Description { get; }
+
         bool HasParameters { get; }
 
         IReadOnlyList<IParameterDefinition> Parameters { get; }

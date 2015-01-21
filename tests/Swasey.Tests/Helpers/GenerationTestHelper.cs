@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Swasey.Model;
 using Swasey.Tests.Generator;
 using Swasey.Tests.ModelBuilder;
+using Swasey.Tests.Templates;
 
 namespace Swasey.Tests.Helpers
 {
@@ -78,6 +79,11 @@ namespace Swasey.Tests.Helpers
                 .GetRoot()
                 .DescendantNodes()
                 .OfType<T>();
+        }
+
+        public static void WriteTo(this IServiceDefinition This, TextWriter output)
+        {
+            DefaultTemplates.Template_ServiceClientMain(output, This);
         }
 
     }

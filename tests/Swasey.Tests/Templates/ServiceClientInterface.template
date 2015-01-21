@@ -1,0 +1,12 @@
+﻿public interface I{{Name}} : IServiceClient
+{
+{{#each Operations}}
+
+        {{#if HasDescription}}
+        /// <summary>
+        ///     {{{Description}}}
+        /// </summary>
+        {{/if}}
+        Task<{{Response.DataType}}> {{Name}}();
+{{/each}}
+}

@@ -15,6 +15,8 @@ namespace Swasey.Tests.ModelBuilder
 
         private QualifiedName Name { get; set; }
 
+        private string Description { get; set; }
+
         private OperationPath Path { get; set; }
 
         private HttpMethodType? HttpMethod { get; set; }
@@ -22,6 +24,12 @@ namespace Swasey.Tests.ModelBuilder
         public OperationBuilder WithHttpMethod(HttpMethodType type)
         {
             HttpMethod = type;
+            return this;
+        }
+
+        public OperationBuilder WithDescription(string description)
+        {
+            Description = description;
             return this;
         }
 
@@ -67,6 +75,7 @@ namespace Swasey.Tests.ModelBuilder
 
             var def = new OperationDefinition(Path, metadata)
             {
+                Description = Description,
                 HttpMethod = HttpMethod ?? HttpMethodType.GET,
                 Name = Name
             };

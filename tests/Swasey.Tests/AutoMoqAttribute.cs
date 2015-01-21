@@ -14,7 +14,7 @@ namespace Swasey.Tests
         public AutoMoqAttribute()
             : base(CreateAutoMoqFixture()) {}
 
-        private static Fixture CreateAutoMoqFixture()
+        internal static Fixture CreateAutoMoqFixture()
         {
             var fixture = new Fixture();
             fixture.Customize(new AutoMoqCustomization());

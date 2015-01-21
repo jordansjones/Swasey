@@ -34,9 +34,6 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Handlebars">
-      <HintPath>..\..\packages\Handlebars.Net.1.2.0\lib\Handlebars.dll</HintPath>
-    </Reference>
     <Reference Include="Jil">
       <HintPath>..\..\packages\Jil.2.7.0\lib\net45\Jil.dll</HintPath>
     </Reference>
@@ -54,12 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
-    <Compile Include="Generator\ClientGenerator.cs" />
-    <Compile Include="Generator\DefaultTemplateContext.cs" />
-    <Compile Include="Generator\GeneratorContext.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />
-    <Compile Include="Generator\IHandlerContext.cs" />
     <Compile Include="Model\BasePath.cs" />
     <Compile Include="Model\Internal\BaseDefinition.cs" />
     <Compile Include="Model\DataType.cs" />
@@ -98,14 +91,9 @@
     <Compile Include="Schema\Version12\Metadata\TokenRequestEndpoint.cs" />
     <Compile Include="SwaggerVersion.cs" />
     <Compile Include="Swasey.cs" />
-    <Compile Include="Templates\DefaultTemplates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey-Net45.config" />
-    <EmbeddedResource Include="Templates\ServiceClientMain.hbs" />
-    <EmbeddedResource Include="Templates\FileHeader.hbs" />
-    <EmbeddedResource Include="Templates\ServiceClientInterface.hbs" />
-    <EmbeddedResource Include="Templates\ServiceClientImplementation.hbs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
