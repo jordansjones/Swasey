@@ -16,9 +16,10 @@ namespace Swasey.Model
             }
 
             _value = value;
+            IsVoid = Constants.DataType_Void.ToUpper().Equals(_value.ToUpper());
         }
 
-        public bool IsVoidType { get; private set; }
+        public bool IsVoid { get; private set; }
 
         public bool Equals(DataType other)
         {

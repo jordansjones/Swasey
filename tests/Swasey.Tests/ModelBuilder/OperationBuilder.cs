@@ -7,7 +7,7 @@ using Swasey.Tests.Helpers;
 
 namespace Swasey.Tests.ModelBuilder
 {
-    internal class OperationBuilder
+    internal class OperationBuilder : BaseBuilder<OperationBuilder>
     {
 
         private Action<ResponseBuilder> ResponseBuilderAction { get; set; }
@@ -65,6 +65,16 @@ namespace Swasey.Tests.ModelBuilder
         {
             ResponseBuilderAction = Ensure.NotNull(action);
             return this;
+        }
+
+        public OperationBuilder WithVoidResponse()
+        {
+            return WithResponse(x => x.WithVoidDataType());
+        }
+
+        public OperationDefinition Build()
+        {
+            return Build(Metadata);
         }
 
         public OperationDefinition Build(IModelMetadata metadata)

@@ -7,6 +7,6 @@
         ///     {{{Description}}}
         /// </summary>
         {{/if}}
-        Task<{{Response.DataType}}> {{Name}}();
+        Task{{#unless Response.DataType.IsVoid}}<{{Response.DataType}}>{{/unless}} {{Name}}();
 {{/each}}
 }

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />

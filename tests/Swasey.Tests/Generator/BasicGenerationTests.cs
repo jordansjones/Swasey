@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using FluentAssertions;
+
+using System.Linq;
+using System.Text;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Swasey.Helpers;
 using Swasey.Model;
 using Swasey.Tests.Helpers;
-using Swasey.Tests.Templates;
 
 using Xunit;
-using Xunit.Extensions;
 
 namespace Swasey.Tests.Generator
 {
-    public class BasicGenerationTests : IGenerationTest
+    public class BasicGenerationTests
     {
 
         [Fact(DisplayName = "Generated file is valid code")]
@@ -58,7 +57,7 @@ namespace Swasey.Tests.Generator
                 }
                     .Visit(codeRoot);
             }
-            actual.ToString().Should().Be(DefaultTemplates.ReadTemplate(DefaultTemplates.TemplateName_FileHeader));
+            actual.ToString().Should().Be(HelperTemplates.HelperTemplate_FileHeader.Value);
         }
 
         [Fact(DisplayName = "Generation produces the correct namespace")]
@@ -72,29 +71,29 @@ namespace Swasey.Tests.Generator
             node.Name.ToString().Should().Be(GenerationTestHelper.DefaultNamespace, "because that is the namespace we defined");
         }
 
-        [Theory(DisplayName = "Generation produces a service interface")]
-        [AutoMoq]
-        public void TestGenerationProducesServiceInterface(string serviceName)
+        [Fact(DisplayName = "Generation produces a service interface")]
+        public void TestGenerationProducesServiceInterface()
         {
+            var serviceName = Fixtures.Create("Service");
             InterfaceDeclarationSyntax node = null;
             this.CreateServiceClient(serviceName).GenerateAndGetParsedSyntaxNode<InterfaceDeclarationSyntax>()
                 .Invoking(x => node = x.First())
                 .ShouldNotThrow<InvalidOperationException>("because an Interface was declared");
-            
+
             var expected = new QualifiedName(serviceName);
 
             node.Identifier.ValueText.Should().Be("I" + expected, "because that is the name we defined for the service client");
         }
 
-        [Theory(DisplayName = "Generation produces a service implementation")]
-        [AutoMoq]
-        public void TestGenerationProducesServiceImplementation(string serviceName)
+        [Fact(DisplayName = "Generation produces a service implementation")]
+        public void TestGenerationProducesServiceImplementation()
         {
+            var serviceName = Fixtures.Create("Service");
             ClassDeclarationSyntax node = null;
             this.CreateServiceClient(serviceName).GenerateAndGetParsedSyntaxNode<ClassDeclarationSyntax>()
                 .Invoking(x => node = x.First())
                 .ShouldNotThrow<InvalidOperationException>("because a Class was declared");
-            
+
             var expected = new QualifiedName(serviceName);
 
             node.Identifier.ValueText.Should().Be(expected.ToString(), "because that is the name we defined for the service client");
@@ -106,46 +105,53 @@ namespace Swasey.Tests.Generator
                 .Identifier.ValueText.Should().Be("I" + expected, "because that is the interface name for the service client");
         }
 
-        [Theory(DisplayName = "Generation with operation definitions produces a service interface methods")]
-        [AutoMoq]
-        public void TestGenerationProducesServiceInterfaceMethods(string serviceName, string opName1, string opName2, string opName3)
+        [Fact(DisplayName = "Generation with operation definitions produces a service interface methods")]
+        public void TestGenerationProducesServiceInterfaceMethods()
         {
-            var expectedOpName1 = new QualifiedName(opName1);
-            var expectedOpName2 = new QualifiedName(opName2);
-            var expectedOpName3 = new QualifiedName(opName3);
+            var serviceName = Fixtures.Create("Service");
+            var opNames = Fixtures.Build.Three.Of("Operation").ToArray();
 
-            var interfaceNode = this.ServiceBuilder()
+            var generatedContent = this.ServiceBuilder()
                 .WithName(serviceName)
                 .WithOperation(
                     ob => ob.WithHttpMethod(HttpMethodType.GET)
-                        .WithName(opName1)
+                        .WithName(opNames[0])
                         .WithPath("/")
-                        .WithResponse(r => r.WithDataType("void"))
+                        .WithResponse(r => r.WithVoidDataType())
                 )
                 .WithOperation(
                     ob => ob.WithHttpMethod(HttpMethodType.DELETE)
-                        .WithName(opName2)
-                        .WithDescription(string.Format("This is the summary for Operation '{0}'", opName2))
+                        .WithName(opNames[1])
+                        .WithDescription(string.Format("This is the summary for Operation '{0}'", opNames[1]))
                         .WithPath("/")
-                        .WithResponse(r => r.WithDataType("void"))
+                        .WithResponse(r => r.WithVoidDataType())
                 )
                 .WithOperation(
                     ob => ob.WithHttpMethod(HttpMethodType.DELETE)
-                        .WithName(opName3)
+                        .WithName(opNames[2])
                         .WithPath("/")
-                        .WithResponse(r => r.WithDataType("void"))
+                        .WithResponse(r => r.WithVoidDataType())
                 )
                 .Build()
-                .Generate()
+                .Generate();
+
+            generatedContent.Should().NotBeNullOrWhiteSpace("because we defined things to generate");
+
+            var interfaceNode = generatedContent
                 .AsSyntaxTree()
                 .GetParsedSyntaxNode<InterfaceDeclarationSyntax>()
                 .First();
 
             interfaceNode.Members.Should().HaveCount(3, "because that is how many operations were defined");
 
-            (interfaceNode.Members[0] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName1.ToString());
-            (interfaceNode.Members[1] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName2.ToString());
-            (interfaceNode.Members[2] as MethodDeclarationSyntax).Identifier.ValueText.Should().Be(expectedOpName3.ToString());
+            interfaceNode.Members[0].Should().BeOfType<MethodDeclarationSyntax>()
+                .Which.Identifier.ValueText.Should().Be(opNames[0]);
+
+            interfaceNode.Members[1].Should().BeOfType<MethodDeclarationSyntax>()
+                .Which.Identifier.ValueText.Should().Be(opNames[1]);
+
+            interfaceNode.Members[2].Should().BeOfType<MethodDeclarationSyntax>()
+                .Which.Identifier.ValueText.Should().Be(opNames[2]);
         }
 
     }

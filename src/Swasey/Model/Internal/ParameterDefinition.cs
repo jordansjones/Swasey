@@ -12,6 +12,8 @@ namespace Swasey.Model
 
         public DataType DataType { get; set; }
 
+        public bool IsRequired { get; set; }
+
         public ParameterName Name { get; set; }
 
         public ParameterType Type { get; set; }

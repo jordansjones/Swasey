@@ -11,6 +11,11 @@ namespace Swasey.Tests.ModelBuilder
 
         private DataType DataType { get; set; }
 
+        public ResponseBuilder WithVoidDataType()
+        {
+            return WithDataType(Constants.DataType_Void);
+        }
+
         public ResponseBuilder WithDataType(string type)
         {
             return WithDataType(new DataType(Ensure.NotNullOrEmpty(type)));

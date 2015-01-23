@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
 
 using FluentAssertions;
+
+using System.Linq;
 
 using Jil;
 
@@ -16,18 +17,18 @@ namespace Swasey.Tests.Schema.Version12
     {
 
 
-        [Fact]
+        [Fact(DisplayName = "Deserializer doesn't throw exceptions")]
         public void TestSchemaDeserializesWithoutException()
         {
-            CreateFixture()
+            Fixtures.CreateResourceListingJson()
                 .Invoking(x => JSON.Deserialize<ResourceListing>(x))
                 .ShouldNotThrow<Exception>();
         }
 
-        [Fact]
+        [Fact(DisplayName = "Schema deserialization works correctly")]
         public void TestSchemaDeserializationWorksCorrectly()
         {
-            var schema = JSON.Deserialize<ResourceListing>(CreateFixture());
+            var schema = JSON.Deserialize<ResourceListing>(Fixtures.CreateResourceListingJson());
 
             schema.Should().NotBeNull("because the deserializer should throw exceptions instead of produce a null base object");
 
@@ -83,58 +84,6 @@ namespace Swasey.Tests.Schema.Version12
                 schema.Apis[i].Path.Should().NotBeNullOrWhiteSpace().And.Be(expectedApis[i].Key);
                 schema.Apis[i].Description.Should().NotBeNullOrWhiteSpace().And.Be(expectedApis[i].Value);
             }
-        }
-
-
-        private static string CreateFixture()
-        {
-            return GhettoJsonCreator.Object(x => x
-                .Value("apiVersion", ResourceListingVesion12.ApiVersion)
-                .Value("swaggerVersion", SwaggerVersion.Version12.Version())
-                .Array("apis", apis => apis
-                    .Object(o => o.Value("path", ResourceListingVesion12.Apis_Pet_Path)
-                        .Value("description", ResourceListingVesion12.Apis_Pet_Description))
-                    .Object(o => o.Value("path", ResourceListingVesion12.Apis_User_Path)
-                        .Value("description", ResourceListingVesion12.Apis_User_Description))
-                    .Object(o => o.Value("path", ResourceListingVesion12.Apis_Store_Path)
-                        .Value("description", ResourceListingVesion12.Apis_Store_Description))
-                )
-                .Object("authorizations", auths => auths
-                    .Object(ResourceListingVesion12.Authorization_Type_OAuth2, o => o
-                        .Value("type", ResourceListingVesion12.Authorization_Type_OAuth2)
-                        .Array("scopes", scopes => scopes
-                            .Object(scope => scope.Value("scope", ResourceListingVesion12.Scope_Email)
-                                .Value("description", ResourceListingVesion12.Scope_Email_Description))
-                            .Object(scope => scope.Value("scope", ResourceListingVesion12.Scope_Pets)
-                                .Value("description", ResourceListingVesion12.Scope_Pets_Description))
-                        )
-                        .Object("grantTypes", gt => gt
-                            .Object("implicit", grant => grant
-                                .Object("loginEndpoint", le => le.Value("url", ResourceListingVesion12.Url_LoginEndpoint))
-                            )
-                            .Object("authorization_code", grant => grant
-                                .Object("tokenRequestEndpoint", tre => tre
-                                    .Value("url", ResourceListingVesion12.Url_TokenRequestEndpoint)
-                                    .Value("clientIdName", ResourceListingVesion12.TokenRequestEndpoint_ClientIdName)
-                                    .Value("clientSecretName", ResourceListingVesion12.TokenRequestEndpoint_ClientSecretName)
-                                )
-                                .Object("tokenEndpoint", te => te
-                                    .Value("url", ResourceListingVesion12.Url_TokenEndpoint)
-                                    .Value("tokenName", ResourceListingVesion12.TokenEndpoint_TokenName)
-                                )
-                            )
-                        )
-                    )
-                )
-                .Object("info", info => info
-                    .Value("title", ResourceListingVesion12.Info_Title)
-                    .Value("description", ResourceListingVesion12.Info_Description)
-                    .Value("termsOfServiceUrl", ResourceListingVesion12.Url_TermsOfServiceUrl)
-                    .Value("contact", ResourceListingVesion12.Info_Contact)
-                    .Value("license", ResourceListingVesion12.Info_License)
-                    .Value("licenseUrl", ResourceListingVesion12.Url_LicenseUrl)
-                )
-            );
         }
 
     }

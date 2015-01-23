@@ -13,7 +13,9 @@ namespace Swasey.Tests.ModelBuilder
 
         private ParameterName Name { get; set; }
 
-        public ParameterType? Type { get; set; }
+        private ParameterType? Type { get; set; }
+
+        private bool IsRequired { get; set; }
 
         public ParameterBuilder WithDataType(string type)
         {
@@ -37,6 +39,12 @@ namespace Swasey.Tests.ModelBuilder
             return this;
         }
 
+        public ParameterBuilder WithRequired(bool isRequired)
+        {
+            IsRequired = isRequired;
+            return this;
+        }
+
         public ParameterBuilder WithType(ParameterType type)
         {
             Type = type;
@@ -52,7 +60,9 @@ namespace Swasey.Tests.ModelBuilder
             return new ParameterDefinition(metadata)
             {
                 Name = Name,
-                Type = Type ?? ParameterType.Body
+                Type = Type ?? ParameterType.Body,
+                DataType = DataType,
+                IsRequired = IsRequired
             };
         }
 

@@ -7,9 +7,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
 using Swasey.Model;
-using Swasey.Tests.Generator;
-using Swasey.Tests.ModelBuilder;
 using Swasey.Tests.Templates;
+using Swasey.Tests.ModelBuilder;
 
 namespace Swasey.Tests.Helpers
 {
@@ -22,12 +21,12 @@ namespace Swasey.Tests.Helpers
 
         public const string DefaultVersion = "1";
 
-        public static IServiceDefinition DefaultServiceDefinition(this IGenerationTest This)
+        public static IServiceDefinition DefaultServiceDefinition(this object This)
         {
             return This.ServiceBuilder().Build();
         }
 
-        public static ServiceBuilder ServiceBuilder(this IGenerationTest This, string basePath = DefaultBasePath, string @namespace = DefaultNamespace, string version = DefaultVersion)
+        public static ServiceBuilder ServiceBuilder(this object This, string basePath = DefaultBasePath, string @namespace = DefaultNamespace, string version = DefaultVersion)
         {
             return new ServiceBuilder()
                 .WithBasePath(DefaultBasePath)
@@ -35,7 +34,7 @@ namespace Swasey.Tests.Helpers
                 .WithVersion(DefaultVersion);
         }
 
-        public static IServiceDefinition CreateServiceClient(this IGenerationTest This, string name)
+        public static IServiceDefinition CreateServiceClient(this object This, string name)
         {
             return This.ServiceBuilder()
                 .WithName(name)
@@ -67,9 +66,9 @@ namespace Swasey.Tests.Helpers
 
         private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
-        public static SyntaxTree AsSyntaxTree(this string source)
+        public static SyntaxTree AsSyntaxTree(this string source, SourceCodeKind sourceKind = SourceCodeKind.Regular)
         {
-            return CSharpSyntaxTree.ParseText(source, ParseOptions);
+            return CSharpSyntaxTree.ParseText(source, ParseOptions.WithKind(sourceKind));
         }
 
         public static IEnumerable<T> GetParsedSyntaxNode<T>(this SyntaxTree This)
@@ -79,11 +78,6 @@ namespace Swasey.Tests.Helpers
                 .GetRoot()
                 .DescendantNodes()
                 .OfType<T>();
-        }
-
-        public static void WriteTo(this IServiceDefinition This, TextWriter output)
-        {
-            DefaultTemplates.Template_ServiceClientMain(output, This);
         }
 
     }

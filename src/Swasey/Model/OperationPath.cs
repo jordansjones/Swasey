@@ -13,7 +13,7 @@ namespace Swasey.Model
             : base(value, IsValid) {}
 
         public OperationPath(string value, OperationPath toCopy)
-            : base(value + toCopy, IsValid)
+            : base(NormalizePaths(value, toCopy), IsValid)
         {
             foreach (var kv in toCopy._pathParameters)
             {
@@ -48,6 +48,16 @@ namespace Swasey.Model
         public static implicit operator string(OperationPath operationPath)
         {
             return operationPath.Value;
+        }
+
+        private static string NormalizePaths(string basePath, OperationPath toCopy)
+        {
+            var operationPath = toCopy.ToString();
+            if (basePath.EndsWith("/") && operationPath.StartsWith("/"))
+            {
+                operationPath = operationPath.Substring(1);
+            }
+            return basePath + operationPath;
         }
 
     }
