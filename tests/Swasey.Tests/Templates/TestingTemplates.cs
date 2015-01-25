@@ -25,8 +25,8 @@ namespace Swasey.Tests.Templates
         private static void Initialize()
         {
             // Templates
-            SwaseyGenerator.RegisterTemplate(TemplateName_ServiceClientInterface, ReadTemplate(TemplateName_ServiceClientInterface));
-            SwaseyGenerator.RegisterTemplate(TemplateName_ServiceClientImplementation, ReadTemplate(TemplateName_ServiceClientImplementation));
+            SwaseyEngine.RegisterTemplate(TemplateName_ServiceClientInterface, ReadTemplate(TemplateName_ServiceClientInterface));
+            SwaseyEngine.RegisterTemplate(TemplateName_ServiceClientImplementation, ReadTemplate(TemplateName_ServiceClientImplementation));
 
             // Main Template
             Template_ServiceClientMain = new Lazy<Action<TextWriter, object>>(
@@ -34,7 +34,7 @@ namespace Swasey.Tests.Templates
                 {
                     using (var sr = new StringReader(ReadTemplate(TemplateName_ServiceClientMain)))
                     {
-                        return SwaseyGenerator.CompileTemplate(sr);
+                        return SwaseyEngine.CompileTemplate(sr);
                     }
                 });
         }

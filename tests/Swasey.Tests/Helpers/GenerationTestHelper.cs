@@ -7,8 +7,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
 using Swasey.Model;
-using Swasey.Tests.Templates;
 using Swasey.Tests.ModelBuilder;
+using Swasey.Tests.Templates;
 
 namespace Swasey.Tests.Helpers
 {
@@ -20,6 +20,20 @@ namespace Swasey.Tests.Helpers
         public const string DefaultNamespace = "Swasey.Service.Client";
 
         public const string DefaultVersion = "1";
+
+        private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
+
+        public static ClientOptions DefaultClientOptions
+        {
+            get
+            {
+                return new ClientOptions
+                {
+                    BaseNamespace = DefaultNamespace,
+                    BasePath = DefaultBasePath
+                };
+            }
+        }
 
         public static IServiceDefinition DefaultServiceDefinition(this object This)
         {
@@ -63,8 +77,6 @@ namespace Swasey.Tests.Helpers
             return This.GenerateAndParse()
                 .GetParsedSyntaxNode<T>();
         }
-
-        private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
         public static SyntaxTree AsSyntaxTree(this string source, SourceCodeKind sourceKind = SourceCodeKind.Regular)
         {

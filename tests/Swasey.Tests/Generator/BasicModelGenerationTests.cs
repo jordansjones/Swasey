@@ -18,7 +18,7 @@ using Xunit;
 
 namespace Swasey.Tests.Generator
 {
-    public class BasicGenerationTests
+    public class BasicModelGenerationTests
     {
 
         [Fact(DisplayName = "Generated file is valid code")]
@@ -74,13 +74,13 @@ namespace Swasey.Tests.Generator
         [Fact(DisplayName = "Generation produces a service interface")]
         public void TestGenerationProducesServiceInterface()
         {
-            var serviceName = Fixtures.Create("Service");
+            var serviceName = Fixtures.Create("service");
             InterfaceDeclarationSyntax node = null;
             this.CreateServiceClient(serviceName).GenerateAndGetParsedSyntaxNode<InterfaceDeclarationSyntax>()
                 .Invoking(x => node = x.First())
                 .ShouldNotThrow<InvalidOperationException>("because an Interface was declared");
 
-            var expected = new QualifiedName(serviceName);
+            var expected = Char.ToUpper(serviceName[0]) + serviceName.Substring(1);
 
             node.Identifier.ValueText.Should().Be("I" + expected, "because that is the name we defined for the service client");
         }

@@ -36,7 +36,7 @@ namespace Swasey.Tests.Generator
                 .WithVoidResponse()
                 .Build();
 
-            var actual = SwaseyGenerator.RenderRawTemplate(TestTemplate, model);
+            var actual = SwaseyEngine.RenderRawTemplate(TestTemplate, model);
 
             var root = actual.AsSyntaxTree(SourceCodeKind.Script)
                 .GetRoot();
@@ -58,7 +58,7 @@ namespace Swasey.Tests.Generator
                 .WithParameter(p => p.WithType(ParameterType.Header).WithDataType("string").WithName("x-signalr-token"))
                 .Build();
 
-            var actual = SwaseyGenerator.RenderRawTemplate(TestTemplate, model);
+            var actual = SwaseyEngine.RenderRawTemplate(TestTemplate, model);
 
             actual.Should().Be(CancellationTokenParameter, "because we only specified header parameters");
         }

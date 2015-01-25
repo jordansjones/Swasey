@@ -86,11 +86,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generator\GenerationTests.cs" />
     <Compile Include="Generator\OperationParametersHelperTests.cs" />
     <Compile Include="Helpers\FixtureBuilder.cs" />
     <Compile Include="Helpers\Fixtures.cs" />
     <Compile Include="Helpers\GenerationTestHelper.cs" />
-    <Compile Include="Generator\BasicGenerationTests.cs" />
+    <Compile Include="Generator\BasicModelGenerationTests.cs" />
     <Compile Include="Helpers\Ensure.cs" />
     <Compile Include="Helpers\SyntaxTriviaWalker.cs" />
     <Compile Include="Helpers\KvPair.cs" />

@@ -1,69 +1,53 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Reflection;
 
-using Handlebars;
-
-using Swasey.Helpers;
+using Jil;
 
 namespace Swasey
 {
-    public static class SwaseyGenerator
+    public class SwaseyGenerator
     {
 
-        static SwaseyGenerator()
+        public SwaseyGenerator(ClientOptions opts)
         {
-            Engine = new Lazy<IHandlebars>(() => Handlebars.Handlebars.Create());
-
-            // Initialize built-in handlers
-            RegisterHelper(new FileHeader(HelperTemplates.HelperTemplate_FileHeader.Compile()));
-            RegisterHelper(new OperationParameters(HelperTemplates.HelperTemplate_OperationParameters.Compile()));
-            RegisterHelper(new PascalCase());
+            Options = opts;
         }
 
-        internal static Lazy<IHandlebars> Engine { get; private set; }
+        public ClientOptions Options { get; private set; }
 
-        public static void RegisterHelper(IBlockHelper helper, string helperName = null)
+        public async Task Generate(string resourceListing, Func<string, Task<string>> apiSupplier)
         {
-            helperName = helperName ?? helper.GetType().Name;
-            Engine.Value.RegisterHelper(helperName, (tw, opts, ctx, args) => helper.Run(tw, opts, ctx, args));
-        }
-
-        public static void RegisterHelper(IInlineHelper helper, string helperName = null)
-        {
-            helperName = helperName ?? helper.GetType().Name;
-            Engine.Value.RegisterHelper(helperName, (tw, ctx, args) => helper.Run(tw, ctx, args));
-        }
-
-        public static void RegisterTemplate(string name, string template)
-        {
-            using (var sr = new StringReader(template))
+            dynamic resources = JSON.DeserializeDynamic(resourceListing);
+            if (resources == null || !resources.ContainsKey("swaggerVersion"))
             {
-                RegisterTemplate(name, sr);
+                throw new Exception("Invalid Swagger spec");
             }
-        }
-
-        public static void RegisterTemplate(string name, TextReader template)
-        {
-            Engine.Value.RegisterTemplate(name, CompileTemplate(template));
-        }
-
-        public static Action<TextWriter, object> CompileTemplate(TextReader template)
-        {
-            return Engine.Value.Compile(template);
-        }
-
-        public static string RenderRawTemplate(string template, object context)
-        {
-            return Engine.Value.Compile(template)(context);
-        }
-
-        internal static Action<TextWriter, object> Compile(this Lazy<string> This)
-        {
-            using (var sr = new StringReader(This.Value))
+            if (!resources.ContainsKey("apis"))
             {
-                return CompileTemplate(sr);
+                throw new Exception("No 'apis' specified");
             }
+
+            var apis = resources.apis;
+            if (apis == null || apis.Count < 1)
+            {
+                throw new Exception("No 'apis' specified");
+            }
+
+            var apiDefs = new List<dynamic>();
+
+            foreach (var item in apis)
+            {
+                var path = (string) item.path;
+                var defString = await apiSupplier(path);
+                apiDefs.Add(JSON.DeserializeDynamic(defString));
+            }
+
+            var db = true;
         }
 
     }
