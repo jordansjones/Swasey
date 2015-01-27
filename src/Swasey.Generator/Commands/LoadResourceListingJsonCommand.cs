@@ -14,8 +14,8 @@ namespace Swasey.Commands
         public async Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
             var json = await context.Loader(context.ResourceListingUri);
-            if (string.IsNullOrWhiteSpace(context.ResourceListingJson))
-                throw new SwaseyException("Invalid Resource Listing JSON: '{0}'", context.ResourceListingJson);
+            if (string.IsNullOrWhiteSpace(json))
+                throw new SwaseyException("Invalid Resource Listing JSON: '{0}'", json);
 
             var rl = JSON.DeserializeDynamic(json);
             if (rl == null)

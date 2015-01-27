@@ -31,19 +31,41 @@ namespace Swasey.Commands
 
             var modelDef = new ModelDefinition(context.ServiceMetadata)
             {
-                ApiVersion = modelTuple.Item2,
-                Type = (string) model.type,
-                Name = (string) model.id
+                ApiVersion = modelTuple.Item1,
+                Name = (string) model.id,
+                Type = "object"
             };
 
-            var requiredProperties = ParseRequiredProperties(model);
+            if (model.ContainsKey("type"))
+            {
+                modelDef.Type = (string) model.type;
+            }
 
             if (model.ContainsKey("description") && !string.IsNullOrWhiteSpace((string) model.description))
             {
                 modelDef.Description = (string) model.description;
             }
 
+            modelDef.Properties.AddRange(ParseProperties(context, model, ParseRequiredProperties(model)));
+
             return modelDef;
+        }
+
+        private IEnumerable<ModelPropertyDefinition> ParseProperties(ILifecycleContext context, dynamic model, HashSet<string> requiredProperties)
+        {
+            if (!model.ContainsKey("properties")) goto NoMoreProperties;
+
+            foreach (var propKv in model.properties)
+            {
+                var prop = new ModelPropertyDefinition(context.ServiceMetadata)
+                {
+                    Name = propKv.Key
+                };
+                var db = true;
+            }
+
+        NoMoreProperties:
+            yield break;
         }
 
         private HashSet<string> ParseRequiredProperties(dynamic model)

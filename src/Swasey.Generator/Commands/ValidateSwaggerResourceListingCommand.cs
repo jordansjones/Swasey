@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Swasey.Lifecycle;
+using Swasey.Model;
 
 namespace Swasey.Commands
 {
@@ -25,8 +26,11 @@ namespace Swasey.Commands
             var ctx = new GenerationContext(context)
             {
                 State = LifecycleState.Continue,
-                ApiVersion = (string) json.apiVersion,
                 SwaggerVersion = (string) json.swaggerVersion
+            };
+            ctx.ServiceMetadata = new ServiceMetadata(ctx.ServiceMetadata)
+            {
+                ApiVersion = (string) json.apiVersion
             };
 
             foreach (var item in json.apis)

@@ -33,6 +33,7 @@ namespace Swasey.Lifecycle
             : this(copyFrom.ApiNamespace, copyFrom.ModelNamespace, copyFrom.Loader, copyFrom.Writer)
         {
             State = copyFrom.State;
+            ResourceListingUri = copyFrom.ResourceListingUri;
 
             SwaggerVersion = copyFrom.SwaggerVersion;
             ResourceListingJson = copyFrom.ResourceListingJson;

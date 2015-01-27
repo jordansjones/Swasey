@@ -96,6 +96,8 @@
     <Compile Include="Helpers\SyntaxTriviaWalker.cs" />
     <Compile Include="Helpers\KvPair.cs" />
     <Compile Include="Helpers\SwaggerVersionExtensions.cs" />
+    <Compile Include="Helpers\TestGeneratorOptions.cs" />
+    <Compile Include="Helpers\TestSwaggerJsonLoader.cs" />
     <Compile Include="ModelBuilder\BaseBuilder.cs" />
     <Compile Include="ModelBuilder\OperationBuilder.cs" />
     <Compile Include="ModelBuilder\ParameterBuilder.cs" />

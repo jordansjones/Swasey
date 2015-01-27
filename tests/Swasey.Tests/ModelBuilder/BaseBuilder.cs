@@ -13,40 +13,37 @@ namespace Swasey.Tests.ModelBuilder
 
         protected BaseBuilder()
         {
-            NewMetadata(new ServicePath(DefaultPath), string.Empty, string.Empty);
+            NewMetadata(Defaults.DefaultApiNamespace, Defaults.DefaultModelNamespace, string.Empty);
         }
 
         protected IServiceMetadata Metadata { get; private set; }
 
-        private T NewMetadata(ServicePath servicePath = null, string @namespace = null, string version = null)
+        private T NewMetadata(string apiNamespace = null, string modelNamespace = null, string apiVersion = null)
         {
             Metadata = new ServiceMetadata(
-                servicePath ?? Metadata.BasePath, 
-                @namespace ?? Metadata.ApiNamespace, 
-                version ?? Metadata.Version
-                );
+                apiNamespace ?? Metadata.ApiNamespace,
+                modelNamespace ?? Metadata.ModelNamespace
+                )
+            {
+                ApiVersion = apiVersion ?? Metadata.ApiVersion
+            };
 
             return (T) this;
         }
 
-        public T WithBasePath(string basePath)
+        public T WithApiNamespace(string @namespace)
         {
-            return WithBasePath(new ServicePath(basePath));
+            return NewMetadata(apiNamespace : @namespace);
         }
 
-        public T WithBasePath(ServicePath basePath)
+        public T WithModelNamespace(string @namespace)
         {
-            return NewMetadata(servicePath : basePath);
-        }
-
-        public T WithNamespace(string @namespace)
-        {
-            return NewMetadata(@namespace : @namespace);
+            return NewMetadata(modelNamespace : @namespace);
         }
 
         public T WithVersion(string version)
         {
-            return NewMetadata(version : version);
+            return NewMetadata(apiVersion : version);
         }
 
 

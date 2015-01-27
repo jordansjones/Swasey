@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -23,15 +24,13 @@ namespace Swasey.Tests.Helpers
 
         private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
-        public static GeneratorOptions DefaultOptions
+        public static GeneratorOptions DefaultGeneratorOptions(Func<Uri, Task<string>> jsonLoader = null)
         {
-            get
+            return new TestGeneratorOptions(new TestSwaggerJsonLoader(jsonLoader ?? Fixtures.TestSwaggerJsonLoader))
             {
-                return new GeneratorOptions
-                {
-                    ApiNamespace = DefaultNamespace
-                };
-            }
+                ApiNamespace = DefaultNamespace,
+                ModelNamespace = DefaultNamespace
+            };
         }
 
         public static IServiceDefinition DefaultServiceDefinition(this object This)
@@ -42,8 +41,8 @@ namespace Swasey.Tests.Helpers
         public static ServiceBuilder ServiceBuilder(this object This, string basePath = DefaultBasePath, string @namespace = DefaultNamespace, string version = DefaultVersion)
         {
             return new ServiceBuilder()
-                .WithBasePath(DefaultBasePath)
-                .WithNamespace(DefaultNamespace)
+                .WithApiNamespace(DefaultNamespace)
+                .WithModelNamespace(DefaultNamespace)
                 .WithVersion(DefaultVersion);
         }
 

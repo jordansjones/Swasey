@@ -14,6 +14,8 @@ namespace Swasey.Tests.Helpers
     internal static class Fixtures
     {
 
+        public static readonly Uri TestResourceListingUri = new Uri("http://localtest");
+
         public static SingleFixtureBuilder Build
         {
             get { return new SingleFixtureBuilder(CreateAutoFixture()); }
@@ -36,87 +38,93 @@ namespace Swasey.Tests.Helpers
             return fixture;
         }
 
-        public static string CreateResourceListingJson()
+        public static Task<string> TestSwaggerJsonLoader(Uri uri)
         {
-            return JSON.SerializeDynamic(
-                new
+            return TestResourceListingUri.Equals(uri)
+                ? CreateResourceListingJson()
+                : GenerateApiJson(uri.AbsolutePath);
+        }
+
+        public static Task<string> CreateResourceListingJson()
+        {
+            var obj = new
+            {
+                apiVersion = ResourceListingVesion12.ApiVersion,
+                swaggerVersion = SwaggerVersion.Version12.Version(),
+                apis = new[]
                 {
-                    apiVersion = ResourceListingVesion12.ApiVersion,
-                    swaggerVersion = SwaggerVersion.Version12.Version(),
-                    apis = new[]
+                    new
                     {
-                        new
-                        {
-                            path = ResourceListingVesion12.Apis_Pet_Path,
-                            description = ResourceListingVesion12.Apis_Pet_Description
-                        },
-                        new
-                        {
-                            path = ResourceListingVesion12.Apis_User_Path,
-                            description = ResourceListingVesion12.Apis_User_Description
-                        },
-                        new
-                        {
-                            path = ResourceListingVesion12.Apis_Store_Path,
-                            description = ResourceListingVesion12.Apis_Store_Description
-                        }
+                        path = ResourceListingVesion12.Apis_Pet_Path,
+                        description = ResourceListingVesion12.Apis_Pet_Description
                     },
-                    authorizations = new Dictionary<string, dynamic>
+                    new
                     {
+                        path = ResourceListingVesion12.Apis_User_Path,
+                        description = ResourceListingVesion12.Apis_User_Description
+                    },
+                    new
+                    {
+                        path = ResourceListingVesion12.Apis_Store_Path,
+                        description = ResourceListingVesion12.Apis_Store_Description
+                    }
+                },
+                authorizations = new 
+                {
+                    oauth2 = new
+                    {
+                        type = ResourceListingVesion12.Authorization_Type_OAuth2,
+                        scopes = new[]
                         {
-                            ResourceListingVesion12.Authorization_Type_OAuth2, new
+                            new
                             {
-                                type = ResourceListingVesion12.Authorization_Type_OAuth2,
-                                scopes = new[]
+                                scope = ResourceListingVesion12.Scope_Email,
+                                description = ResourceListingVesion12.Scope_Email_Description
+                            },
+                            new
+                            {
+                                scope = ResourceListingVesion12.Scope_Pets,
+                                description = ResourceListingVesion12.Scope_Pets_Description
+                            }
+                        },
+                        grantTypes = new
+                        {
+                            @implicit = new
+                            {
+                                loginEndpoint = new
                                 {
-                                    new
-                                    {
-                                        scope = ResourceListingVesion12.Scope_Email,
-                                        description = ResourceListingVesion12.Scope_Email_Description
-                                    },
-                                    new
-                                    {
-                                        scope = ResourceListingVesion12.Scope_Pets,
-                                        description = ResourceListingVesion12.Scope_Pets_Description
-                                    }
+                                    url = ResourceListingVesion12.Url_LoginEndpoint
+                                }
+                            },
+                            authorization_code = new
+                            {
+                                tokenRequestEndpoint = new
+                                {
+                                    url = ResourceListingVesion12.Url_TokenRequestEndpoint,
+                                    clientIdName = ResourceListingVesion12.TokenRequestEndpoint_ClientIdName,
+                                    clientSecretName = ResourceListingVesion12.TokenRequestEndpoint_ClientSecretName
                                 },
-                                grantTypes = new
+                                tokenEndpoint = new
                                 {
-                                    @implicit = new
-                                    {
-                                        loginEndpoint = new
-                                        {
-                                            url = ResourceListingVesion12.Url_LoginEndpoint
-                                        }
-                                    },
-                                    authorization_code = new
-                                    {
-                                        tokenRequestEndpoint = new
-                                        {
-                                            url = ResourceListingVesion12.Url_TokenRequestEndpoint,
-                                            clientIdName = ResourceListingVesion12.TokenRequestEndpoint_ClientIdName,
-                                            clientSecretName = ResourceListingVesion12.TokenRequestEndpoint_ClientSecretName
-                                        },
-                                        tokenEndpoint = new
-                                        {
-                                            url = ResourceListingVesion12.Url_TokenEndpoint,
-                                            tokenName = ResourceListingVesion12.TokenEndpoint_TokenName
-                                        }
-                                    }
+                                    url = ResourceListingVesion12.Url_TokenEndpoint,
+                                    tokenName = ResourceListingVesion12.TokenEndpoint_TokenName
                                 }
                             }
                         }
-                    },
-                    info = new
-                    {
-                        title = ResourceListingVesion12.Info_Title,
-                        description = ResourceListingVesion12.Info_Description,
-                        termsOfServiceUrl = ResourceListingVesion12.Url_TermsOfServiceUrl,
-                        contact = ResourceListingVesion12.Info_Contact,
-                        license = ResourceListingVesion12.Info_License,
-                        licenseUrl = ResourceListingVesion12.Url_LicenseUrl
                     }
-                });
+                },
+                info = new
+                {
+                    title = ResourceListingVesion12.Info_Title,
+                    description = ResourceListingVesion12.Info_Description,
+                    termsOfServiceUrl = ResourceListingVesion12.Url_TermsOfServiceUrl,
+                    contact = ResourceListingVesion12.Info_Contact,
+                    license = ResourceListingVesion12.Info_License,
+                    licenseUrl = ResourceListingVesion12.Url_LicenseUrl
+                }
+            };
+
+            return Task.FromResult(JSON.SerializeDynamic(obj));
         }
 
         public static Task<string> GenerateApiJson(string path)

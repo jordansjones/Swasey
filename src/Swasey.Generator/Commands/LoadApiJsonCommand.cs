@@ -20,7 +20,7 @@ namespace Swasey.Commands
 
             var basePath = context.ResourceListingUri;
 
-            foreach (var path in ctx.ApiPathJsonMapping.Keys)
+            foreach (var path in ctx.ApiPathJsonMapping.Keys.ToList())
             {
                 var json = await context.Loader(new Uri(basePath, path));
                 if (string.IsNullOrWhiteSpace(json))

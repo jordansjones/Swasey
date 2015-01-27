@@ -21,6 +21,7 @@ namespace Swasey.Tests.Schema.Version12
         public void TestSchemaDeserializesWithoutException()
         {
             Fixtures.CreateResourceListingJson()
+                .Result
                 .Invoking(x => JSON.Deserialize<ResourceListing>(x))
                 .ShouldNotThrow<Exception>();
         }
@@ -28,7 +29,7 @@ namespace Swasey.Tests.Schema.Version12
         [Fact(DisplayName = "Schema deserialization works correctly")]
         public void TestSchemaDeserializationWorksCorrectly()
         {
-            var schema = JSON.Deserialize<ResourceListing>(Fixtures.CreateResourceListingJson());
+            var schema = JSON.Deserialize<ResourceListing>(Fixtures.CreateResourceListingJson().Result);
 
             schema.Should().NotBeNull("because the deserializer should throw exceptions instead of produce a null base object");
 

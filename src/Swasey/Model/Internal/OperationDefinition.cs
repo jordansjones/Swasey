@@ -33,7 +33,8 @@ namespace Swasey.Model
         {
             get
             {
-                return new OperationPath(BasePath, Path);
+                throw new NotImplementedException();
+//                return new OperationPath(BasePath, Path);
             }
         }
 

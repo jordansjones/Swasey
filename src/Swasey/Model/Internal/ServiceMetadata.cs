@@ -12,6 +12,12 @@ namespace Swasey.Model
             ModelNamespace = modelNamespace;
         }
 
+        internal ServiceMetadata(IServiceMetadata copyFrom)
+            : this(copyFrom.ApiNamespace, copyFrom.ModelNamespace)
+        {
+            ApiVersion = copyFrom.ApiVersion;
+        }
+
         public IServiceMetadata Metadata
         {
             get { return this; }
