@@ -9,7 +9,7 @@ namespace Swasey.Model
 
         private ResponseDefinition _response;
 
-        public OperationDefinition(OperationPath path, IModelMetadata meta) : base(meta)
+        public OperationDefinition(OperationPath path, IServiceMetadata meta) : base(meta)
         {
             Path = path;
             Parameters = new List<IParameterDefinition>();

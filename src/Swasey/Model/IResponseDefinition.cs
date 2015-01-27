@@ -1,6 +1,6 @@
 ﻿namespace Swasey.Model
 {
-    public interface IResponseDefinition : IModelMetadata
+    public interface IResponseDefinition : IServiceMetadata
     {
 
         IOperationDefinition Context { get; }

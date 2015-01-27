@@ -27,7 +27,7 @@ namespace Swasey.Tests.ModelBuilder
             return this;
         }
 
-        public ResponseDefinition Build(IModelMetadata metadata)
+        public ResponseDefinition Build(IServiceMetadata metadata)
         {
             if (DataType == null) throw new ArgumentException("Missing DataType");
 

@@ -77,7 +77,7 @@ namespace Swasey.Tests.ModelBuilder
             return Build(Metadata);
         }
 
-        public OperationDefinition Build(IModelMetadata metadata)
+        public OperationDefinition Build(IServiceMetadata metadata)
         {
             if (Name == null) throw new ArgumentException("Missing Name");
             if (Path == null) throw new ArgumentException("Missing Path");

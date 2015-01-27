@@ -52,7 +52,7 @@ namespace Swasey.Tests.ModelBuilder
         }
 
 
-        public ParameterDefinition Build(IModelMetadata metadata)
+        public ParameterDefinition Build(IServiceMetadata metadata)
         {
             if (Name == null) throw new ArgumentException("Missing Name");
             if (DataType == null) throw new ArgumentException("Missing DataType");

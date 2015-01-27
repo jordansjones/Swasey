@@ -14,7 +14,7 @@ namespace Swasey.Tests.Generator
         [Fact]
         public async Task GenertorWorks()
         {
-            var gen = new SwaseyGenerator(GenerationTestHelper.DefaultClientOptions);
+            var gen = new SwaseyGenerator(GenerationTestHelper.DefaultOptions);
 
             await gen.Generate(Fixtures.CreateResourceListingJson(), Fixtures.GenerateApiJson);
         }

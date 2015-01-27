@@ -52,15 +52,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientOptions.cs" />
+    <Compile Include="Commands\LoadApiJsonCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
+    <Compile Include="GeneratorOptions.cs" />
+    <Compile Include="Commands\ExtractApiModelsCommand.cs" />
+    <Compile Include="Commands\ExtractApiOperationsCommand.cs" />
+    <Compile Include="Commands\GenerateApiSourcesCommand.cs" />
+    <Compile Include="Commands\GenerateModelSourcesCommand.cs" />
+    <Compile Include="Commands\GroupOperationsByTypeCommand.cs" />
+    <Compile Include="Commands\NormalizeModelMapCommand.cs" />
+    <Compile Include="Commands\LoadResourceListingJsonCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
+    <Compile Include="Extensions\SwaseyGeneratorExtensions.cs" />
     <Compile Include="Helpers\FileHeader.cs" />
     <Compile Include="Helpers\UCFirst.cs" />
+    <Compile Include="Lifecycle\GenerationContext.cs" />
+    <Compile Include="Lifecycle\GenerationLifecycle.cs" />
+    <Compile Include="Lifecycle\ILifecycleContext.cs" />
+    <Compile Include="Lifecycle\ILifecycleCommand.cs" />
+    <Compile Include="Lifecycle\ILifecycle.cs" />
+    <Compile Include="Lifecycle\LifecycleState.cs" />
+    <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyEngine.cs" />
     <Compile Include="Helpers\IBlockHelper.cs" />
     <Compile Include="Helpers\IInlineHelper.cs" />
     <Compile Include="Helpers\OperationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\HelperTemplates.cs" />
+    <Compile Include="SwaseyException.cs" />
     <Compile Include="SwaseyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +93,7 @@
       <Name>Swasey-Net45</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

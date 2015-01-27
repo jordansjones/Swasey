@@ -3,30 +3,23 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    internal abstract class BaseDefinition : IModelMetadata
+    internal abstract class BaseDefinition : IServiceMetadata
     {
 
-        protected BaseDefinition(IModelMetadata meta)
+        protected BaseDefinition(IServiceMetadata meta)
         {
-            Metadata = meta;
+            ApiNamespace = meta.ApiNamespace;
+            ModelNamespace = meta.ModelNamespace;
+            ApiVersion = meta.ApiVersion;
         }
 
-        public IModelMetadata Metadata { get; private set; }
+        public IServiceMetadata Metadata { get { return this; } }
 
-        public ServicePath BasePath
-        {
-            get { return Metadata.BasePath; }
-        }
+        public string ApiNamespace { get; private set; }
 
-        public string Namespace
-        {
-            get { return Metadata.Namespace; }
-        }
+        public string ModelNamespace { get; private set; }
 
-        public string Version
-        {
-            get { return Metadata.Version; }
-        }
+        public string ApiVersion { get; set; }
 
 
     }

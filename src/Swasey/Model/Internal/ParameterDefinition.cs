@@ -6,7 +6,7 @@ namespace Swasey.Model
     internal class ParameterDefinition : BaseDefinition, IParameterDefinition
     {
 
-        public ParameterDefinition(IModelMetadata meta) : base(meta) {}
+        public ParameterDefinition(IServiceMetadata meta) : base(meta) {}
 
         public IOperationDefinition Context { get; set; }
 

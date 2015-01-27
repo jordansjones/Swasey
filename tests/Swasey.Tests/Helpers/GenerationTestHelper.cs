@@ -23,14 +23,13 @@ namespace Swasey.Tests.Helpers
 
         private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
-        public static ClientOptions DefaultClientOptions
+        public static GeneratorOptions DefaultOptions
         {
             get
             {
-                return new ClientOptions
+                return new GeneratorOptions
                 {
-                    BaseNamespace = DefaultNamespace,
-                    BasePath = DefaultBasePath
+                    ApiNamespace = DefaultNamespace
                 };
             }
         }

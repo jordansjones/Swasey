@@ -7,7 +7,7 @@ namespace Swasey.Model
     internal class ServiceDefinition : BaseDefinition, IServiceDefinition
     {
 
-        public ServiceDefinition(IModelMetadata meta) : base(meta)
+        public ServiceDefinition(IServiceMetadata meta) : base(meta)
         {
             Operations = new List<IOperationDefinition>();
         }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IParameterDefinition : IModelMetadata
+    public interface IParameterDefinition : IServiceMetadata
     {
 
         IOperationDefinition Context { get; }

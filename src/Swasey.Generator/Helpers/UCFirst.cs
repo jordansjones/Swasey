@@ -14,6 +14,7 @@ namespace Swasey.Helpers
             if (arguments.Length == 0) return;
 
             arguments
+                .Where(x => x != null)
                 .Select(x => x.ToString())
                 .ToList()
                 .ForEach(

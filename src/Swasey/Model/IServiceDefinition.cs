@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IServiceDefinition : IModelMetadata
+    public interface IServiceDefinition : IServiceMetadata
     {
 
         bool HasCountOperation { get; }

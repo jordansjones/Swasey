@@ -6,7 +6,7 @@ namespace Swasey.Model
     internal class ResponseDefinition : BaseDefinition, IResponseDefinition
     {
 
-        public ResponseDefinition(IModelMetadata meta) : base(meta) {}
+        public ResponseDefinition(IServiceMetadata meta) : base(meta) {}
 
         public IOperationDefinition Context { get; set; }
 

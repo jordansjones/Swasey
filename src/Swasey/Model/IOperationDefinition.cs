@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IOperationDefinition : IModelMetadata
+    public interface IOperationDefinition : IServiceMetadata
     {
 
         IServiceDefinition Context { get; }

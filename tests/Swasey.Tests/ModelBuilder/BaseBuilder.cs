@@ -16,13 +16,13 @@ namespace Swasey.Tests.ModelBuilder
             NewMetadata(new ServicePath(DefaultPath), string.Empty, string.Empty);
         }
 
-        protected IModelMetadata Metadata { get; private set; }
+        protected IServiceMetadata Metadata { get; private set; }
 
         private T NewMetadata(ServicePath servicePath = null, string @namespace = null, string version = null)
         {
-            Metadata = new ModelMetadata(
+            Metadata = new ServiceMetadata(
                 servicePath ?? Metadata.BasePath, 
-                @namespace ?? Metadata.Namespace, 
+                @namespace ?? Metadata.ApiNamespace, 
                 version ?? Metadata.Version
                 );
 
