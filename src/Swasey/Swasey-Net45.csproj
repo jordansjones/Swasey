@@ -96,6 +96,7 @@
     <Compile Include="Schema\Version12\Metadata\TokenRequestEndpoint.cs" />
     <Compile Include="SwaggerVersion.cs" />
     <Compile Include="Swasey.cs" />
+    <Compile Include="SwaseyException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey-Net45.config" />

@@ -16,8 +16,6 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
-        public DataType Type { get; set; }
-
         IReadOnlyList<IModelPropertyDefinition> IModelDefinition.Properties
         {
             get { return Properties; }
@@ -29,6 +27,11 @@ namespace Swasey.Model
         }
 
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}", Name);
+        }
 
     }
 }

@@ -79,7 +79,6 @@
     <Compile Include="Helpers\OperationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\HelperTemplates.cs" />
-    <Compile Include="SwaseyException.cs" />
     <Compile Include="SwaseyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

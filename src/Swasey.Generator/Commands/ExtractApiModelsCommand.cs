@@ -32,14 +32,8 @@ namespace Swasey.Commands
             var modelDef = new ModelDefinition(context.ServiceMetadata)
             {
                 ApiVersion = modelTuple.Item1,
-                Name = (string) model.id,
-                Type = "object"
+                Name = (string) model.id
             };
-
-            if (model.ContainsKey("type"))
-            {
-                modelDef.Type = (string) model.type;
-            }
 
             if (model.ContainsKey("description") && !string.IsNullOrWhiteSpace((string) model.description))
             {
@@ -57,11 +51,26 @@ namespace Swasey.Commands
 
             foreach (var propKv in model.properties)
             {
+                var obj = propKv.Value;
                 var prop = new ModelPropertyDefinition(context.ServiceMetadata)
                 {
-                    Name = propKv.Key
+                    Name = propKv.Key,
+                    Type = DataType.ParseFromPropertyJObject(obj)
                 };
-                var db = true;
+                if (obj.ContainsKey("description"))
+                {
+                    prop.Description = obj.description;
+                }
+                if (obj.ContainsKey("key"))
+                {
+                    prop.IsKey = (bool) obj.key;
+                }
+                if (requiredProperties.Contains(prop.Name))
+                {
+                    prop.IsRequired = true;
+                }
+
+                yield return prop;
             }
 
         NoMoreProperties:

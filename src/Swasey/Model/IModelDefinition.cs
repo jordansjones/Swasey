@@ -9,8 +9,6 @@ namespace Swasey.Model
 
         QualifiedName Name { get; }
 
-        DataType Type { get; }
-
         IReadOnlyList<IModelPropertyDefinition> Properties { get; }
 
         bool HasDescription { get; }

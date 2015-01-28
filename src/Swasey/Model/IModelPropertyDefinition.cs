@@ -9,9 +9,13 @@ namespace Swasey.Model
 
         DataType Type { get; }
 
+        string Description { get; }
+
         bool HasDescription { get; }
 
-        string Description { get; }
+        bool IsKey { get; }
+
+        bool IsRequired { get; }
 
     }
 }
