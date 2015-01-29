@@ -29,8 +29,9 @@ namespace Swasey.Commands
         {
             foreach (var apiKv in context.ApiPathJsonMapping)
             {
-                foreach ()
+//                foreach ()
             }
+            yield break;
         }
 
     }

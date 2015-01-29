@@ -80,6 +80,13 @@
     <Compile Include="Normalization\INormalizationEntity.cs" />
     <Compile Include="Normalization\INormalizationApiOperationParameter.cs" />
     <Compile Include="Normalization\INormalizationApiOperationResponse.cs" />
+    <Compile Include="Normalization\Internal\BaseNormalizationEntity.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiDataType.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiModel.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiModelProperty.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperation.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperationParameter.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperationResponse.cs" />
     <Compile Include="Normalization\Internal\NormalizationContext.cs" />
     <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyEngine.cs" />

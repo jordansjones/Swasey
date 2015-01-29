@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Swasey.Lifecycle;
-using Swasey.Model;
+using Swasey.Normalization;
 
 namespace Swasey.Commands
 {
@@ -19,44 +20,65 @@ namespace Swasey.Commands
 
             foreach (var modelTuple in ExtractModels(context))
             {
-                ctx.RawModelDefinitions.Add(ParseModelData(context, modelTuple));
+                ctx.NormalizationContext.Models.Add(ParseModelData(context, modelTuple));
             }
 
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
-        private IModelDefinition ParseModelData(ILifecycleContext context, Tuple<string, dynamic> modelTuple)
+        private NormalizationApiModel ParseModelData(ILifecycleContext context, Tuple<string, dynamic> modelTuple)
         {
+            var apiVersion = modelTuple.Item1;
             dynamic model = modelTuple.Item2;
 
-            var modelDef = new ModelDefinition(context.ServiceMetadata)
+            var normModel = new NormalizationApiModel
             {
-                ApiVersion = modelTuple.Item1,
+                ApiNamespace = context.ApiNamespace,
+                ApiVersion = apiVersion,
+                ModelNamespace = context.ModelNamespace,
                 Name = (string) model.id
             };
 
             if (model.ContainsKey("description") && !string.IsNullOrWhiteSpace((string) model.description))
             {
-                modelDef.Description = (string) model.description;
+                normModel.Description = (string) model.description;
             }
 
-            modelDef.Properties.AddRange(ParseProperties(context, model, ParseRequiredProperties(model)));
+            var requiredProperties = ParseRequiredProperties(model);
 
-            return modelDef;
+            foreach (NormalizationApiModelProperty prop in ParseProperties(model))
+            {
+                prop.ApiNamespace = context.ApiNamespace;
+                prop.ApiVersion = apiVersion;
+                prop.ModelNamespace = context.ModelNamespace;
+
+                if (requiredProperties.Contains(prop.Name))
+                {
+                    prop.IsRequired = true;
+                }
+                normModel.Properties.Add(prop);
+            }
+
+            return normModel;
         }
 
-        private IEnumerable<ModelPropertyDefinition> ParseProperties(ILifecycleContext context, dynamic model, HashSet<string> requiredProperties)
+        private IEnumerable<NormalizationApiModelProperty> ParseProperties(dynamic model)
         {
             if (!model.ContainsKey("properties")) goto NoMoreProperties;
 
             foreach (var propKv in model.properties)
             {
                 var obj = propKv.Value;
-                var prop = new ModelPropertyDefinition(context.ServiceMetadata)
+                var prop = new NormalizationApiModelProperty
                 {
-                    Name = propKv.Key,
-                    Type = DataType.ParseFromPropertyJObject(obj)
+                    Name = propKv.Key
                 };
+
+//                var prop = new ModelPropertyDefinition(context.ServiceMetadata)
+//                {
+//                    Name = propKv.Key,
+//                    Type = DataType.ParseFromPropertyJObject(obj)
+//                };
                 if (obj.ContainsKey("description"))
                 {
                     prop.Description = obj.description;
@@ -64,10 +86,6 @@ namespace Swasey.Commands
                 if (obj.ContainsKey("key"))
                 {
                     prop.IsKey = (bool) obj.key;
-                }
-                if (requiredProperties.Contains(prop.Name))
-                {
-                    prop.IsRequired = true;
                 }
 
                 yield return prop;

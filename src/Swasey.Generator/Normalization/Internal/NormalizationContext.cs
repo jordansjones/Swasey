@@ -9,31 +9,38 @@ namespace Swasey.Normalization
 
         public NormalizationContext()
         {
-            Models = new List<INormalizationApiModel>();
-            Operations = new List<INormalizationApiOperation>();
+            Models = new List<NormalizationApiModel>();
+            Operations = new List<NormalizationApiOperation>();
         }
 
         public NormalizationContext(INormalizationContext ctx)
             : this()
         {
-            if (ctx.Models.Any()) { Models.AddRange(ctx.Models.Values); }
-            if (ctx.Operations.Any()) { Operations.AddRange(ctx.Operations.Values); }
+            Models.AddRange(
+                (ctx.Models ?? new Dictionary<string, INormalizationApiModel>())
+                    .Select(x => new NormalizationApiModel(x.Value))
+                );
+
+            Operations.AddRange(
+                (ctx.Operations ?? new Dictionary<string, INormalizationApiOperation>())
+                    .Select(x => new NormalizationApiOperation(x.Value))
+                );
         }
 
-        public List<INormalizationApiModel> Models { get; private set; }
+        public List<NormalizationApiModel> Models { get; private set; }
 
-        public List<INormalizationApiOperation> Operations { get; private set; }
+        public List<NormalizationApiOperation> Operations { get; private set; }
 
         #region INormalizationContext Implementation
 
         IReadOnlyDictionary<string, INormalizationApiModel> INormalizationContext.Models
         {
-            get { return Models.ToDictionary(x => x.Name, x => x); }
+            get { return Models.OfType<INormalizationApiModel>().ToDictionary(x => x.Name, x => x); }
         }
 
         IReadOnlyDictionary<string, INormalizationApiOperation> INormalizationContext.Operations
         {
-            get { return Operations.ToDictionary(x => x.Name, x => x); }
+            get { return Operations.OfType<INormalizationApiOperation>().ToDictionary(x => x.Name, x => x); }
         }
 
         #endregion
