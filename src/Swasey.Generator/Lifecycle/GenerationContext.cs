@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Swasey.Model;
+using Swasey.Normalization;
 
 namespace Swasey.Lifecycle
 {
@@ -19,7 +20,8 @@ namespace Swasey.Lifecycle
             Loader = loader ?? Defaults.DefaultSwaggerJsonLoader;
             Writer = writer ?? Defaults.DefaultSwaseyWriter;
             ApiPathJsonMapping = new Dictionary<string, dynamic>();
-            RawModelDefinitions = new List<IModelDefinition>();
+
+            NormalizationContext = new NormalizationContext();
             Models = new Dictionary<QualifiedName, IModelDefinition>();
         }
 
@@ -38,9 +40,10 @@ namespace Swasey.Lifecycle
             SwaggerVersion = copyFrom.SwaggerVersion;
             ResourceListingJson = copyFrom.ResourceListingJson;
 
+            NormalizationContext = new NormalizationContext(copyFrom.NormalizationContext);
+
             copyFrom.ApiPathJsonMapping.ToList().ForEach(x => ApiPathJsonMapping.Add(x.Key, x.Value));
 
-            RawModelDefinitions.AddRange(copyFrom.RawModelDefinitions);
             copyFrom.Models.ToList().ForEach(x => Models.Add(x.Key, x.Value));
         }
 
@@ -66,9 +69,8 @@ namespace Swasey.Lifecycle
 
         IReadOnlyCollection<KeyValuePair<string, dynamic>> ILifecycleContext.ApiPathJsonMapping { get { return ApiPathJsonMapping; } }
 
-        
-        public List<IModelDefinition> RawModelDefinitions { get; private set; }
-        IReadOnlyList<IModelDefinition> ILifecycleContext.RawModelDefinitions { get { return RawModelDefinitions; } }
+        public NormalizationContext NormalizationContext { get; private set; }
+        INormalizationContext ILifecycleContext.NormalizationContext { get { return NormalizationContext; } }
 
         public Dictionary<QualifiedName, IModelDefinition> Models { get; private set; }
 

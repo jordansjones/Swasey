@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Swasey.Model;
+using Swasey.Normalization;
 
 namespace Swasey.Lifecycle
 {
@@ -25,7 +26,7 @@ namespace Swasey.Lifecycle
 
         IReadOnlyCollection<KeyValuePair<string, dynamic>> ApiPathJsonMapping { get; }
 
-        IReadOnlyList<IModelDefinition> RawModelDefinitions { get; }
+        INormalizationContext NormalizationContext { get; }
 
         IReadOnlyCollection<KeyValuePair<QualifiedName, IModelDefinition>> Models { get; }
 

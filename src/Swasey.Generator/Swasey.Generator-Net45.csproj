@@ -72,6 +72,15 @@
     <Compile Include="Lifecycle\ILifecycleCommand.cs" />
     <Compile Include="Lifecycle\ILifecycle.cs" />
     <Compile Include="Lifecycle\LifecycleState.cs" />
+    <Compile Include="Normalization\INormalizationApiOperation.cs" />
+    <Compile Include="Normalization\INormalizationContext.cs" />
+    <Compile Include="Normalization\INormalizationApiModel.cs" />
+    <Compile Include="Normalization\INormalizationApiModelProperty.cs" />
+    <Compile Include="Normalization\INormalizationApiDataType.cs" />
+    <Compile Include="Normalization\INormalizationEntity.cs" />
+    <Compile Include="Normalization\INormalizationApiOperationParameter.cs" />
+    <Compile Include="Normalization\INormalizationApiOperationResponse.cs" />
+    <Compile Include="Normalization\Internal\NormalizationContext.cs" />
     <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyEngine.cs" />
     <Compile Include="Helpers\IBlockHelper.cs" />
