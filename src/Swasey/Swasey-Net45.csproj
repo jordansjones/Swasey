@@ -50,10 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ExtractApiModelsCommand.cs" />
+    <Compile Include="Commands\ExtractApiOperationsCommand.cs" />
+    <Compile Include="Commands\GenerateApiSourcesCommand.cs" />
+    <Compile Include="Commands\GenerateModelSourcesCommand.cs" />
+    <Compile Include="Commands\LoadApiJsonCommand.cs" />
+    <Compile Include="Commands\LoadResourceListingJsonCommand.cs" />
+    <Compile Include="Commands\SwaseyNormalizerCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
+    <Compile Include="Extensions\HttpMethodTypeExtensions.cs" />
+    <Compile Include="Extensions\ParameterTypeExtensions.cs" />
+    <Compile Include="GeneratorOptions.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />
+    <Compile Include="Lifecycle\GenerationContext.cs" />
+    <Compile Include="Lifecycle\GenerationLifecycle.cs" />
+    <Compile Include="Lifecycle\ILifecycle.cs" />
+    <Compile Include="Lifecycle\ILifecycleCommand.cs" />
+    <Compile Include="Lifecycle\ILifecycleContext.cs" />
+    <Compile Include="Lifecycle\LifecycleState.cs" />
     <Compile Include="Model\BasePath.cs" />
     <Compile Include="Model\IModelDefinition.cs" />
     <Compile Include="Model\IModelPropertyDefinition.cs" />
@@ -77,6 +95,23 @@
     <Compile Include="Model\Internal\ResponseDefinition.cs" />
     <Compile Include="Model\QualifiedName.cs" />
     <Compile Include="Model\Services.cs" />
+    <Compile Include="Normalization\INormalizationApiDataType.cs" />
+    <Compile Include="Normalization\INormalizationApiModel.cs" />
+    <Compile Include="Normalization\INormalizationApiModelProperty.cs" />
+    <Compile Include="Normalization\INormalizationApiOperation.cs" />
+    <Compile Include="Normalization\INormalizationApiOperationParameter.cs" />
+    <Compile Include="Normalization\INormalizationApiOperationResponse.cs" />
+    <Compile Include="Normalization\INormalizationContext.cs" />
+    <Compile Include="Normalization\INormalizationEntity.cs" />
+    <Compile Include="Normalization\Internal\BaseNormalizationEntity.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiDataType.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiModel.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiModelProperty.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperation.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperationParameter.cs" />
+    <Compile Include="Normalization\Internal\NormalizationApiOperationResponse.cs" />
+    <Compile Include="Normalization\Internal\NormalizationContext.cs" />
+    <Compile Include="Normalization\Internal\SimpleNormalizationApiDataType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\Version12\ApiDeclaration.cs" />
     <Compile Include="Schema\Version12\ApiModels.cs" />
@@ -96,7 +131,9 @@
     <Compile Include="Schema\Version12\Metadata\TokenRequestEndpoint.cs" />
     <Compile Include="SwaggerVersion.cs" />
     <Compile Include="Swasey.cs" />
+    <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyException.cs" />
+    <Compile Include="SwaseyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey-Net45.config" />
@@ -104,7 +141,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Builder\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

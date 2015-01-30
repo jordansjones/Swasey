@@ -2,12 +2,17 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Swasey.Model;
+using Swasey.Normalization;
+
 namespace Swasey
 {
 
     public delegate Task<string> SwaggerJsonLoader(Uri uri);
 
     public delegate void SwaseyWriter(WriteType type, string name, string content);
+
+    public delegate IServiceDefinition SwaseyNormalizer(INormalizationContext normalizationContext);
 
     public enum WriteType
     {
@@ -32,6 +37,11 @@ namespace Swasey
         }
 
         public static void DefaultSwaseyWriter(WriteType type, string name, string content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IServiceDefinition DefaultSwaseyNormalizer(INormalizationContext normalizationContext)
         {
             throw new NotImplementedException();
         }

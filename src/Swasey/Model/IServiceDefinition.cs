@@ -7,19 +7,9 @@ namespace Swasey.Model
     public interface IServiceDefinition : IServiceMetadata
     {
 
-        bool HasCountOperation { get; }
-
-        bool HasCreateOperation { get; }
-
-        bool HasDeleteOperation { get; }
-
-        bool HasGetByKeyOperation { get; }
-
-        bool HasUpdateOperation { get; }
-
-        QualifiedName Name { get; }
-
         IReadOnlyList<IOperationDefinition> Operations { get; }
+
+        IReadOnlyList<IModelDefinition> Models { get; }
 
     }
 }

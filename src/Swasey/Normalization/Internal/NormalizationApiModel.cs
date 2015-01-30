@@ -11,10 +11,14 @@ namespace Swasey.Normalization
 
         private readonly List<NormalizationApiModel> _subTypes = new List<NormalizationApiModel>();
 
+        private readonly List<string> _rawSubTypes = new List<string>();
+
         public NormalizationApiModel() {}
 
         public NormalizationApiModel(INormalizationApiModel copyFrom) : base(copyFrom)
         {
+            if (copyFrom == null) return;
+
             Description = copyFrom.Description;
             Discriminator = copyFrom.Discriminator;
             Name = copyFrom.Name;
@@ -39,6 +43,8 @@ namespace Swasey.Normalization
         {
             get { return _subTypes; }
         }
+
+        public List<string> RawSubTypes { get { return _rawSubTypes; } }
 
         public string Description { get; set; }
 

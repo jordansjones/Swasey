@@ -52,50 +52,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\LoadApiJsonCommand.cs" />
-    <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
-    <Compile Include="GeneratorOptions.cs" />
-    <Compile Include="Commands\ExtractApiModelsCommand.cs" />
-    <Compile Include="Commands\ExtractApiOperationsCommand.cs" />
-    <Compile Include="Commands\GenerateApiSourcesCommand.cs" />
-    <Compile Include="Commands\GenerateModelSourcesCommand.cs" />
-    <Compile Include="Commands\GroupOperationsByTypeCommand.cs" />
-    <Compile Include="Commands\NormalizeModelMapCommand.cs" />
-    <Compile Include="Commands\LoadResourceListingJsonCommand.cs" />
-    <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
-    <Compile Include="Extensions\SwaseyGeneratorExtensions.cs" />
     <Compile Include="Helpers\FileHeader.cs" />
     <Compile Include="Helpers\UCFirst.cs" />
-    <Compile Include="Lifecycle\GenerationContext.cs" />
-    <Compile Include="Lifecycle\GenerationLifecycle.cs" />
-    <Compile Include="Lifecycle\ILifecycleContext.cs" />
-    <Compile Include="Lifecycle\ILifecycleCommand.cs" />
-    <Compile Include="Lifecycle\ILifecycle.cs" />
-    <Compile Include="Lifecycle\LifecycleState.cs" />
-    <Compile Include="Normalization\INormalizationApiOperation.cs" />
-    <Compile Include="Normalization\INormalizationContext.cs" />
-    <Compile Include="Normalization\INormalizationApiModel.cs" />
-    <Compile Include="Normalization\INormalizationApiModelProperty.cs" />
-    <Compile Include="Normalization\INormalizationApiDataType.cs" />
-    <Compile Include="Normalization\INormalizationEntity.cs" />
-    <Compile Include="Normalization\INormalizationApiOperationParameter.cs" />
-    <Compile Include="Normalization\INormalizationApiOperationResponse.cs" />
-    <Compile Include="Normalization\Internal\BaseNormalizationEntity.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiDataType.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiModel.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiModelProperty.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiOperation.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiOperationParameter.cs" />
-    <Compile Include="Normalization\Internal\NormalizationApiOperationResponse.cs" />
-    <Compile Include="Normalization\Internal\NormalizationContext.cs" />
-    <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyEngine.cs" />
     <Compile Include="Helpers\IBlockHelper.cs" />
     <Compile Include="Helpers\IInlineHelper.cs" />
     <Compile Include="Helpers\OperationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\HelperTemplates.cs" />
-    <Compile Include="SwaseyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey.Generator-Net45.config" />

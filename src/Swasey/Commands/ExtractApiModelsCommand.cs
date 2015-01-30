@@ -20,24 +20,54 @@ namespace Swasey.Commands
 
             foreach (var modelTuple in ExtractModels(context))
             {
-                ctx.NormalizationContext.Models.Add(ParseModelData(context, modelTuple));
+                var model = ParseModelData(modelTuple);
+                model.ApiNamespace = context.ApiNamespace;
+                model.ModelNamespace = context.ModelNamespace;
+
+                foreach (var prop in model.Properties)
+                {
+                    prop.ApiNamespace = context.ApiNamespace;
+                    prop.ModelNamespace = context.ModelNamespace;
+                }
+
+                ctx.NormalizationContext.Models.Add(model);
+            }
+
+            foreach (var model in ctx.NormalizationContext.Models.Where(x => x.RawSubTypes.Any()))
+            {
+                foreach (var st in model.RawSubTypes)
+                {
+                    var sm = ctx.NormalizationContext.Models.FirstOrDefault(x => x.Name.Equals(st, StringComparison.InvariantCultureIgnoreCase));
+                    if (sm == null) continue;
+                    model.SubTypes.Add(sm);
+                }
             }
 
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
-        private NormalizationApiModel ParseModelData(ILifecycleContext context, Tuple<string, dynamic> modelTuple)
+        private NormalizationApiModel ParseModelData(Tuple<string, dynamic> modelTuple)
         {
             var apiVersion = modelTuple.Item1;
             dynamic model = modelTuple.Item2;
 
             var normModel = new NormalizationApiModel
             {
-                ApiNamespace = context.ApiNamespace,
                 ApiVersion = apiVersion,
-                ModelNamespace = context.ModelNamespace,
                 Name = (string) model.id
             };
+
+            if (model.ContainsKey("subTypes"))
+            {
+                foreach (var sto in model.subTypes)
+                {
+                    if (sto == null) continue;
+                    var st = (string) sto;
+                    if (string.IsNullOrWhiteSpace(st)) continue;
+
+                    normModel.RawSubTypes.Add(st);
+                }
+            }
 
             if (model.ContainsKey("description") && !string.IsNullOrWhiteSpace((string) model.description))
             {
@@ -48,9 +78,7 @@ namespace Swasey.Commands
 
             foreach (NormalizationApiModelProperty prop in ParseProperties(model))
             {
-                prop.ApiNamespace = context.ApiNamespace;
                 prop.ApiVersion = apiVersion;
-                prop.ModelNamespace = context.ModelNamespace;
 
                 if (requiredProperties.Contains(prop.Name))
                 {
@@ -69,16 +97,14 @@ namespace Swasey.Commands
             foreach (var propKv in model.properties)
             {
                 var obj = propKv.Value;
+
                 var prop = new NormalizationApiModelProperty
                 {
                     Name = propKv.Key
                 };
 
-//                var prop = new ModelPropertyDefinition(context.ServiceMetadata)
-//                {
-//                    Name = propKv.Key,
-//                    Type = DataType.ParseFromPropertyJObject(obj)
-//                };
+                prop.CopyFrom(SimpleNormalizationApiDataType.ParseFromJObject(obj));
+
                 if (obj.ContainsKey("description"))
                 {
                     prop.Description = obj.description;

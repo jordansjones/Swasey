@@ -18,6 +18,7 @@ namespace Swasey.Lifecycle
         string SwaggerVersion { get; }
 
         SwaggerJsonLoader Loader { get; }
+        SwaseyNormalizer Normalizer { get; }
         SwaseyWriter Writer { get; }
 
         LifecycleState State { get; }
@@ -28,7 +29,7 @@ namespace Swasey.Lifecycle
 
         INormalizationContext NormalizationContext { get; }
 
-        IReadOnlyCollection<KeyValuePair<QualifiedName, IModelDefinition>> Models { get; }
+        IServiceDefinition ServiceDefinition { get; }
 
     }
 }

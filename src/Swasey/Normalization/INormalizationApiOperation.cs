@@ -19,5 +19,8 @@ namespace Swasey.Normalization
 
         string Path { get; }
 
+        string ResourcePath { get; }
+
+        INormalizationApiOperationResponse Response { get; }
     }
 }

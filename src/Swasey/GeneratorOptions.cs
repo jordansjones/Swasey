@@ -11,6 +11,7 @@ namespace Swasey
             ApiNamespace = Defaults.DefaultApiNamespace;
             ModelNamespace = Defaults.DefaultModelNamespace;
             Loader = Defaults.DefaultSwaggerJsonLoader;
+            Normalizer = Defaults.DefaultSwaseyNormalizer;
             Writer = Defaults.DefaultSwaseyWriter;
         }
 
@@ -19,6 +20,8 @@ namespace Swasey
         public string ModelNamespace { get; set; }
 
         public SwaggerJsonLoader Loader { get; set; }
+
+        public SwaseyNormalizer Normalizer { get; set; }
 
         public SwaseyWriter Writer { get; set; }
 

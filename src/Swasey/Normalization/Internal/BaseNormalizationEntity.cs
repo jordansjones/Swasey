@@ -11,6 +11,8 @@ namespace Swasey.Normalization
         public BaseNormalizationEntity(INormalizationEntity copyFrom)
             : this()
         {
+            if (copyFrom == null) return;
+
             ApiNamespace = copyFrom.ApiNamespace;
             ApiVersion = copyFrom.ApiVersion;
             ModelNamespace = copyFrom.ModelNamespace;

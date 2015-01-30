@@ -10,6 +10,8 @@ namespace Swasey.Normalization
 
         public NormalizationApiDataType(INormalizationEntity copyFrom) : base(copyFrom) {}
 
+        public dynamic JObject { get; set; }
+
         public string DefaultValue { get; set; }
 
         public bool IsEnum { get; set; }
@@ -47,6 +49,6 @@ namespace Swasey.Normalization
             TypeName = copyFrom.TypeName;
         }
 
-
     }
+
 }

@@ -24,12 +24,13 @@ namespace Swasey.Tests.Helpers
 
         private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
-        public static GeneratorOptions DefaultGeneratorOptions(Func<Uri, Task<string>> jsonLoader = null)
+        public static GeneratorOptions DefaultGeneratorOptions(Func<Uri, Task<string>> jsonLoader, SwaseyNormalizer swaseyNormalizer)
         {
-            return new TestGeneratorOptions(new TestSwaggerJsonLoader(jsonLoader ?? Fixtures.TestSwaggerJsonLoader))
+            return new TestGeneratorOptions(new TestSwaggerJsonLoader(jsonLoader))
             {
                 ApiNamespace = DefaultNamespace,
-                ModelNamespace = DefaultNamespace
+                ModelNamespace = DefaultNamespace,
+                Normalizer = swaseyNormalizer
             };
         }
 

@@ -10,6 +10,7 @@ namespace Swasey.Normalization
 
         public NormalizationApiOperationResponse(INormalizationApiOperationResponse copyFrom) : base(copyFrom)
         {
+            if (copyFrom == null) return;
             CopyFrom(copyFrom);
         }
 

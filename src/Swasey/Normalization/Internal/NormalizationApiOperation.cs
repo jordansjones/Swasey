@@ -18,6 +18,8 @@ namespace Swasey.Normalization
             HttpMethod = copyFrom.HttpMethod;
             Name = copyFrom.Name;
             Path = copyFrom.Path;
+            ResourcePath = copyFrom.ResourcePath;
+            Response = new NormalizationApiOperationResponse(copyFrom.Response);
 
             Parameters.AddRange(
                 (copyFrom.Parameters ?? new List<INormalizationApiOperationParameter>())
@@ -45,5 +47,10 @@ namespace Swasey.Normalization
 
         public string Path { get; set; }
 
+        public string ResourcePath { get; set; }
+
+        public NormalizationApiOperationResponse Response { get; set; }
+
+        INormalizationApiOperationResponse INormalizationApiOperation.Response { get { return Response; } }
     }
 }

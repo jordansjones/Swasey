@@ -26,8 +26,7 @@ namespace Swasey
                 .Enqueue(new ValidateSwaggerApiDefinitionCommand())
                 .Enqueue(new ExtractApiModelsCommand())
                 .Enqueue(new ExtractApiOperationsCommand())
-                .Enqueue(new GroupOperationsByTypeCommand())
-                .Enqueue(new NormalizeModelMapCommand())
+                .Enqueue(new SwaseyNormalizerCommand())
                 .Enqueue(new GenerateApiSourcesCommand())
                 .Enqueue(new GenerateModelSourcesCommand())
                 ;
