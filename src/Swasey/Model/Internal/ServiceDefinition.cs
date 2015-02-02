@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    internal class ServiceDefinition : BaseDefinition, IServiceDefinition
+    internal class ServiceDefinition : IServiceDefinition
     {
 
-        public ServiceDefinition(IServiceMetadata meta) : base(meta)
+        public ServiceDefinition()
         {
             Operations = new List<OperationDefinition>();
             Models = new List<ModelDefinition>();
@@ -17,14 +17,14 @@ namespace Swasey.Model
 
         public List<OperationDefinition> Operations { get; private set; }
 
-        IReadOnlyList<IModelDefinition> IServiceDefinition.Models
+        ILookup<QualifiedName, IModelDefinition> IServiceDefinition.Models
         {
-            get { return Models; }
+            get { return Models.OfType<IModelDefinition>().ToLookup(x => x.Name); }
         }
 
-        IReadOnlyList<IOperationDefinition> IServiceDefinition.Operations
+        ILookup<QualifiedName, IOperationDefinition> IServiceDefinition.Operations
         {
-            get { return Operations; }
+            get { return Operations.OfType<IOperationDefinition>().ToLookup(x => x.Name); }
         }
 
         public ServiceDefinition AddModel(ModelDefinition model)

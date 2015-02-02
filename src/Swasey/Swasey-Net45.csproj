@@ -133,7 +133,6 @@
     <Compile Include="Swasey.cs" />
     <Compile Include="SwaseyDelegates.cs" />
     <Compile Include="SwaseyException.cs" />
-    <Compile Include="SwaseyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.Swasey-Net45.config" />

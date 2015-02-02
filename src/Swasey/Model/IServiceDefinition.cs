@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IServiceDefinition : IServiceMetadata
+    public interface IServiceDefinition
     {
 
-        IReadOnlyList<IOperationDefinition> Operations { get; }
+        ILookup<QualifiedName, IOperationDefinition> Operations { get; }
 
-        IReadOnlyList<IModelDefinition> Models { get; }
+        ILookup<QualifiedName, IModelDefinition> Models { get; }
 
     }
 }

@@ -8,7 +8,7 @@ namespace Swasey.Normalization
     {
 
         IReadOnlyDictionary<string, INormalizationApiModel> Models { get; }
-        IReadOnlyDictionary<string, INormalizationApiOperation> Operations { get; }
+        ILookup<string, INormalizationApiOperation> Operations { get; }
 
     }
 }

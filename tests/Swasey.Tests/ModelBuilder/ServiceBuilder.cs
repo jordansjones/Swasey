@@ -34,7 +34,7 @@ namespace Swasey.Tests.ModelBuilder
 
         public IServiceDefinition Build()
         {
-            var def = new ServiceDefinition(Metadata);
+            var def = new ServiceDefinition();
 
             foreach (var op in _operationBuilders)
             {

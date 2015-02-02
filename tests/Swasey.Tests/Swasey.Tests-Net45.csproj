@@ -95,6 +95,10 @@
     <Compile Include="Helpers\GenerationTestHelper.cs" />
     <Compile Include="Generator\BasicModelGenerationTests.cs" />
     <Compile Include="Helpers\Ensure.cs" />
+    <Compile Include="Helpers\NormalizationExtensions\DataTypeNormalization.cs" />
+    <Compile Include="Helpers\NormalizationExtensions\ModelNormalization.cs" />
+    <Compile Include="Helpers\NormalizationExtensions\ModelPropertyNormalization.cs" />
+    <Compile Include="Helpers\NormalizationExtensions\ServiceMetadataExtensions.cs" />
     <Compile Include="Helpers\SyntaxTriviaWalker.cs" />
     <Compile Include="Helpers\KvPair.cs" />
     <Compile Include="Helpers\SwaggerVersionExtensions.cs" />

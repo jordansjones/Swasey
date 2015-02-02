@@ -22,8 +22,9 @@ namespace Swasey.Normalization
                 );
 
             Operations.AddRange(
-                (ctx.Operations ?? new Dictionary<string, INormalizationApiOperation>())
-                    .Select(x => new NormalizationApiOperation(x.Value))
+                (ctx.Operations ?? Enumerable.Empty<IGrouping<string, INormalizationApiOperation>>())
+                    .SelectMany(x => x)
+                    .Select(x => new NormalizationApiOperation(x))
                 );
         }
 
@@ -38,9 +39,9 @@ namespace Swasey.Normalization
             get { return Models.OfType<INormalizationApiModel>().ToDictionary(x => x.Name, x => x); }
         }
 
-        IReadOnlyDictionary<string, INormalizationApiOperation> INormalizationContext.Operations
+        ILookup<string, INormalizationApiOperation> INormalizationContext.Operations
         {
-            get { return Operations.OfType<INormalizationApiOperation>().ToDictionary(x => x.Name, x => x); }
+            get { return Operations.OfType<INormalizationApiOperation>().ToLookup(x => x.ResourcePath); }
         }
 
         #endregion

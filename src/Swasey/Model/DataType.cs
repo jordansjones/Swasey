@@ -28,7 +28,7 @@ namespace Swasey.Model
 
         public bool HasMinimumValue { get { return !string.IsNullOrWhiteSpace(MinimumValue); } }
 
-        public bool IsEnum { get; private set; }
+        public bool IsEnum { get; set; }
 
         public bool IsEnumerable { get; set; }
 
@@ -38,7 +38,7 @@ namespace Swasey.Model
 
         public bool IsVoidType { get; private set; }
 
-        public string[] EnumValues { get; private set; }
+        public string[] EnumValues { get; set; }
 
         public string MinimumValue { get; set; }
 
