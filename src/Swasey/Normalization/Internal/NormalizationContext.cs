@@ -17,8 +17,9 @@ namespace Swasey.Normalization
             : this()
         {
             Models.AddRange(
-                (ctx.Models ?? new Dictionary<string, INormalizationApiModel>())
-                    .Select(x => new NormalizationApiModel(x.Value))
+                (ctx.Models ?? Enumerable.Empty<IGrouping<string, INormalizationApiModel>>())
+                    .SelectMany(x => x)
+                    .Select(x => new NormalizationApiModel(x))
                 );
 
             Operations.AddRange(
@@ -34,9 +35,9 @@ namespace Swasey.Normalization
 
         #region INormalizationContext Implementation
 
-        IReadOnlyDictionary<string, INormalizationApiModel> INormalizationContext.Models
+        ILookup<string, INormalizationApiModel> INormalizationContext.Models
         {
-            get { return Models.OfType<INormalizationApiModel>().ToDictionary(x => x.Name, x => x); }
+            get { return Models.OfType<INormalizationApiModel>().ToLookup(x => x.Name); }
         }
 
         ILookup<string, INormalizationApiOperation> INormalizationContext.Operations

@@ -6,13 +6,13 @@ namespace Swasey.Model
     public interface IServiceMetadata
     {
 
-        IServiceMetadata Metadata { get; }
-
         string ApiNamespace { get; }
 
-        string ModelNamespace { get; }
-
         string ApiVersion { get; }
+
+        IServiceMetadata Metadata { get; }
+
+        string ModelNamespace { get; }
 
     }
 }

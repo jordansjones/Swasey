@@ -8,6 +8,12 @@ namespace Swasey.Model
 
         public ResponseDefinition(IServiceMetadata meta) : base(meta) {}
 
+        public ResponseDefinition(IResponseDefinition copyFrom) : base(copyFrom)
+        {
+            Context = copyFrom.Context;
+            DataType = copyFrom.DataType;
+        }
+
         public IOperationDefinition Context { get; set; }
 
         public DataType DataType { get; set; }

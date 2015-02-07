@@ -28,13 +28,15 @@ namespace Swasey
                 .Enqueue(new ValidateSwaggerApiDefinitionCommand())
                 .Enqueue(new ExtractApiModelsCommand())
                 .Enqueue(new ExtractApiOperationsCommand())
-                .Enqueue(new SwaseyNormalizerCommand())
+                .Enqueue(new NormalizeEnumsCommand())
+                .Enqueue(new NormalizeModelsCommand())
+                .Enqueue(new NormalizeOperationsCommand())
                 .Enqueue(new GenerateApiSourcesCommand())
                 .Enqueue(new GenerateModelSourcesCommand())
                 ;
 
             await lifecycle.Execute(
-                new GenerationContext(Options)
+                new LifecycleContext(Options)
                 {
                     ResourceListingUri = resourceListingUri
                 });

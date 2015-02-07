@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\xunit.core.2.0.0-rc1-build2826\build\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\packages\xunit.core.2.0.0-rc1-build2826\build\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,7 +15,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>22dce7c8</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>99c3b300</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,25 +81,26 @@
     <Reference Include="Tavis.UriTemplates">
       <HintPath>..\..\packages\Tavis.UriTemplates.0.6.1\lib\Net45\Tavis.UriTemplates.dll</HintPath>
     </Reference>
-    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    <Reference Include="xunit.abstractions">
+      <HintPath>..\..\packages\xunit.abstractions.2.0.0-rc1-build2826\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.assert">
+      <HintPath>..\..\packages\xunit.assert.2.0.0-rc1-build2826\lib\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core">
+      <HintPath>..\..\packages\xunit.extensibility.core.2.0.0-rc1-build2826\lib\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generator\GenerationTests.cs" />
     <Compile Include="Generator\OperationParametersHelperTests.cs" />
     <Compile Include="Helpers\DefaultSwaggerJsonCreator.cs" />
-    <Compile Include="Helpers\DefaultSwaseyNormalizer.cs" />
     <Compile Include="Helpers\FixtureBuilder.cs" />
     <Compile Include="Helpers\Fixtures.cs" />
     <Compile Include="Helpers\GenerationTestHelper.cs" />
     <Compile Include="Generator\BasicModelGenerationTests.cs" />
     <Compile Include="Helpers\Ensure.cs" />
-    <Compile Include="Helpers\NormalizationExtensions\DataTypeNormalization.cs" />
-    <Compile Include="Helpers\NormalizationExtensions\ModelNormalization.cs" />
     <Compile Include="Helpers\NormalizationExtensions\ModelPropertyNormalization.cs" />
-    <Compile Include="Helpers\NormalizationExtensions\ServiceMetadataExtensions.cs" />
     <Compile Include="Helpers\SyntaxTriviaWalker.cs" />
     <Compile Include="Helpers\KvPair.cs" />
     <Compile Include="Helpers\SwaggerVersionExtensions.cs" />
@@ -126,10 +128,6 @@
     <EmbeddedResource Include="Templates\ServiceClientInterface.hbs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Swasey.Generator\Swasey.Generator-Net45.csproj">
-      <Project>{3c6f69cd-039b-4ab2-b3a1-2e54d6f02e02}</Project>
-      <Name>Swasey.Generator-Net45</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Swasey\Swasey-Net45.csproj">
       <Project>{f4d8ff64-1076-4f22-83d2-cace45a27ea7}</Project>
       <Name>Swasey-Net45</Name>
@@ -142,6 +140,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\xunit.core.2.0.0-rc1-build2826\build\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.core.2.0.0-rc1-build2826\build\portable-net45+aspnetcore50+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

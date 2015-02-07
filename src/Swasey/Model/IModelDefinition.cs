@@ -4,16 +4,10 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IModelDefinition : IServiceMetadata
+    public interface IModelDefinition : IModelEntity
     {
 
-        QualifiedName Name { get; }
-
         IReadOnlyList<IModelPropertyDefinition> Properties { get; }
-
-        bool HasDescription { get; }
-
-        string Description { get; }
 
     }
 }

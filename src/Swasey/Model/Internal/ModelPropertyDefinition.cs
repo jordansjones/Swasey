@@ -8,6 +8,17 @@ namespace Swasey.Model
 
         public ModelPropertyDefinition(IServiceMetadata meta) : base(meta) {}
 
+        public ModelPropertyDefinition(IModelPropertyDefinition copyFrom) : base(copyFrom)
+        {
+            if (copyFrom == null) return;
+
+            Name = copyFrom.Name;
+            Type = copyFrom.Type;
+            Description = copyFrom.Description;
+            IsKey = copyFrom.IsKey;
+            IsRequired = copyFrom.IsRequired;
+        }
+
         public QualifiedName Name { get; set; }
 
         public DataType Type { get; set; }

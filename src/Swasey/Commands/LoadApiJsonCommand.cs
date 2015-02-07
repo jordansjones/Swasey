@@ -13,7 +13,7 @@ namespace Swasey.Commands
 
         public async Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
-            var ctx = new GenerationContext(context)
+            var ctx = new LifecycleContext(context)
             {
                 State = LifecycleState.Continue
             };

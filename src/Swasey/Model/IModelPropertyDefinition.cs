@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IModelPropertyDefinition
+    public interface IModelPropertyDefinition : IServiceMetadata
     {
         QualifiedName Name { get; }
 

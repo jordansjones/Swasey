@@ -9,7 +9,7 @@ namespace Swasey.Tests.Helpers
     internal static class ModelPropertyNormalization
     {
 
-        public static IModelPropertyDefinition Normalize(this INormalizationApiModelProperty This)
+        public static ModelPropertyDefinition Normalize(this INormalizationApiModelProperty This)
         {
             return new ModelPropertyDefinition(This.AsMetadata())
             {

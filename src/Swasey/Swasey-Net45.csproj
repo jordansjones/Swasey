@@ -34,6 +34,9 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Handlebars">
+      <HintPath>..\..\packages\Handlebars.Net.1.2.1\lib\Handlebars.dll</HintPath>
+    </Reference>
     <Reference Include="Jil">
       <HintPath>..\..\packages\Jil.2.7.0\lib\net45\Jil.dll</HintPath>
     </Reference>
@@ -43,11 +46,12 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="Tavis.UriTemplates">
+      <HintPath>..\..\packages\Tavis.UriTemplates.0.6.1\lib\Net45\Tavis.UriTemplates.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ExtractApiModelsCommand.cs" />
@@ -56,27 +60,42 @@
     <Compile Include="Commands\GenerateModelSourcesCommand.cs" />
     <Compile Include="Commands\LoadApiJsonCommand.cs" />
     <Compile Include="Commands\LoadResourceListingJsonCommand.cs" />
-    <Compile Include="Commands\SwaseyNormalizerCommand.cs" />
+    <Compile Include="Commands\NormalizeEnumsCommand.cs" />
+    <Compile Include="Commands\NormalizeModelsCommand.cs" />
+    <Compile Include="Commands\NormalizeOperationsCommand.cs" />
     <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
     <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
+    <Compile Include="Extensions\DataTypeExtensions.cs" />
     <Compile Include="Extensions\HttpMethodTypeExtensions.cs" />
     <Compile Include="Extensions\ParameterTypeExtensions.cs" />
+    <Compile Include="Extensions\ServiceMetadataExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="GeneratorOptions.cs" />
+    <Compile Include="Helpers\FileHeader.cs" />
+    <Compile Include="Helpers\HelperTemplates.cs" />
+    <Compile Include="Helpers\IBlockHelper.cs" />
+    <Compile Include="Helpers\IInlineHelper.cs" />
+    <Compile Include="Helpers\OperationParameters.cs" />
+    <Compile Include="Helpers\UCFirst.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />
-    <Compile Include="Lifecycle\GenerationContext.cs" />
+    <Compile Include="Lifecycle\LifecycleContext.cs" />
     <Compile Include="Lifecycle\GenerationLifecycle.cs" />
     <Compile Include="Lifecycle\ILifecycle.cs" />
     <Compile Include="Lifecycle\ILifecycleCommand.cs" />
     <Compile Include="Lifecycle\ILifecycleContext.cs" />
     <Compile Include="Lifecycle\LifecycleState.cs" />
     <Compile Include="Model\BasePath.cs" />
+    <Compile Include="Model\IEnumDefinition.cs" />
     <Compile Include="Model\IModelDefinition.cs" />
+    <Compile Include="Model\IModelEntity.cs" />
     <Compile Include="Model\IModelPropertyDefinition.cs" />
     <Compile Include="Model\Internal\BaseDefinition.cs" />
     <Compile Include="Model\DataType.cs" />
+    <Compile Include="Model\Internal\BaseModelEntityDefinition.cs" />
+    <Compile Include="Model\Internal\EnumDefinition.cs" />
     <Compile Include="Model\Internal\ModelDefinition.cs" />
     <Compile Include="Model\Internal\ModelPropertyDefinition.cs" />
     <Compile Include="Model\IOperationDefinition.cs" />
@@ -132,17 +151,18 @@
     <Compile Include="SwaggerVersion.cs" />
     <Compile Include="Swasey.cs" />
     <Compile Include="SwaseyDelegates.cs" />
+    <Compile Include="SwaseyEngine.cs" />
     <Compile Include="SwaseyException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Helpers\FileHeader.hbs" />
+    <EmbeddedResource Include="Helpers\OperationParameters.hbs" />
     <None Include="packages.Swasey-Net45.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Builder\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

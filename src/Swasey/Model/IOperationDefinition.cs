@@ -9,21 +9,23 @@ namespace Swasey.Model
 
         IServiceDefinition Context { get; }
 
-        HttpMethodType HttpMethod { get; }
+        string Description { get; }
 
-        QualifiedName Name { get; }
+        OperationPath FullPath { get; }
 
         bool HasDescription { get; }
 
-        string Description { get; }
-
         bool HasParameters { get; }
+
+        HttpMethodType HttpMethod { get; }
+
+        QualifiedName Name { get; }
 
         IReadOnlyList<IParameterDefinition> Parameters { get; }
 
         OperationPath Path { get; }
 
-        OperationPath FullPath { get; }
+        QualifiedName ResourceName { get; }
 
         IResponseDefinition Response { get; }
 

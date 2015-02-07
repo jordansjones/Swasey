@@ -13,7 +13,7 @@ namespace Swasey.Commands
 
         public Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
-            var ctx = new GenerationContext(context)
+            var ctx = new LifecycleContext(context)
             {
                 State = LifecycleState.Continue
             };
@@ -46,15 +46,19 @@ namespace Swasey.Commands
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
-        private NormalizationApiModel ParseModelData(Tuple<string, dynamic> modelTuple)
+        private NormalizationApiModel ParseModelData(dynamic item)
         {
-            var apiVersion = modelTuple.Item1;
-            dynamic model = modelTuple.Item2;
+            var apiVersion = (string) item.ApiVersion;
+            var resourceName = (string) item.ResourceName;
+            var resourcePath = (string) item.ResourcePath;
+            dynamic model = item.Model;
 
             var normModel = new NormalizationApiModel
             {
                 ApiVersion = apiVersion,
-                Name = (string) model.id
+                Name = (string) model.id,
+                ResourceName = resourceName,
+                ResourcePath = resourcePath
             };
 
             if (model.ContainsKey("subTypes"))
@@ -104,7 +108,7 @@ namespace Swasey.Commands
                 };
 
                 prop.CopyFrom(SimpleNormalizationApiDataType.ParseFromJObject(obj));
-
+                
                 if (obj.ContainsKey("description"))
                 {
                     prop.Description = obj.description;
@@ -139,18 +143,26 @@ namespace Swasey.Commands
             return requiredProperties;
         }
 
-        private IEnumerable<Tuple<string, dynamic>> ExtractModels(ILifecycleContext context)
+        private IEnumerable<dynamic> ExtractModels(ILifecycleContext context)
         {
             foreach (var apiKv in context.ApiPathJsonMapping)
             {
                 var api = apiKv.Value;
                 var apiVersion = (string) api.apiVersion;
+                var resourcePath = (string) api.resourcePath;
+                var resourceName = resourcePath.ResourceNameFromPath();
                 if (api.ContainsKey("models"))
                 {
                     foreach (var modelKv in api.models)
                     {
                         if (modelKv != null && modelKv.Value != null)
-                            yield return Tuple.Create(apiVersion, modelKv.Value);
+                            yield return new
+                            {
+                                ApiVersion = apiVersion,
+                                Model = modelKv.Value,
+                                ResourceName = resourceName,
+                                ResourcePath = resourcePath
+                            };
                     }
                 }
             }

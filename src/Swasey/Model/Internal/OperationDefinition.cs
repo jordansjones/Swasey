@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Swasey.Model
 {
+    [DebuggerDisplay("{HttpMethod}", Name = "[{ResourceName, nq}] {Name}")]
     internal class OperationDefinition : BaseDefinition, IOperationDefinition
     {
 
@@ -12,10 +14,25 @@ namespace Swasey.Model
         public OperationDefinition(OperationPath path, IServiceMetadata meta) : base(meta)
         {
             Path = path;
-            Parameters = new List<IParameterDefinition>();
+            Parameters = new List<ParameterDefinition>();
         }
 
-        public List<IParameterDefinition> Parameters { get; private set; }
+        public OperationDefinition(IOperationDefinition copyFrom)
+            : this(copyFrom.Path, copyFrom.Metadata)
+        {
+            Context = copyFrom.Context;
+            Description = copyFrom.Description;
+            HttpMethod = copyFrom.HttpMethod;
+            Name = copyFrom.Name;
+
+            copyFrom.Parameters
+                .Select(x => new ParameterDefinition(x))
+                .ToList()
+                .ForEach(x => AddParameter(x));
+            SetResponse(new ResponseDefinition(copyFrom.Response));
+        }
+
+        public List<ParameterDefinition> Parameters { get; private set; }
 
         public ResponseDefinition Response
         {
@@ -27,7 +44,9 @@ namespace Swasey.Model
             }
         }
 
-        public OperationPath Path { get; private set; }
+        public IServiceDefinition Context { get; set; }
+
+        public string Description { get; set; }
 
         public OperationPath FullPath
         {
@@ -38,29 +57,32 @@ namespace Swasey.Model
             }
         }
 
-        public IServiceDefinition Context { get; set; }
-
-        public HttpMethodType HttpMethod { get; set; }
-
-        public QualifiedName Name { get; set; }
-
-        public string Description { get; set; }
-
-        public bool HasDescription { get { return !string.IsNullOrWhiteSpace(Description); } }
+        public bool HasDescription
+        {
+            get { return !string.IsNullOrWhiteSpace(Description); }
+        }
 
         public bool HasParameters
         {
             get { return Parameters.Any(); }
         }
 
-        IResponseDefinition IOperationDefinition.Response
-        {
-            get { return Response; }
-        }
+        public HttpMethodType HttpMethod { get; set; }
+
+        public QualifiedName Name { get; set; }
 
         IReadOnlyList<IParameterDefinition> IOperationDefinition.Parameters
         {
             get { return Parameters; }
+        }
+
+        public OperationPath Path { get; private set; }
+
+        public QualifiedName ResourceName { get; set; }
+
+        IResponseDefinition IOperationDefinition.Response
+        {
+            get { return Response; }
         }
 
         public OperationDefinition AddParameter(ParameterDefinition param)

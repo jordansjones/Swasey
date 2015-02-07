@@ -23,7 +23,7 @@ namespace Swasey.Commands
             if (!json.ContainsKey("apis") == null)
                 throw new SwaseyException("apis is required");
 
-            var ctx = new GenerationContext(context)
+            var ctx = new LifecycleContext(context)
             {
                 State = LifecycleState.Continue,
                 SwaggerVersion = (string) json.swaggerVersion

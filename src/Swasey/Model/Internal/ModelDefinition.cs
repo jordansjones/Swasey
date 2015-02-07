@@ -1,36 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Swasey.Model
 {
-    internal class ModelDefinition : BaseDefinition, IModelDefinition
+    [DebuggerDisplay("{DebuggerDisplay, nq}", Name = "{Name}")]
+    internal class ModelDefinition : BaseModelEntityDefinition, IModelDefinition
     {
 
-        public ModelDefinition(IServiceMetadata meta) : base(meta)
+        private readonly List<ModelPropertyDefinition> _properties = new List<ModelPropertyDefinition>();
+
+        public ModelDefinition(IServiceMetadata meta) : base(meta) {}
+
+        public ModelDefinition(IModelDefinition copyFrom) : base(copyFrom)
         {
-            Properties = new List<IModelPropertyDefinition>();
+            if (copyFrom != null && copyFrom.Properties.Any())
+            {
+                Properties.AddRange(copyFrom.Properties.Select(x => new ModelPropertyDefinition(x)));
+            }
         }
 
-        public List<IModelPropertyDefinition> Properties { get; private set; }
+        public string ContextName { get; set; }
 
-        public QualifiedName Name { get; set; }
+        public List<ModelPropertyDefinition> Properties
+        {
+            get { return _properties; }
+        }
 
         IReadOnlyList<IModelPropertyDefinition> IModelDefinition.Properties
         {
             get { return Properties; }
         }
 
-        public bool HasDescription
+        private string DebuggerDisplay
         {
-            get { return !string.IsNullOrWhiteSpace(Description); }
-        }
-
-        public string Description { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("Name: {0}", Name);
+            get { return string.Join(", ", Properties.Select(x => string.Format("{{{0}: {1}}}", x.Name, x.Type))); }
         }
 
     }

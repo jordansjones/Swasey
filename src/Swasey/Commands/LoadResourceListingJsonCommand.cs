@@ -21,7 +21,7 @@ namespace Swasey.Commands
             if (rl == null)
                 throw new SwaseyException("Unable to parse Resource Listing JSON: '{0}'", context.ResourceListingJson);
 
-            return new GenerationContext(context)
+            return new LifecycleContext(context)
             {
                 State = LifecycleState.Continue,
                 ResourceListingJson = rl
