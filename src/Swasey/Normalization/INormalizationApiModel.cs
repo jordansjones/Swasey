@@ -15,6 +15,10 @@ namespace Swasey.Normalization
 
         IReadOnlyDictionary<string, INormalizationApiModelProperty> Properties { get; }
 
+        string ResourceName { get; }
+
+        string ResourcePath { get; }
+
         IReadOnlyList<INormalizationApiModel> SubTypes { get; }
 
     }

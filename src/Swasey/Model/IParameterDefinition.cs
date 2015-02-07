@@ -12,6 +12,8 @@ namespace Swasey.Model
 
         bool IsRequired { get; }
 
+        bool IsVariadic { get; }
+
         ParameterName Name { get; }
 
         ParameterType Type { get; }

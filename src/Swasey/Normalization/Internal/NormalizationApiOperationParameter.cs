@@ -32,5 +32,10 @@ namespace Swasey.Normalization
 
         public ParameterType ParameterType { get; set; }
 
+        public void ResetName(string name)
+        {
+            Name = name;
+        }
+
     }
 }

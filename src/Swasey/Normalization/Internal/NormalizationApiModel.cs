@@ -22,6 +22,8 @@ namespace Swasey.Normalization
             Description = copyFrom.Description;
             Discriminator = copyFrom.Discriminator;
             Name = copyFrom.Name;
+            ResourceName = copyFrom.ResourceName;
+            ResourcePath = copyFrom.ResourcePath;
 
             Properties.AddRange(
                 (copyFrom.Properties ?? new Dictionary<string, INormalizationApiModelProperty>())
@@ -38,6 +40,10 @@ namespace Swasey.Normalization
         {
             get { return _properties; }
         }
+
+        public string ResourceName { get; set; }
+
+        public string ResourcePath { get; set; }
 
         public List<NormalizationApiModel> SubTypes
         {

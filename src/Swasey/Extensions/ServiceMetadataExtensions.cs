@@ -4,7 +4,7 @@ using System.Linq;
 using Swasey.Model;
 using Swasey.Normalization;
 
-namespace Swasey.Tests.Helpers
+namespace Swasey
 {
     internal static class ServiceMetadataExtensions
     {

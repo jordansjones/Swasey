@@ -28,5 +28,7 @@ namespace Swasey.Normalization
 
         string TypeName { get; }
 
+        void SetTypeName(string name);
+
     }
 }

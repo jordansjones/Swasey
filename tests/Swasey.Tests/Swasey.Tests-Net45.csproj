@@ -44,10 +44,10 @@
       <HintPath>..\..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Handlebars">
-      <HintPath>..\..\packages\Handlebars.Net.1.2.0\lib\Handlebars.dll</HintPath>
+      <HintPath>..\..\packages\Handlebars.Net.1.2.1\lib\Handlebars.dll</HintPath>
     </Reference>
     <Reference Include="Jil">
-      <HintPath>..\..\packages\Jil.2.7.0\lib\net45\Jil.dll</HintPath>
+      <HintPath>..\..\packages\Jil.2.7.2\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.1.0.0.0-beta2\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
@@ -63,10 +63,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\..\packages\AutoFixture.3.22.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <HintPath>..\..\packages\AutoFixture.3.23.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="Sigil">
-      <HintPath>..\..\packages\Sigil.4.3.1\lib\net45\Sigil.dll</HintPath>
+      <HintPath>..\..\packages\Sigil.4.4.0\lib\net45\Sigil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable">

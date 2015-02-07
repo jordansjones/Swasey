@@ -34,6 +34,11 @@ namespace Swasey.Normalization
 
         public string TypeName { get; set; }
 
+        public void SetTypeName(string name)
+        {
+            TypeName = name;
+        }
+
         internal void CopyFrom(INormalizationApiDataType copyFrom)
         {
             DefaultValue = copyFrom.DefaultValue;
