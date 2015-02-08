@@ -1,7 +1,8 @@
 Param(
     [string] $Target = "Default",
     [string] $Configuration = "Debug",
-    [string] $Verbosity = "normal"
+    [string] $Verbosity = "normal",
+    [switch] $ForcePackage
 )
 
 $SelfRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
@@ -29,6 +30,12 @@ if (!(Test-Path $CAKE_EXE)) {
     Throw "Could not find " + $CAKE_EXE
 }
 
-Invoke-Expression "$CAKE_EXE `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`""
+$ForcePackageArg = ""
+if ($ForcePackage)
+{
+    $ForcePackageArg = "-forcePackage"
+}
+
+Invoke-Expression "$CAKE_EXE `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $ForcePackageArg"
 
 exit $LASTEXITCODE

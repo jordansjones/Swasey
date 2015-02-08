@@ -4,13 +4,13 @@
 
 var target          = Argument<string>("target", "Default");
 var configuration   = Argument<string>("configuration", "Debug");
+var forcePackage    = HasArgument("forcePackage");
 
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
 
 var projectName = "Swasey";
-
 
 // "Root"
 var context =  GetContext();
@@ -20,7 +20,7 @@ var solution = baseDir.GetFilePath(projectName + ".sln");
 // Directories
 // WorkingDirectory is relative to this file. Make it relative to the Solution file.
 var solutionDir = solution.GetDirectory();
-var packagingRoot = baseDir.Combine("Packaging");
+var packagingRoot = baseDir.Combine("publish");
 var testResultsDir = baseDir.Combine("TestResults");
 var nugetPackagingDir = packagingRoot.Combine(projectName);
 var sourcesDir = solutionDir.Combine("src");
@@ -80,7 +80,7 @@ Task("Clean")
     foreach (var dir in new [] { packagingRoot, testResultsDir })
     {
          Information("Cleaning {0}", dir);
-         CleanDirectories(dir.FullPath);
+         CleanDirectory(dir);
     }
 });
 
@@ -121,20 +121,31 @@ Task("UnitTests")
     .Does(() =>
 {
     Information("Running Tests in {0}", solution);
+
+    if (!FileSystem.Exist(testResultsDir))
+    {
+        CreateDirectory(testResultsDir);
+    }
+
     XUnit2(
         solutionDir + "/**/bin/" + configuration + "/**/*.Tests*.dll",
         new XUnit2Settings {
             OutputDirectory = testResultsDir,
-            HtmlReport = true
+            HtmlReport = true,
+            XmlReport = true
         }
     );
 });
 
 Task("CopyNugetPackageFiles")
     .IsDependentOn("UnitTests")
-    .WithCriteria(() => isReleaseBuild)
     .Does(() =>
 {
+    if (!FileSystem.Exist(nugetPackagingDir))
+    {
+        CreateDirectory(nugetPackagingDir);
+    }
+
     var baseBuildDir = sourcesDir.Combine(projectName).Combine("bin").Combine(configuration);
 
     var net45BuildDir = baseBuildDir.Combine("Net45");
@@ -148,9 +159,9 @@ Task("CopyNugetPackageFiles")
 
     foreach (var dirPair in dirMap)
     {
-        var files = new DirectoryInfo(dirPair.Key.FullPath)
-            .EnumerateFiles()
-            .Select(x => new FilePath(x.FullName));
+        var files = FileSystem.GetDirectory(dirPair.Key)
+            .GetFiles(projectName + "*", SearchScope.Current)
+            .Select(x => x.Path);
         CopyFiles(files, dirPair.Value);
     }
 
@@ -165,7 +176,6 @@ Task("CopyNugetPackageFiles")
 
 Task("CreateNugetPackage")
     .IsDependentOn("CopyNugetPackageFiles")
-    .WithCriteria(() => isReleaseBuild)
     .Does(() =>
 {
     NuGetPack(
@@ -186,7 +196,8 @@ Task("CreateNugetPackage")
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Package")
-    .IsDependentOn("CreateNugetPackage");
+    .IsDependentOn("CreateNugetPackage")
+    .WithCriteria(() => isReleaseBuild || forcePackage);
 
 Task("Default")
     .IsDependentOn("Package");
