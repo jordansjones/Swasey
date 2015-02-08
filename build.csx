@@ -11,30 +11,40 @@ var configuration   = Argument<string>("configuration", "Debug");
 
 var projectName = "Swasey";
 
+
+// "Root"
+var context =  GetContext();
+var baseDir = context.Environment.WorkingDirectory;
+var solution = baseDir.GetFilePath(projectName + ".sln");
+
 // Directories
 // WorkingDirectory is relative to this file. Make it relative to the Solution file.
-var baseDir = GetContext().Environment.WorkingDirectory;
+var solutionDir = solution.GetDirectory();
 var packagingRoot = baseDir.Combine("Packaging");
 var testResultsDir = baseDir.Combine("TestResults");
 var nugetPackagingDir = packagingRoot.Combine(projectName);
+var sourcesDir = solutionDir.Combine("src");
+var testsDir = solutionDir.Combine("tests");
+var metaDir = solutionDir.Combine("meta");
 
 // Files
-var solutionInfoCs = baseDir.Combine("build").GetFilePath("SolutionInfo.cs");
-var nuspecFile = baseDir.Combine("build").GetFilePath(projectName + ".nuspec");
-var solution = baseDir.GetFilePath(projectName + ".sln");
-var solutionDir = solution.GetDirectory();
+var solutionInfoCs = metaDir.GetFilePath("SolutionInfo.cs");
+var nuspecFile = metaDir.GetFilePath(projectName + ".nuspec");
+var licenseFile = solutionDir.GetFilePath("LICENSE.txt");
+var readmeFile = solutionDir.GetFilePath("README.md");
+var releaseNotesFile = metaDir.GetFilePath("ReleaseNotes.md");
 
-var appVeyorEnv = AppVeyor().Environment;
+var appVeyorEnv =  context.AppVeyor().Environment;
 
 // Get whether or not this is a local build.
-var local = !BuildSystem().IsRunningOnAppVeyor;
+var local = !context.BuildSystem().IsRunningOnAppVeyor;
 var isReleaseBuild = !local && appVeyorEnv.Repository.Tag.IsTag;
 
 // Release notes
-var releaseNotes = ParseReleaseNotes(baseDir.GetFilePath("ReleaseNotes.md"));
+var releaseNotes = ParseReleaseNotes(releaseNotesFile);
 
 // Version
-var buildNumber = !isRelaseBuild ? 0 : appVeyorEnv.Build.Number;
+var buildNumber = !isReleaseBuild ? 0 : appVeyorEnv.Build.Number;
 var version = releaseNotes.Version.ToString();
 var semVersion = isReleaseBuild ? version : (version + string.Concat("-build-", buildNumber));
 
@@ -125,15 +135,13 @@ Task("CopyNugetPackageFiles")
     .WithCriteria(() => isReleaseBuild)
     .Does(() =>
 {
-    var baseBuildDir = solutionDir.Combine(projectName).Combine("bin").Combine(configuration);
+    var baseBuildDir = sourcesDir.Combine(projectName).Combine("bin").Combine(configuration);
 
     var net45BuildDir = baseBuildDir.Combine("Net45");
     var net45PackageDir = nugetPackagingDir.Combine("lib/net45/");
 
     var dirMap = new Dictionary<DirectoryPath, DirectoryPath> {
-        { net45BuildDir, net45PackageDir },
-        { netcore45BuildDir, netcore45PackageDir },
-        { portableBuildDir, portablePackageDir }
+        { net45BuildDir, net45PackageDir }
     };
 
     CleanDirectories(dirMap.Values);
@@ -147,9 +155,9 @@ Task("CopyNugetPackageFiles")
     }
 
     var packageFiles = new FilePath[] {
-        solutionDir.CombineWithFilePath("LICENSE.txt"),
-        solutionDir.CombineWithFilePath("README.md"),
-        solutionDir.CombineWithFilePath("ReleaseNotes.md")
+        licenseFile,
+        readmeFile,
+        releaseNotesFile
     };
 
     CopyFiles(packageFiles, nugetPackagingDir);
