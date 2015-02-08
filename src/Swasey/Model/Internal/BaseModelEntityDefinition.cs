@@ -23,6 +23,8 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
+        public string Namespace { get { return ModelNamespace; } }
+
         public override string ToString()
         {
             return string.Format("Name: {0}", Name);

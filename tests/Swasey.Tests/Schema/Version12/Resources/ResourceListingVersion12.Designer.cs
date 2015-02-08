@@ -8,12 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Linq;
-
-namespace Swasey.Tests.Schema.Version12 {
-
-
+namespace Swasey.Tests.Schema.Version12.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -24,14 +22,14 @@ namespace Swasey.Tests.Schema.Version12 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ResourceListingVesion12 {
+    internal class ResourceListingVersion12 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResourceListingVesion12() {
+        internal ResourceListingVersion12() {
         }
         
         /// <summary>
@@ -41,7 +39,7 @@ namespace Swasey.Tests.Schema.Version12 {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Swasey.Tests.Schema.Version12.Resources.ResourceListingVesion12", typeof(ResourceListingVesion12).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Swasey.Tests.Schema.Version12.Resources.ResourceListingVersion12", typeof(ResourceListingVersion12).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -167,6 +165,69 @@ namespace Swasey.Tests.Schema.Version12 {
         internal static string Info_Title {
             get {
                 return ResourceManager.GetString("Info_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to getPetById.
+        /// </summary>
+        internal static string Operation_GetPetById {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns a pet based on ID.
+        /// </summary>
+        internal static string Operation_GetPetById_Notes {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to petId.
+        /// </summary>
+        internal static string Operation_GetPetById_Param_PetId {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Param_PetId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID of pet that needs to be fetched.
+        /// </summary>
+        internal static string Operation_GetPetById_Param_PetId_Description {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Param_PetId_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to path.
+        /// </summary>
+        internal static string Operation_GetPetById_Param_PetId_ParamType {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Param_PetId_ParamType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /pet/{petId}.
+        /// </summary>
+        internal static string Operation_GetPetById_Path {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find pet by ID.
+        /// </summary>
+        internal static string Operation_GetPetById_Summary {
+            get {
+                return ResourceManager.GetString("Operation_GetPetById_Summary", resourceCulture);
             }
         }
         

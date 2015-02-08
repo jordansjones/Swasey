@@ -163,9 +163,6 @@
     <EmbeddedResource Include="Helpers\FileHeader.hbs" />
     <EmbeddedResource Include="Helpers\OperationParameters.hbs" />
     <None Include="packages.Swasey-Net45.config" />
-    <EmbeddedResource Include="Templates\ServiceClientImplementation.hbs" />
-    <EmbeddedResource Include="Templates\ServiceClientInterface.hbs" />
-    <EmbeddedResource Include="Templates\ServiceClientMain.hbs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

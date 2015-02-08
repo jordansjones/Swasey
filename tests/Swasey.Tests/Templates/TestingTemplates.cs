@@ -13,14 +13,20 @@ namespace Swasey.Tests.Templates
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class TestingTemplates
     {
-
-        internal const string TemplateName_ServiceClientMain = "ServiceClientMain";
+        
+        private const string TemplateName_ServiceClientEnum = "ServiceClientEnum";
+        private const string TemplateName_ServiceClientModel = "ServiceClientModel";
+        private const string TemplateName_ServiceClientOperation = "ServiceClientOperation";
 
         internal const string TemplateName_ServiceClientInterface = "ServiceClientInterface";
 
         internal const string TemplateName_ServiceClientImplementation = "ServiceClientImplementation";
 
-        private static Lazy<Action<TextWriter, object>> Template_ServiceClientMain { get; set; }
+        public static string Template_ServiceClientEnum { get; private set; }
+
+        public static string Template_ServiceClientModel { get; private set; }
+
+        public static string Template_ServiceClientOperation { get; private set; }
 
         private static void Initialize()
         {
@@ -28,21 +34,12 @@ namespace Swasey.Tests.Templates
             SwaseyEngine.RegisterTemplate(TemplateName_ServiceClientInterface, ReadTemplate(TemplateName_ServiceClientInterface));
             SwaseyEngine.RegisterTemplate(TemplateName_ServiceClientImplementation, ReadTemplate(TemplateName_ServiceClientImplementation));
 
-            // Main Template
-            Template_ServiceClientMain = new Lazy<Action<TextWriter, object>>(
-                () =>
-                {
-                    using (var sr = new StringReader(ReadTemplate(TemplateName_ServiceClientMain)))
-                    {
-                        return SwaseyEngine.CompileTemplate(sr);
-                    }
-                });
-        }
-
-        public static IServiceDefinition WriteTo(this IServiceDefinition This, TextWriter output)
-        {
-            Template_ServiceClientMain.Value(output, This);
-            return This;
+            // Enum Template
+            Template_ServiceClientEnum = ReadTemplate(TemplateName_ServiceClientEnum);
+            // Model Template
+            Template_ServiceClientModel = ReadTemplate(TemplateName_ServiceClientModel);
+            // Operation Template
+            Template_ServiceClientOperation = ReadTemplate(TemplateName_ServiceClientOperation);
         }
 
         #region Boilerplate

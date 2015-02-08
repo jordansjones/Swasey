@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 using Jil;
 
+using Swasey.Tests.Schema;
 using Swasey.Tests.Schema.Version12;
+using Swasey.Tests.Schema.Version12.Resources;
 
 namespace Swasey.Tests.Helpers
 {
@@ -22,15 +24,15 @@ namespace Swasey.Tests.Helpers
         public static Task<string> GenerateApiJson(string path)
         {
             dynamic apiObject = null;
-            if (ResourceListingVesion12.Apis_Store_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
+            if (ResourceListingVersion12.Apis_Store_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
             {
                 apiObject = GenerateStoreApiObject(path);
             }
-            if (ResourceListingVesion12.Apis_Pet_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
+            if (ResourceListingVersion12.Apis_Pet_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
             {
                 apiObject = GeneratePetApiObject(path);
             }
-            if (ResourceListingVesion12.Apis_User_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
+            if (ResourceListingVersion12.Apis_User_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
             {
                 apiObject = GenerateUserApiObject(path);
             }
@@ -47,42 +49,42 @@ namespace Swasey.Tests.Helpers
         {
             var obj = new
             {
-                apiVersion = ResourceListingVesion12.ApiVersion,
+                apiVersion = ResourceListingVersion12.ApiVersion,
                 swaggerVersion = SwaggerVersion.Version12.Version(),
                 apis = new[]
                 {
                     new
                     {
-                        path = ResourceListingVesion12.Apis_Pet_Path,
-                        description = ResourceListingVesion12.Apis_Pet_Description
+                        path = ResourceListingVersion12.Apis_Pet_Path,
+                        description = ResourceListingVersion12.Apis_Pet_Description
                     },
                     new
                     {
-                        path = ResourceListingVesion12.Apis_User_Path,
-                        description = ResourceListingVesion12.Apis_User_Description
+                        path = ResourceListingVersion12.Apis_User_Path,
+                        description = ResourceListingVersion12.Apis_User_Description
                     },
                     new
                     {
-                        path = ResourceListingVesion12.Apis_Store_Path,
-                        description = ResourceListingVesion12.Apis_Store_Description
+                        path = ResourceListingVersion12.Apis_Store_Path,
+                        description = ResourceListingVersion12.Apis_Store_Description
                     }
                 },
                 authorizations = new
                 {
                     oauth2 = new
                     {
-                        type = ResourceListingVesion12.Authorization_Type_OAuth2,
+                        type = ResourceListingVersion12.Authorization_Type_OAuth2,
                         scopes = new[]
                         {
                             new
                             {
-                                scope = ResourceListingVesion12.Scope_Email,
-                                description = ResourceListingVesion12.Scope_Email_Description
+                                scope = ResourceListingVersion12.Scope_Email,
+                                description = ResourceListingVersion12.Scope_Email_Description
                             },
                             new
                             {
-                                scope = ResourceListingVesion12.Scope_Pets,
-                                description = ResourceListingVesion12.Scope_Pets_Description
+                                scope = ResourceListingVersion12.Scope_Pets,
+                                description = ResourceListingVersion12.Scope_Pets_Description
                             }
                         },
                         grantTypes = new
@@ -91,21 +93,21 @@ namespace Swasey.Tests.Helpers
                             {
                                 loginEndpoint = new
                                 {
-                                    url = ResourceListingVesion12.Url_LoginEndpoint
+                                    url = ResourceListingVersion12.Url_LoginEndpoint
                                 }
                             },
                             authorization_code = new
                             {
                                 tokenRequestEndpoint = new
                                 {
-                                    url = ResourceListingVesion12.Url_TokenRequestEndpoint,
-                                    clientIdName = ResourceListingVesion12.TokenRequestEndpoint_ClientIdName,
-                                    clientSecretName = ResourceListingVesion12.TokenRequestEndpoint_ClientSecretName
+                                    url = ResourceListingVersion12.Url_TokenRequestEndpoint,
+                                    clientIdName = ResourceListingVersion12.TokenRequestEndpoint_ClientIdName,
+                                    clientSecretName = ResourceListingVersion12.TokenRequestEndpoint_ClientSecretName
                                 },
                                 tokenEndpoint = new
                                 {
-                                    url = ResourceListingVesion12.Url_TokenEndpoint,
-                                    tokenName = ResourceListingVesion12.TokenEndpoint_TokenName
+                                    url = ResourceListingVersion12.Url_TokenEndpoint,
+                                    tokenName = ResourceListingVersion12.TokenEndpoint_TokenName
                                 }
                             }
                         }
@@ -113,12 +115,12 @@ namespace Swasey.Tests.Helpers
                 },
                 info = new
                 {
-                    title = ResourceListingVesion12.Info_Title,
-                    description = ResourceListingVesion12.Info_Description,
-                    termsOfServiceUrl = ResourceListingVesion12.Url_TermsOfServiceUrl,
-                    contact = ResourceListingVesion12.Info_Contact,
-                    license = ResourceListingVesion12.Info_License,
-                    licenseUrl = ResourceListingVesion12.Url_LicenseUrl
+                    title = ResourceListingVersion12.Info_Title,
+                    description = ResourceListingVersion12.Info_Description,
+                    termsOfServiceUrl = ResourceListingVersion12.Url_TermsOfServiceUrl,
+                    contact = ResourceListingVersion12.Info_Contact,
+                    license = ResourceListingVersion12.Info_License,
+                    licenseUrl = ResourceListingVersion12.Url_LicenseUrl
                 }
             };
 
@@ -129,39 +131,39 @@ namespace Swasey.Tests.Helpers
         {
             return new
             {
-                apiVersion = ResourceListingVesion12.ApiVersion,
+                apiVersion = ResourceListingVersion12.ApiVersion,
                 swaggerVersion = SwaggerVersion.Version12.Version(),
                 basePath = "/",
                 resourcePath = resourcePath,
-                produces = new[] {"application/json"},
+                produces = new[] { GeneralResources.Application_Json },
                 authorizations = new
                 {},
                 apis = new object[]
                 {
                     new
                     {
-                        path = resourcePath + "/{petId}",
+                        path = ResourceListingVersion12.Operation_GetPetById_Path,
                         operations = new object[]
                         {
                             new
                             {
-                                method = "GET",
-                                summary = "Find pet by ID",
-                                notes = "Returns a pet based on ID",
+                                method = GeneralResources.HttpMethod_GET,
+                                summary = ResourceListingVersion12.Operation_GetPetById_Summary,
+                                notes = ResourceListingVersion12.Operation_GetPetById_Notes,
                                 type = "Pet",
-                                nickname = "getPetById",
+                                nickname = ResourceListingVersion12.Operation_GetPetById,
                                 authorizations = new
                                 {},
                                 parameters = new object[]
                                 {
                                     new
                                     {
-                                        name = "petId",
-                                        description = "ID of pet that needs to be fetched",
+                                        name = ResourceListingVersion12.Operation_GetPetById_Param_PetId,
+                                        description = ResourceListingVersion12.Operation_GetPetById_Param_PetId_Description,
                                         required = true,
                                         type = "integer",
                                         format = "int64",
-                                        paramType = "path",
+                                        paramType = ResourceListingVersion12.Operation_GetPetById_Param_PetId_ParamType,
                                         allowMultiple = false,
                                         minimum = "1.0",
                                         maximum = "100000.0"
@@ -183,7 +185,7 @@ namespace Swasey.Tests.Helpers
                             },
                             new
                             {
-                                method = "PUT",
+                                method = GeneralResources.HttpMethod_PUT,
                                 summary = "Update an existing pet",
                                 notes = "",
                                 type = "void",
@@ -222,7 +224,7 @@ namespace Swasey.Tests.Helpers
                             },
                             new
                             {
-                                method = "POST",
+                                method = GeneralResources.HttpMethod_POST,
                                 summary = "Updtes a pet in the store with form data",
                                 notes = "",
                                 type = "void",
@@ -324,7 +326,7 @@ namespace Swasey.Tests.Helpers
                                 type = "array",
                                 items = new Dictionary<string, string>
                                 {
-                                    {"ref", "Tag"}
+                                    {"$ref", "Tag"}
                                 }
                             },
                             status = new
@@ -380,11 +382,11 @@ namespace Swasey.Tests.Helpers
         {
             return new
             {
-                apiVersion = ResourceListingVesion12.ApiVersion,
+                apiVersion = ResourceListingVersion12.ApiVersion,
                 swaggerVersion = SwaggerVersion.Version12.Version(),
                 basePath = "/",
                 resourcePath = resourcePath,
-                produces = new[] {"application/json"},
+                produces = new[] { GeneralResources.Application_Json },
                 authorizations = new
                 {},
                 apis = new object[]
@@ -396,7 +398,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "GET",
+                                method = GeneralResources.HttpMethod_GET,
                                 summary = "Find purchase order by ID",
                                 notes = "For valid response try integer IDs with value <= 5. Anything above 5 or nonintegers will generate API errors",
                                 type = "Order",
@@ -430,7 +432,7 @@ namespace Swasey.Tests.Helpers
                             },
                             new
                             {
-                                method = "DELETE",
+                                method = GeneralResources.HttpMethod_DELETE,
                                 summary = "Delete purchase order by ID",
                                 notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
                                 type = "void",
@@ -480,7 +482,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "POST",
+                                method = GeneralResources.HttpMethod_POST,
                                 summary = "Place an order for a pet",
                                 notes = "",
                                 type = "void",
@@ -562,11 +564,11 @@ namespace Swasey.Tests.Helpers
         {
             return new
             {
-                apiVersion = ResourceListingVesion12.ApiVersion,
+                apiVersion = ResourceListingVersion12.ApiVersion,
                 swaggerVersion = SwaggerVersion.Version12.Version(),
                 basePath = "/",
                 resourcePath = resourcePath,
-                produces = new[] {"application/json"},
+                produces = new[] { GeneralResources.Application_Json },
                 authorizations = new
                 {},
                 apis = new object[]
@@ -578,7 +580,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "POST",
+                                method = GeneralResources.HttpMethod_POST,
                                 summary = "Create user",
                                 notes = "This can only be done by the logged in user.",
                                 type = "void",
@@ -616,7 +618,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "POST",
+                                method = GeneralResources.HttpMethod_POST,
                                 summary = "Creates lists of users with given input array",
                                 notes = "",
                                 type = "void",
@@ -658,7 +660,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "POST",
+                                method = GeneralResources.HttpMethod_POST,
                                 summary = "Creates lists of users with given input list",
                                 notes = "",
                                 type = "void",
@@ -700,7 +702,7 @@ namespace Swasey.Tests.Helpers
                         {
                             new
                             {
-                                method = "PUT",
+                                method = GeneralResources.HttpMethod_PUT,
                                 summary = "Update user",
                                 notes = "This can only be done by the logged in user.",
                                 type = "void",
@@ -753,7 +755,7 @@ namespace Swasey.Tests.Helpers
                             },
                             new
                             {
-                                method = "DELETE",
+                                method = GeneralResources.HttpMethod_DELETE,
                                 summary = "Delete user",
                                 notes = "This can only be done by the logged in user.",
                                 type = "void",

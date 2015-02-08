@@ -8,11 +8,15 @@ namespace Swasey.Tests.Helpers
 
         private readonly TestSwaggerJsonLoader _jsonLoader;
 
-        public TestGeneratorOptions(TestSwaggerJsonLoader jsonLoader)
+        private readonly ITestSwaseyWriter _testWriter;
+
+        public TestGeneratorOptions(TestSwaggerJsonLoader jsonLoader, ITestSwaseyWriter writer)
         {
             _jsonLoader = jsonLoader;
+            _testWriter = writer;
 
             Loader = _jsonLoader.Load;
+            Writer = _testWriter.Write;
         }
 
     }

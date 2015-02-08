@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Swasey.Model;
@@ -31,6 +32,10 @@ namespace Swasey.Lifecycle
             : this(opts.ApiNamespace, opts.ModelNamespace, opts.Loader, opts.Writer)
         {
             State = LifecycleState.Continue;
+
+            ApiEnumTemplate = SwaseyEngine.Compile(opts.ApiEnumTemplate);
+            ApiModelTemplate = SwaseyEngine.Compile(opts.ApiModelTemplate);
+            ApiOperationTemplate = SwaseyEngine.Compile(opts.ApiOperationTemplate);
         }
 
         internal LifecycleContext(ILifecycleContext copyFrom)
@@ -38,6 +43,10 @@ namespace Swasey.Lifecycle
         {
             State = copyFrom.State;
             ResourceListingUri = copyFrom.ResourceListingUri;
+
+            ApiEnumTemplate = copyFrom.ApiEnumTemplate;
+            ApiModelTemplate = copyFrom.ApiModelTemplate;
+            ApiOperationTemplate = copyFrom.ApiOperationTemplate;
 
             SwaggerVersion = copyFrom.SwaggerVersion;
             ResourceListingJson = copyFrom.ResourceListingJson;
@@ -55,7 +64,13 @@ namespace Swasey.Lifecycle
 
         public ServiceDefinition ServiceDefinition { get; internal set; }
 
+        public Action<TextWriter, object> ApiEnumTemplate { get; private set; }
+
+        public Action<TextWriter, object> ApiModelTemplate { get; private set; }
+
         public string ApiNamespace { get; private set; }
+
+        public Action<TextWriter, object> ApiOperationTemplate { get; private set; }
 
         IReadOnlyCollection<KeyValuePair<string, dynamic>> ILifecycleContext.ApiPathJsonMapping
         {

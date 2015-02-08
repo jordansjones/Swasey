@@ -12,9 +12,11 @@ namespace Swasey
     public enum WriteType
     {
 
-        Api,
+        Enum,
 
-        Model
+        Model,
+
+        Operation
 
     }
 

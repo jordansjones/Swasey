@@ -117,76 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Apis_Pet_Description" xml:space="preserve">
-    <value>Operations about pets</value>
+  <data name="Application_Json" xml:space="preserve">
+    <value>application/json</value>
   </data>
-  <data name="Apis_Pet_Path" xml:space="preserve">
-    <value>/pet</value>
+  <data name="HttpMethod_DELETE" xml:space="preserve">
+    <value>DELETE</value>
   </data>
-  <data name="Apis_Store_Description" xml:space="preserve">
-    <value>Operations about store</value>
+  <data name="HttpMethod_GET" xml:space="preserve">
+    <value>GET</value>
   </data>
-  <data name="Apis_Store_Path" xml:space="preserve">
-    <value>/store</value>
+  <data name="HttpMethod_POST" xml:space="preserve">
+    <value>POST</value>
   </data>
-  <data name="Apis_User_Description" xml:space="preserve">
-    <value>Operations about user</value>
-  </data>
-  <data name="Apis_User_Path" xml:space="preserve">
-    <value>/user</value>
-  </data>
-  <data name="ApiVersion" xml:space="preserve">
-    <value>1.0.0</value>
-  </data>
-  <data name="Authorization_Type_OAuth2" xml:space="preserve">
-    <value>oauth2</value>
-  </data>
-  <data name="Info_Contact" xml:space="preserve">
-    <value>apiteam@wordnik.com</value>
-  </data>
-  <data name="Info_Description" xml:space="preserve">
-    <value>This is a sample server Petstore server.  You can find out more about Swagger \n    at &lt;a href=\"http://swagger.wordnik.com\"&gt;http://swagger.wordnik.com&lt;/a&gt; or on irc.freenode.net, #swagger.  For this sample,\n    you can use the api key \"special-key\" to test the authorization filters</value>
-  </data>
-  <data name="Info_License" xml:space="preserve">
-    <value>Apache 2.0</value>
-  </data>
-  <data name="Info_Title" xml:space="preserve">
-    <value>Swagger Sample App</value>
-  </data>
-  <data name="Scope_Email" xml:space="preserve">
-    <value>email</value>
-  </data>
-  <data name="Scope_Email_Description" xml:space="preserve">
-    <value>Access to your email address</value>
-  </data>
-  <data name="Scope_Pets" xml:space="preserve">
-    <value>pets</value>
-  </data>
-  <data name="Scope_Pets_Description" xml:space="preserve">
-    <value>Access to your pets</value>
-  </data>
-  <data name="TokenEndpoint_TokenName" xml:space="preserve">
-    <value>access_code</value>
-  </data>
-  <data name="TokenRequestEndpoint_ClientIdName" xml:space="preserve">
-    <value>client_id</value>
-  </data>
-  <data name="TokenRequestEndpoint_ClientSecretName" xml:space="preserve">
-    <value>client_secret</value>
-  </data>
-  <data name="Url_LicenseUrl" xml:space="preserve">
-    <value>http://www.apache.org/licenses/LICENSE-2.0.html</value>
-  </data>
-  <data name="Url_LoginEndpoint" xml:space="preserve">
-    <value>http://petstore.swagger.wordnik.com/oauth/dialog</value>
-  </data>
-  <data name="Url_TermsOfServiceUrl" xml:space="preserve">
-    <value>http://helloreverb.com/terms/</value>
-  </data>
-  <data name="Url_TokenEndpoint" xml:space="preserve">
-    <value>http://petstore.swagger.wordnik.com/oauth/token</value>
-  </data>
-  <data name="Url_TokenRequestEndpoint" xml:space="preserve">
-    <value>http://petstore.swagger.wordnik.com/oauth/requestToken</value>
+  <data name="HttpMethod_PUT" xml:space="preserve">
+    <value>PUT</value>
   </data>
 </root>

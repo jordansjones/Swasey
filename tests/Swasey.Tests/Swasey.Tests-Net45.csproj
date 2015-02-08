@@ -100,32 +100,45 @@
     <Compile Include="Helpers\GenerationTestHelper.cs" />
     <Compile Include="Generator\BasicModelGenerationTests.cs" />
     <Compile Include="Helpers\Ensure.cs" />
+    <Compile Include="Helpers\Writers\ITestSwaseyWriter.cs" />
     <Compile Include="Helpers\NormalizationExtensions\ModelPropertyNormalization.cs" />
-    <Compile Include="Helpers\SyntaxTriviaWalker.cs" />
+    <Compile Include="Helpers\RoslynCrap\SyntaxTriviaWalker.cs" />
     <Compile Include="Helpers\KvPair.cs" />
     <Compile Include="Helpers\SwaggerVersionExtensions.cs" />
     <Compile Include="Helpers\TestGeneratorOptions.cs" />
     <Compile Include="Helpers\TestSwaggerJsonLoader.cs" />
+    <Compile Include="Helpers\Writers\StringBuilderSwaseyWriter.cs" />
     <Compile Include="ModelBuilder\BaseBuilder.cs" />
     <Compile Include="ModelBuilder\OperationBuilder.cs" />
     <Compile Include="ModelBuilder\ParameterBuilder.cs" />
     <Compile Include="ModelBuilder\ResponseBuilder.cs" />
     <Compile Include="ModelBuilder\ServiceBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schema\Version12\ResourceListingTests.cs" />
-    <Compile Include="Schema\Version12\Resources\ResourceListingVesion12.Designer.cs">
+    <Compile Include="Schema\GeneralResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResourceListingVesion12.resx</DependentUpon>
+      <DependentUpon>GeneralResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Schema\Version12\ResourceListingTests.cs" />
+    <Compile Include="Schema\Version12\Resources\ResourceListingVersion12.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceListingVersion12.resx</DependentUpon>
     </Compile>
     <Compile Include="Templates\TestingTemplates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Templates\ServiceClientMain.hbs" />
+    <EmbeddedResource Include="Schema\GeneralResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\ServiceClientImplementation.hbs" />
     <EmbeddedResource Include="Templates\ServiceClientInterface.hbs" />
+    <EmbeddedResource Include="Templates\ServiceClientEnum.hbs" />
+    <EmbeddedResource Include="Templates\ServiceClientModel.hbs" />
+    <EmbeddedResource Include="Templates\ServiceClientOperation.hbs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Swasey\Swasey-Net45.csproj">
@@ -134,9 +147,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Schema\Version12\Resources\ResourceListingVesion12.resx">
+    <EmbeddedResource Include="Schema\Version12\Resources\ResourceListingVersion12.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceListingVesion12.Designer.cs</LastGenOutput>
+      <LastGenOutput>ResourceListingVersion12.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Jil;
-
 using Ploeh.AutoFixture;
-
-using Swasey.Tests.Schema.Version12;
 
 namespace Swasey.Tests.Helpers
 {
     internal static class Fixtures
     {
+
+        public const string DefaultApiNamespace = "Swasey.Service.Client.Api";
+
+        public const string DefaultBasePath = "/";
+
+        public const string DefaultModelNamespace = "Swasey.Service.Client.Model";
+
+        public const string DefaultVersion = "1";
 
         public static readonly Uri TestResourceListingUri = new Uri("http://localtest");
 

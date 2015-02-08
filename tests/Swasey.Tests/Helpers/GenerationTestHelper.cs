@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,34 +15,34 @@ namespace Swasey.Tests.Helpers
     internal static class GenerationTestHelper
     {
 
-        public const string DefaultBasePath = "/";
-
-        public const string DefaultNamespace = "Swasey.Service.Client";
-
-        public const string DefaultVersion = "1";
-
         private static readonly CSharpParseOptions ParseOptions = new CSharpParseOptions(LanguageVersion.CSharp5);
 
-        public static GeneratorOptions DefaultGeneratorOptions(Func<Uri, Task<string>> jsonLoader)
-        {
-            return new TestGeneratorOptions(new TestSwaggerJsonLoader(jsonLoader))
-            {
-                ApiNamespace = DefaultNamespace,
-                ModelNamespace = DefaultNamespace
-            };
-        }
+//        public static string Generate(this IServiceDefinition This)
+//        {
+//            using (var sw = new StringWriter())
+//            {
+//                This.WriteTo(sw);
+//                return sw.GetStringBuilder()
+//                    .ToString();
+//            }
+//        }
+//
+//        public static SyntaxTree GenerateAndParse(this IServiceDefinition This)
+//        {
+//            return This.Generate()
+//                .AsSyntaxTree();
+//        }
+//
+//        public static IEnumerable<T> GenerateAndGetParsedSyntaxNode<T>(this IServiceDefinition This)
+//            where T : SyntaxNode
+//        {
+//            return This.GenerateAndParse()
+//                .GetParsedSyntaxNode<T>();
+//        }
 
-        public static IServiceDefinition DefaultServiceDefinition(this object This)
+        public static SyntaxTree AsSyntaxTree(this string source, SourceCodeKind sourceKind = SourceCodeKind.Regular)
         {
-            return This.ServiceBuilder().Build();
-        }
-
-        public static ServiceBuilder ServiceBuilder(this object This, string basePath = DefaultBasePath, string @namespace = DefaultNamespace, string version = DefaultVersion)
-        {
-            return new ServiceBuilder()
-                .WithApiNamespace(DefaultNamespace)
-                .WithModelNamespace(DefaultNamespace)
-                .WithVersion(DefaultVersion);
+            return CSharpSyntaxTree.ParseText(source, ParseOptions.WithKind(sourceKind));
         }
 
         public static IServiceDefinition CreateServiceClient(this object This, string name)
@@ -53,32 +52,21 @@ namespace Swasey.Tests.Helpers
                 .Build();
         }
 
-        public static string Generate(this IServiceDefinition This)
+        public static GeneratorOptions DefaultGeneratorOptions(Func<Uri, Task<string>> jsonLoader, ITestSwaseyWriter writer)
         {
-            using (var sw = new StringWriter())
+            return new TestGeneratorOptions(new TestSwaggerJsonLoader(jsonLoader), writer ?? new StringBuilderSwaseyWriter())
             {
-                This.WriteTo(sw);
-                return sw.GetStringBuilder()
-                    .ToString();
-            }
+                ApiNamespace = Fixtures.DefaultApiNamespace,
+                ModelNamespace = Fixtures.DefaultModelNamespace,
+                ApiEnumTemplate = TestingTemplates.Template_ServiceClientEnum,
+                ApiModelTemplate = TestingTemplates.Template_ServiceClientModel,
+                ApiOperationTemplate = TestingTemplates.Template_ServiceClientOperation
+            };
         }
 
-        public static SyntaxTree GenerateAndParse(this IServiceDefinition This)
+        public static IServiceDefinition DefaultServiceDefinition(this object This)
         {
-            return This.Generate()
-                .AsSyntaxTree();
-        }
-
-        public static IEnumerable<T> GenerateAndGetParsedSyntaxNode<T>(this IServiceDefinition This)
-            where T : SyntaxNode
-        {
-            return This.GenerateAndParse()
-                .GetParsedSyntaxNode<T>();
-        }
-
-        public static SyntaxTree AsSyntaxTree(this string source, SourceCodeKind sourceKind = SourceCodeKind.Regular)
-        {
-            return CSharpSyntaxTree.ParseText(source, ParseOptions.WithKind(sourceKind));
+            return This.ServiceBuilder().Build();
         }
 
         public static IEnumerable<T> GetParsedSyntaxNode<T>(this SyntaxTree This)
@@ -88,6 +76,19 @@ namespace Swasey.Tests.Helpers
                 .GetRoot()
                 .DescendantNodes()
                 .OfType<T>();
+        }
+
+        public static ServiceBuilder ServiceBuilder(
+            this object This,
+            string basePath = Fixtures.DefaultBasePath,
+            string apiNamespace = Fixtures.DefaultApiNamespace,
+            string modelNamespace = Fixtures.DefaultModelNamespace,
+            string version = Fixtures.DefaultVersion)
+        {
+            return new ServiceBuilder()
+                .WithApiNamespace(apiNamespace)
+                .WithModelNamespace(modelNamespace)
+                .WithVersion(version);
         }
 
     }

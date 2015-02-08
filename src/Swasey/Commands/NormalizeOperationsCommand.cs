@@ -82,9 +82,10 @@ namespace Swasey.Commands
 
         private ResponseDefinition NormalizeResponseDefinition(INormalizationApiOperation op)
         {
+            var dt = op.Response.AsDataType();
             return new ResponseDefinition(op.Response.AsMetadata())
             {
-                DataType = op.Response.AsDataType()
+                DataType = dt
             };
         }
 
@@ -92,7 +93,7 @@ namespace Swasey.Commands
         {
             var path = op.Path;
 
-            var versionParam = op.Parameters.FirstOrDefault(x => x.Name.IndexOf("version", StringComparison.InvariantCultureIgnoreCase) >= 0);
+            var versionParam = op.Parameters.FirstOrDefault(x => x.Name.IndexOf(Constants.ParameterName_Version, StringComparison.InvariantCultureIgnoreCase) >= 0);
             if (versionParam != null)
             {
                 var template = new UriTemplate(path, true);

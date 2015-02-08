@@ -16,7 +16,7 @@ namespace Swasey.Model
             }
 
             _value = value;
-            IsVoidType = Constants.DataType_Void.ToUpper().Equals(_value.ToUpper());
+            IsVoid = Constants.DataType_Void.ToUpperInvariant().Equals(_value.Trim().ToUpperInvariant());
             IsEnumerable = false;
         }
 
@@ -34,7 +34,7 @@ namespace Swasey.Model
 
         public bool IsNullable { get; set; }
 
-        public bool IsVoidType { get; private set; }
+        public bool IsVoid { get; private set; }
 
         public string MinimumValue { get; set; }
 

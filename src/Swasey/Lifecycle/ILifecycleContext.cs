@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Swasey.Model;
@@ -10,7 +11,13 @@ namespace Swasey.Lifecycle
     public interface ILifecycleContext
     {
 
+        Action<TextWriter, object> ApiEnumTemplate { get; }
+
+        Action<TextWriter, object> ApiModelTemplate { get; }
+
         string ApiNamespace { get; }
+
+        Action<TextWriter, object> ApiOperationTemplate { get; }
 
         IReadOnlyCollection<KeyValuePair<string, dynamic>> ApiPathJsonMapping { get; }
 

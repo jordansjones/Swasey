@@ -62,8 +62,9 @@ namespace Swasey.Commands
 
         private NormalizationApiOperationResponse ParseResponse(dynamic op)
         {
+            var dataType = SimpleNormalizationApiDataType.ParseFromJObject(op);
             var resp = new NormalizationApiOperationResponse();
-            resp.CopyFrom(SimpleNormalizationApiDataType.ParseFromJObject(op));
+            resp.CopyFrom(dataType);
 
             return resp;
         }

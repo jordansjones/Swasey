@@ -71,6 +71,8 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
+        public string Namespace { get { return ApiNamespace; } }
+
         IReadOnlyList<IParameterDefinition> IOperationDefinition.Parameters
         {
             get { return Parameters; }

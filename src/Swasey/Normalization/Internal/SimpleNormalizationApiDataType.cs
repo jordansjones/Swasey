@@ -101,6 +101,14 @@ namespace Swasey.Normalization
 
         internal static SimpleNormalizationApiDataType ParseStringFromJObject(dynamic prop)
         {
+            var propType = (string) prop.type;
+            var normalPropType = propType;
+            if (!String.IsNullOrWhiteSpace(normalPropType)) { normalPropType = normalPropType.ToLowerInvariant(); }
+
+            if (!"string".Equals(normalPropType) && !prop.ContainsKey("format"))
+            {
+                return new SimpleNormalizationApiDataType(propType, prop);
+            }
             if (!prop.ContainsKey("format"))
             {
                 return new SimpleNormalizationApiDataType("string", prop);

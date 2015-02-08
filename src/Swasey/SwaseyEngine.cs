@@ -60,7 +60,12 @@ namespace Swasey
 
         internal static Action<TextWriter, object> Compile(this Lazy<string> This)
         {
-            using (var sr = new StringReader(This.Value))
+            return Compile(This.Value);
+        }
+
+        internal static Action<TextWriter, object> Compile(string template)
+        {
+            using (var sr = new StringReader(template))
             {
                 return CompileTemplate(sr);
             }
