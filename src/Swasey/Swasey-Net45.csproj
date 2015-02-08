@@ -134,6 +134,9 @@
     <Compile Include="Normalization\Internal\NormalizationContext.cs" />
     <Compile Include="Normalization\Internal\SimpleNormalizationApiDataType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\meta\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Schema\Version12\ApiDeclaration.cs" />
     <Compile Include="Schema\Version12\ApiModels.cs" />
     <Compile Include="Schema\Version12\BaseApiDeclaration.cs" />

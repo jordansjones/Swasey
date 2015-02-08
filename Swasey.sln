@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{B9769A2C-9291-4750-901D-D47558715A46}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
+		meta\SolutionInfo.cs = meta\SolutionInfo.cs
+		meta\Swasey.nuspec = meta\Swasey.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swasey-Net45", "src\Swasey\Swasey-Net45.csproj", "{F4D8FF64-1076-4F22-83D2-CACE45A27EA7}"

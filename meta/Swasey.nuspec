@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+        <id>Swasey</id>
+        <title>Swasey</title>
+        <version>@version@</version>
+        <authors>Jordan S. Jones</authors>
+        <licenseUrl>https://github.com/jordansjones/Swasey/blob/master/LICENSE.txt</licenseUrl>
+        <projectUrl>https://github.com/jordansjones/Swasey</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Highly opinionated Swagger client generator for C#</description>
+        <releaseNotes>@releaseNotes@</releaseNotes>
+        <tags>rest swagger</tags>
+        <copyright>Copyright 2015 Jordan S. Jones</copyright>
+        <dependencies>
+            <group targetFramework="net45">
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="lib\**\*.*" target="lib" />
+        <file src="*.*" exclude="lib\**\*.*" />
+    </files>
+</package>
