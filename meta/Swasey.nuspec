@@ -8,7 +8,7 @@
         <licenseUrl>https://github.com/jordansjones/Swasey/blob/master/LICENSE.txt</licenseUrl>
         <projectUrl>https://github.com/jordansjones/Swasey</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Highly opinionated Swagger client generator for C#</description>
+        <description>Highly opinionated template-driven engine to generate client code by parsing Swagger Resource Declarations.</description>
         <releaseNotes>@releaseNotes@</releaseNotes>
         <tags>rest swagger</tags>
         <copyright>Copyright 2015 Jordan S. Jones</copyright>
