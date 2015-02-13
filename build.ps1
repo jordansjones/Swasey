@@ -11,7 +11,7 @@ $Script = Join-Path $SelfRoot "build.csx"
 $TOOLS_DIR = Join-Path $SelfRoot "tools"
 $CAKE_DIR = Join-Path $TOOLS_DIR "Cake"
 $NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
-$CAKE_EXE = $CAKE_DIR "Cake.exe"
+$CAKE_EXE = Join-Path $CAKE_DIR "Cake.exe"
 
 if (!(Test-Path $NUGET_EXE)) {
     Throw "Could not find " + $NUGET_EXE
