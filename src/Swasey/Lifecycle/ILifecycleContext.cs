@@ -8,7 +8,7 @@ using Swasey.Normalization;
 
 namespace Swasey.Lifecycle
 {
-    public interface ILifecycleContext
+    internal interface ILifecycleContext
     {
 
         Action<TextWriter, object> ApiEnumTemplate { get; }
@@ -21,11 +21,17 @@ namespace Swasey.Lifecycle
 
         IReadOnlyCollection<KeyValuePair<string, dynamic>> ApiPathJsonMapping { get; }
 
+        SwaseyEnumWriter EnumWriter { get; }
+
         SwaggerJsonLoader Loader { get; }
 
         string ModelNamespace { get; }
 
-        INormalizationContext NormalizationContext { get; }
+        SwaseyModelWriter ModelWriter { get; }
+
+        NormalizationContext NormalizationContext { get; }
+
+        SwaseyOperationWriter OperationWriter { get; }
 
         dynamic ResourceListingJson { get; }
 
@@ -38,8 +44,6 @@ namespace Swasey.Lifecycle
         LifecycleState State { get; }
 
         string SwaggerVersion { get; }
-
-        SwaseyWriter Writer { get; }
 
     }
 }

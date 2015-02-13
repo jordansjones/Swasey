@@ -2,23 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Swasey.Model;
+
 namespace Swasey
 {
 
     public delegate Task<string> SwaggerJsonLoader(Uri uri);
 
-    public delegate void SwaseyWriter(WriteType type, string name, string content);
+    public delegate void SwaseyOperationWriter(string name, string content, IOperationDefinition definition);
 
-    public enum WriteType
-    {
+    public delegate void SwaseyEnumWriter(string name, string content, IEnumDefinition definition);
 
-        Enum,
-
-        Model,
-
-        Operation
-
-    }
+    public delegate void SwaseyModelWriter(string name, string content, IModelDefinition definition);
 
 
     internal static class Defaults
@@ -33,7 +28,17 @@ namespace Swasey
             throw new NotImplementedException();
         }
 
-        public static void DefaultSwaseyWriter(WriteType type, string name, string content)
+        public static void DefaultSwaseyEnumWriter(string name, string content, IEnumDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void DefaultSwaseyModelWriter(string name, string content, IModelDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void DefaultSwaseyOperationWriter(string name, string content, IOperationDefinition definition)
         {
             throw new NotImplementedException();
         }

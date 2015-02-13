@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Linq;
 
+using Swasey.Model;
+
 namespace Swasey.Tests.Helpers
 {
     public interface ITestSwaseyWriter
     {
 
-        void Write(WriteType type, string name, string content);
+        void Write(string name, string content, IOperationDefinition definition);
+
+        void Write(string name, string content, IEnumDefinition definition);
+
+        void Write(string name, string content, IModelDefinition definition);
 
     }
 }

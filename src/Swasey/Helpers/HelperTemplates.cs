@@ -14,17 +14,12 @@ namespace Swasey.Helpers
 
         internal const string TemplateName_FileHeader = "FileHeader";
 
-        internal const string TemplateName_OperationParameters = "OperationParameters";
-
         internal static Lazy<string> HelperTemplate_FileHeader { get; private set; }
-
-        internal static Lazy<string> HelperTemplate_OperationParameters { get; private set; }
 
         private static void Initialize()
         {
             // Helper Templates
             HelperTemplate_FileHeader = new Lazy<string>(() => ReadTemplate(TemplateName_FileHeader));
-            HelperTemplate_OperationParameters = new Lazy<string>(() => ReadTemplate(TemplateName_OperationParameters));
         }
 
         #region Boilerplate

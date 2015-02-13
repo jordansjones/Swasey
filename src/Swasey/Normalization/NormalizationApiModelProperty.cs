@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace Swasey.Normalization
 {
-    internal class NormalizationApiModelProperty : NormalizationApiDataType, INormalizationApiModelProperty
+    internal class NormalizationApiModelProperty : NormalizationApiDataType
     {
 
         public NormalizationApiModelProperty() {}
 
-        public NormalizationApiModelProperty(INormalizationApiModelProperty copyFrom)
+        public NormalizationApiModelProperty(NormalizationApiModelProperty copyFrom)
             : base(copyFrom)
         {
             CopyFrom(copyFrom);

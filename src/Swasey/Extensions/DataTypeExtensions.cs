@@ -9,7 +9,7 @@ namespace Swasey
     internal static class DataTypeExtensions
     {
 
-        public static DataType AsDataType(this INormalizationApiDataType This)
+        public static DataType AsDataType(this NormalizationApiDataType This)
         {
             return new DataType(This.TypeName)
             {

@@ -17,11 +17,29 @@ namespace Swasey
 
             // Initialize built-in handlers
             RegisterHelper(new FileHeader(HelperTemplates.HelperTemplate_FileHeader.Compile()));
-            RegisterHelper(new OperationParameters(HelperTemplates.HelperTemplate_OperationParameters.Compile()));
             RegisterHelper(new UCFirst());
+            RegisterHelper(new LCFirst());
         }
 
         internal static Lazy<IHandlebars> Engine { get; private set; }
+
+        internal static Action<TextWriter, object> Compile(this Lazy<string> This)
+        {
+            return Compile(This.Value);
+        }
+
+        internal static Action<TextWriter, object> Compile(string template)
+        {
+            using (var sr = new StringReader(template))
+            {
+                return CompileTemplate(sr);
+            }
+        }
+
+        public static Action<TextWriter, object> CompileTemplate(TextReader template)
+        {
+            return Engine.Value.Compile(template);
+        }
 
         public static void RegisterHelper(IBlockHelper helper, string helperName = null)
         {
@@ -48,27 +66,9 @@ namespace Swasey
             Engine.Value.RegisterTemplate(name, CompileTemplate(template));
         }
 
-        public static Action<TextWriter, object> CompileTemplate(TextReader template)
-        {
-            return Engine.Value.Compile(template);
-        }
-
         public static string RenderRawTemplate(string template, object context)
         {
             return Engine.Value.Compile(template)(context);
-        }
-
-        internal static Action<TextWriter, object> Compile(this Lazy<string> This)
-        {
-            return Compile(This.Value);
-        }
-
-        internal static Action<TextWriter, object> Compile(string template)
-        {
-            using (var sr = new StringReader(template))
-            {
-                return CompileTemplate(sr);
-            }
         }
 
     }

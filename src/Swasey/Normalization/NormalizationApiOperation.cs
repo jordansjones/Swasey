@@ -4,14 +4,13 @@ using System.Linq;
 
 namespace Swasey.Normalization
 {
-    internal class NormalizationApiOperation : BaseNormalizationEntity, INormalizationApiOperation
+    internal class NormalizationApiOperation : BaseNormalizationEntity
     {
-
         private readonly List<NormalizationApiOperationParameter> _parameters = new List<NormalizationApiOperationParameter>();
 
         public NormalizationApiOperation() {}
 
-        public NormalizationApiOperation(INormalizationApiOperation copyFrom) : base(copyFrom)
+        public NormalizationApiOperation(NormalizationApiOperation copyFrom) : base(copyFrom)
         {
             BasePath = copyFrom.BasePath;
             Description = copyFrom.Description;
@@ -21,16 +20,18 @@ namespace Swasey.Normalization
             ResourcePath = copyFrom.ResourcePath;
             Response = new NormalizationApiOperationResponse(copyFrom.Response);
 
-            Parameters.AddRange(
-                (copyFrom.Parameters ?? new List<INormalizationApiOperationParameter>())
-                    .Select(x => new NormalizationApiOperationParameter(x))
-                );
+            if (copyFrom.Parameters.Any())
+            {
+                Parameters.AddRange(copyFrom.Parameters);
+            }
         }
 
         public List<NormalizationApiOperationParameter> Parameters
         {
             get { return _parameters; }
         }
+
+        public NormalizationApiOperationResponse Response { get; set; }
 
         public string BasePath { get; set; }
 
@@ -40,17 +41,9 @@ namespace Swasey.Normalization
 
         public string Name { get; set; }
 
-        IReadOnlyList<INormalizationApiOperationParameter> INormalizationApiOperation.Parameters
-        {
-            get { return Parameters.OfType<INormalizationApiOperationParameter>().ToList(); }
-        }
-
         public string Path { get; set; }
 
         public string ResourcePath { get; set; }
 
-        public NormalizationApiOperationResponse Response { get; set; }
-
-        INormalizationApiOperationResponse INormalizationApiOperation.Response { get { return Response; } }
     }
 }

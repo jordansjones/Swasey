@@ -12,5 +12,7 @@ namespace Swasey.Model
 
         QualifiedName Name { get; }
 
+        QualifiedName ResourceName { get; }
+
     }
 }

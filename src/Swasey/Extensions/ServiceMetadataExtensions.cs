@@ -9,7 +9,7 @@ namespace Swasey
     internal static class ServiceMetadataExtensions
     {
 
-        public static IServiceMetadata AsMetadata(this INormalizationEntity This)
+        public static IServiceMetadata AsMetadata(this BaseNormalizationEntity This)
         {
             return new ServiceMetadata(This.ApiNamespace, This.ModelNamespace)
             {

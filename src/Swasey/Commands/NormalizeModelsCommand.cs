@@ -12,17 +12,15 @@ namespace Swasey.Commands
     internal class NormalizeModelsCommand : ILifecycleCommand
     {
 
-        private readonly Dictionary<string, int> _usedNames = new Dictionary<string, int>();
-
         private readonly List<NormalModelName> _modelNameMaps = new List<NormalModelName>();
+
+        private readonly Dictionary<string, int> _usedNames = new Dictionary<string, int>();
 
         public Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
             var serviceDefinition = new ServiceDefinition(context.ServiceDefinition);
 
-            var normalModels = context.NormalizationContext.Models.SelectMany(x => x).ToList();
-
-            foreach (var normalModel in normalModels)
+            foreach (var normalModel in context.NormalizationContext.Models)
             {
                 var normalModelName = new NormalModelName(normalModel.ResourcePath, normalModel.Name);
                 _modelNameMaps.Add(normalModelName);
@@ -31,13 +29,14 @@ namespace Swasey.Commands
                 {
                     ContextName = normalModel.ResourceName,
                     Description = normalModel.Description,
-                    Name = normalModel.Name
+                    Name = normalModel.Name,
+                    ResourceName = normalModel.ResourcePath.ResourceNameFromPath()
                 };
 
                 modelDef.Name = NormalizeModelName(modelDef, modelDef.Name);
                 normalModelName.New = modelDef.Name;
 
-                modelDef.Properties.AddRange(ExtractModelProperties(normalModel.Properties.Values));
+                modelDef.Properties.AddRange(ExtractModelProperties(normalModel.Properties));
 
                 serviceDefinition.AddModel(modelDef);
             }
@@ -45,9 +44,9 @@ namespace Swasey.Commands
             var resourceModelLookup = _modelNameMaps.ToLookup(x => x.ResourcePath);
 
             // Ensure all Operations refer to the proper model names
-            foreach (var op in context.NormalizationContext.Operations.SelectMany(x => x))
+            foreach (var op in context.NormalizationContext.Operations)
             {
-                if (!resourceModelLookup.Contains(op.ResourcePath)) continue;
+                if (!resourceModelLookup.Contains(op.ResourcePath)) { continue; }
 
                 var resourceModels = resourceModelLookup[op.ResourcePath].ToList();
 
@@ -65,9 +64,8 @@ namespace Swasey.Commands
                         opParam.SetTypeName(paramItem.New);
                     }
                 }
-
             }
-            
+
 
             var ctx = new LifecycleContext(context)
             {
@@ -77,7 +75,7 @@ namespace Swasey.Commands
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
-        private IEnumerable<ModelPropertyDefinition> ExtractModelProperties(IEnumerable<INormalizationApiModelProperty> properties)
+        private IEnumerable<ModelPropertyDefinition> ExtractModelProperties(IEnumerable<NormalizationApiModelProperty> properties)
         {
             foreach (var normalProp in properties)
             {
@@ -94,7 +92,7 @@ namespace Swasey.Commands
 
         private string NormalizeModelName(ModelDefinition def, string desiredName)
         {
-            var count = 0;
+            int count;
             if (!_usedNames.TryGetValue(desiredName, out count))
             {
                 _usedNames.Add(desiredName, ++count);
@@ -120,11 +118,11 @@ namespace Swasey.Commands
                 New = old;
             }
 
-            public string ResourcePath { get; private set; }
+            public string New { get; set; }
 
             public string Old { get; private set; }
 
-            public string New { get; set; }
+            public string ResourcePath { get; private set; }
 
         }
 

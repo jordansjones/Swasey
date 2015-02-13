@@ -14,7 +14,8 @@ namespace Swasey.Commands
         public Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
             var svcDef = context.ServiceDefinition;
-            var swaseyWriter = context.Writer;
+            var enumWriter = context.EnumWriter;
+            var modelWriter = context.ModelWriter;
 
             var sb = new StringBuilder();
 
@@ -27,7 +28,7 @@ namespace Swasey.Commands
                     template(sw, obj);
                 }
 
-                swaseyWriter(WriteType.Enum, obj.Name, sb.ToString());
+                enumWriter(obj.Name, sb.ToString(), obj);
             }
 
             // Models Second
@@ -39,7 +40,7 @@ namespace Swasey.Commands
                     template(sw, obj);
                 }
 
-                swaseyWriter(WriteType.Model, obj.Name, sb.ToString());
+                modelWriter(obj.Name, sb.ToString(), obj);
             }
 
             return Task.FromResult(context);

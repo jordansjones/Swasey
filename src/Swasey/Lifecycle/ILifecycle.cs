@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Swasey.Lifecycle
 {
-    public interface ILifecycle
+    internal interface ILifecycle
     {
 
         ILifecycle Enqueue(ILifecycleCommand command);

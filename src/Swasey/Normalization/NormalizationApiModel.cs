@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Swasey.Normalization
 {
-    internal class NormalizationApiModel : BaseNormalizationEntity, INormalizationApiModel
+    internal class NormalizationApiModel : BaseNormalizationEntity
     {
 
         private readonly List<NormalizationApiModelProperty> _properties = new List<NormalizationApiModelProperty>();
@@ -15,7 +15,7 @@ namespace Swasey.Normalization
 
         public NormalizationApiModel() {}
 
-        public NormalizationApiModel(INormalizationApiModel copyFrom) : base(copyFrom)
+        public NormalizationApiModel(NormalizationApiModel copyFrom) : base(copyFrom)
         {
             if (copyFrom == null) return;
 
@@ -25,15 +25,9 @@ namespace Swasey.Normalization
             ResourceName = copyFrom.ResourceName;
             ResourcePath = copyFrom.ResourcePath;
 
-            Properties.AddRange(
-                (copyFrom.Properties ?? new Dictionary<string, INormalizationApiModelProperty>())
-                    .Select(x => new NormalizationApiModelProperty(x.Value))
-                );
+            Properties.AddRange(copyFrom.Properties);
 
-            SubTypes.AddRange(
-                (copyFrom.SubTypes ?? new List<INormalizationApiModel>())
-                    .Select(x => new NormalizationApiModel(x))
-                );
+            SubTypes.AddRange(copyFrom.SubTypes);
         }
 
         public List<NormalizationApiModelProperty> Properties
@@ -57,16 +51,6 @@ namespace Swasey.Normalization
         public string Discriminator { get; set; }
 
         public string Name { get; set; }
-
-        IReadOnlyDictionary<string, INormalizationApiModelProperty> INormalizationApiModel.Properties
-        {
-            get { return Properties.OfType<INormalizationApiModelProperty>().ToDictionary(x => x.Name, x => x); }
-        }
-
-        IReadOnlyList<INormalizationApiModel> INormalizationApiModel.SubTypes
-        {
-            get { return SubTypes.OfType<INormalizationApiModel>().ToList(); }
-        }
 
     }
 }

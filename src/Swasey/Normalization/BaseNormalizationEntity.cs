@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace Swasey.Normalization
 {
-    internal abstract class BaseNormalizationEntity : INormalizationEntity
+    internal abstract class BaseNormalizationEntity
     {
 
         public BaseNormalizationEntity() {}
 
-        public BaseNormalizationEntity(INormalizationEntity copyFrom)
+        public BaseNormalizationEntity(BaseNormalizationEntity copyFrom)
             : this()
         {
             if (copyFrom == null) return;

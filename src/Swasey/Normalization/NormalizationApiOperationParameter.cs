@@ -5,7 +5,7 @@ using Swasey.Model;
 
 namespace Swasey.Normalization
 {
-    internal class NormalizationApiOperationParameter : NormalizationApiDataType, INormalizationApiOperationParameter
+    internal class NormalizationApiOperationParameter : NormalizationApiDataType
     {
 
         public NormalizationApiOperationParameter()
@@ -13,7 +13,7 @@ namespace Swasey.Normalization
             AllowsMultiple = false;
         }
 
-        public NormalizationApiOperationParameter(INormalizationApiOperationParameter copyFrom) : base(copyFrom)
+        public NormalizationApiOperationParameter(NormalizationApiOperationParameter copyFrom) : base(copyFrom)
         {
             if (copyFrom == null) return;
 

@@ -15,7 +15,7 @@ namespace Swasey.Commands
         {
             var svcDef = context.ServiceDefinition;
             var template = context.ApiOperationTemplate;
-            var swaseyWriter = context.Writer;
+            var swaseyWriter = context.OperationWriter;
 
             var sb = new StringBuilder();
 
@@ -25,7 +25,7 @@ namespace Swasey.Commands
                 {
                     template(sw, op);
                 }
-                swaseyWriter(WriteType.Operation, op.Name, sb.ToString());
+                swaseyWriter(op.Name, sb.ToString(), op);
             }
 
             return Task.FromResult(context);

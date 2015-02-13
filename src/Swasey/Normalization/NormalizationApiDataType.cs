@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace Swasey.Normalization
 {
-    internal abstract class NormalizationApiDataType : BaseNormalizationEntity, INormalizationApiDataType
+    internal abstract class NormalizationApiDataType : BaseNormalizationEntity
     {
 
         public NormalizationApiDataType() {}
 
-        public NormalizationApiDataType(INormalizationEntity copyFrom) : base(copyFrom) {}
+        public NormalizationApiDataType(NormalizationApiDataType copyFrom) : base(copyFrom) {}
 
         public dynamic JObject { get; set; }
 
@@ -39,7 +39,7 @@ namespace Swasey.Normalization
             TypeName = name;
         }
 
-        internal void CopyFrom(INormalizationApiDataType copyFrom)
+        internal void CopyFrom(NormalizationApiDataType copyFrom)
         {
             DefaultValue = copyFrom.DefaultValue;
             IsEnum = copyFrom.IsEnum;

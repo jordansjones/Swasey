@@ -16,7 +16,7 @@ namespace Swasey.Tests.Helpers
             _testWriter = writer;
 
             Loader = _jsonLoader.Load;
-            Writer = _testWriter.Write;
+            OperationWriter = _testWriter.Write;
         }
 
     }

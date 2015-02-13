@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Text;
 
+using Swasey.Model;
+
 namespace Swasey.Tests.Helpers
 {
     public class StringBuilderSwaseyWriter : ITestSwaseyWriter
@@ -14,11 +16,20 @@ namespace Swasey.Tests.Helpers
 
         public StringBuilder Builder { get; private set; }
 
-        public void Write(WriteType type, string name, string content)
+        public void Write(string name, string content, IOperationDefinition definition)
         {
             Builder.Append(content);
         }
 
+        public void Write(string name, string content, IEnumDefinition definition)
+        {
+            Builder.Append(content);
+        }
+
+        public void Write(string name, string content, IModelDefinition definition)
+        {
+            Builder.Append(content);
+        }
 
     }
 }

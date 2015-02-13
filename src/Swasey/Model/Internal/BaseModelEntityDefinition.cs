@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    internal abstract class BaseModelEntityDefinition : BaseDefinition
+    internal abstract class BaseModelEntityDefinition : BaseDefinition, IModelEntity
     {
 
         protected BaseModelEntityDefinition(IServiceMetadata meta) : base(meta) {}
@@ -12,6 +12,7 @@ namespace Swasey.Model
         {
             Description = copyFrom.Description;
             Name = copyFrom.Name;
+            ResourceName = copyFrom.ResourceName;
         }
 
         public string Description { get; set; }
@@ -23,7 +24,12 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
-        public string Namespace { get { return ModelNamespace; } }
+        public string Namespace
+        {
+            get { return ModelNamespace; }
+        }
+
+        public QualifiedName ResourceName { get; set; }
 
         public override string ToString()
         {

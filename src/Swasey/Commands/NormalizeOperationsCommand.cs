@@ -17,7 +17,7 @@ namespace Swasey.Commands
         {
             var serviceDefinition = new ServiceDefinition(context.ServiceDefinition);
 
-            foreach (var normalOp in context.NormalizationContext.Operations.SelectMany(x => x))
+            foreach (var normalOp in context.NormalizationContext.Operations)
             {
                 var op = new OperationDefinition(NormalizeOperationPath(normalOp), normalOp.AsMetadata())
                 {
@@ -32,10 +32,9 @@ namespace Swasey.Commands
                     .Select(NormalizeParameterDefinition)
                     .ToList()
                     .ForEach(x => op.AddParameter(x));
-
                 serviceDefinition.AddOperation(op);
             }
-            
+
 
             var ctx = new LifecycleContext(context)
             {
@@ -45,7 +44,7 @@ namespace Swasey.Commands
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
-        private QualifiedName ExtractName(INormalizationApiOperation op)
+        private QualifiedName ExtractName(NormalizationApiOperation op)
         {
             var name = op.Name;
             var resourceName = op.ResourcePath.ResourceNameFromPath();
@@ -68,28 +67,7 @@ namespace Swasey.Commands
             return new QualifiedName(name);
         }
 
-        private ParameterDefinition NormalizeParameterDefinition(INormalizationApiOperationParameter normalParam)
-        {
-            return new ParameterDefinition(normalParam.AsMetadata())
-            {
-                DataType = normalParam.AsDataType(),
-                IsRequired = normalParam.IsRequired,
-                IsVariadic = normalParam.AllowsMultiple,
-                Name = normalParam.Name,
-                Type = normalParam.ParameterType
-            };
-        }
-
-        private ResponseDefinition NormalizeResponseDefinition(INormalizationApiOperation op)
-        {
-            var dt = op.Response.AsDataType();
-            return new ResponseDefinition(op.Response.AsMetadata())
-            {
-                DataType = dt
-            };
-        }
-
-        private OperationPath NormalizeOperationPath(INormalizationApiOperation op)
+        private OperationPath NormalizeOperationPath(NormalizationApiOperation op)
         {
             var path = op.Path;
 
@@ -102,6 +80,27 @@ namespace Swasey.Commands
             }
 
             return new OperationPath(path);
+        }
+
+        private ParameterDefinition NormalizeParameterDefinition(NormalizationApiOperationParameter normalParam)
+        {
+            return new ParameterDefinition(normalParam.AsMetadata())
+            {
+                DataType = normalParam.AsDataType(),
+                IsRequired = normalParam.IsRequired,
+                IsVariadic = normalParam.AllowsMultiple,
+                Name = normalParam.Name,
+                Type = normalParam.ParameterType
+            };
+        }
+
+        private ResponseDefinition NormalizeResponseDefinition(NormalizationApiOperation op)
+        {
+            var dt = op.Response.AsDataType();
+            return new ResponseDefinition(op.Response.AsMetadata())
+            {
+                DataType = dt
+            };
         }
 
     }

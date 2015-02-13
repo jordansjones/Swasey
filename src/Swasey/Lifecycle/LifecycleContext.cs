@@ -11,7 +11,7 @@ namespace Swasey.Lifecycle
     internal class LifecycleContext : ILifecycleContext
     {
 
-        private LifecycleContext(string apiNamespace, string modelNamespace, SwaggerJsonLoader loader, SwaseyWriter writer)
+        private LifecycleContext(string apiNamespace, string modelNamespace, SwaggerJsonLoader loader, SwaseyOperationWriter operationWriter, SwaseyEnumWriter enumWriter, SwaseyModelWriter modelWriter)
         {
             ApiNamespace = apiNamespace ?? Defaults.DefaultApiNamespace;
             ModelNamespace = modelNamespace ?? Defaults.DefaultModelNamespace;
@@ -21,7 +21,9 @@ namespace Swasey.Lifecycle
             ServiceDefinition = new ServiceDefinition();
 
             Loader = loader ?? Defaults.DefaultSwaggerJsonLoader;
-            Writer = writer ?? Defaults.DefaultSwaseyWriter;
+            OperationWriter = operationWriter ?? Defaults.DefaultSwaseyOperationWriter;
+            EnumWriter = enumWriter ?? Defaults.DefaultSwaseyEnumWriter;
+            ModelWriter = modelWriter ?? Defaults.DefaultSwaseyModelWriter;
 
             ApiPathJsonMapping = new Dictionary<string, dynamic>();
 
@@ -29,7 +31,7 @@ namespace Swasey.Lifecycle
         }
 
         public LifecycleContext(GeneratorOptions opts)
-            : this(opts.ApiNamespace, opts.ModelNamespace, opts.Loader, opts.Writer)
+            : this(opts.ApiNamespace, opts.ModelNamespace, opts.Loader, opts.OperationWriter, opts.EnumWriter, opts.ModelWriter)
         {
             State = LifecycleState.Continue;
 
@@ -39,7 +41,7 @@ namespace Swasey.Lifecycle
         }
 
         internal LifecycleContext(ILifecycleContext copyFrom)
-            : this(copyFrom.ApiNamespace, copyFrom.ModelNamespace, copyFrom.Loader, copyFrom.Writer)
+            : this(copyFrom.ApiNamespace, copyFrom.ModelNamespace, copyFrom.Loader, copyFrom.OperationWriter, copyFrom.EnumWriter, copyFrom.ModelWriter)
         {
             State = copyFrom.State;
             ResourceListingUri = copyFrom.ResourceListingUri;
@@ -77,14 +79,15 @@ namespace Swasey.Lifecycle
             get { return ApiPathJsonMapping; }
         }
 
+        public SwaseyEnumWriter EnumWriter { get; private set; }
+
         public SwaggerJsonLoader Loader { get; private set; }
 
         public string ModelNamespace { get; private set; }
 
-        INormalizationContext ILifecycleContext.NormalizationContext
-        {
-            get { return NormalizationContext; }
-        }
+        public SwaseyModelWriter ModelWriter { get; private set; }
+
+        public SwaseyOperationWriter OperationWriter { get; private set; }
 
         public dynamic ResourceListingJson { get; internal set; }
 
@@ -100,8 +103,6 @@ namespace Swasey.Lifecycle
         public LifecycleState State { get; internal set; }
 
         public string SwaggerVersion { get; internal set; }
-
-        public SwaseyWriter Writer { get; private set; }
 
     }
 }
