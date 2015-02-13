@@ -6,11 +6,12 @@ Param(
 )
 
 $SelfRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-$Script = [io.path]::combine($SelfRoot, "build.csx")
+$Script = Join-Path $SelfRoot "build.csx"
 
-$TOOLS_DIR = [io.path]::combine($SelfRoot, "tools")
-$NUGET_EXE = [io.path]::combine($TOOLS_DIR, "nuget.exe")
-$CAKE_EXE = [io.path]::combine($TOOLS_DIR, "Cake", "Cake.exe")
+$TOOLS_DIR = Join-Path $SelfRoot "tools"
+$CAKE_DIR = Join-Path $TOOLS_DIR "Cake"
+$NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
+$CAKE_EXE = $CAKE_DIR "Cake.exe"
 
 if (!(Test-Path $NUGET_EXE)) {
     Throw "Could not find " + $NUGET_EXE
