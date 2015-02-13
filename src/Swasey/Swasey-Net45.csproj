@@ -80,7 +80,7 @@
     <Compile Include="Helpers\HelperTemplates.cs" />
     <Compile Include="Helpers\IBlockHelper.cs" />
     <Compile Include="Helpers\IInlineHelper.cs" />
-    <Compile Include="Helpers\UCFirst.cs" />
+    <Compile Include="Helpers\FirstCharacterCaseHelpers.cs" />
     <Compile Include="HttpMethodType.cs" />
     <Compile Include="IResourceListing.cs" />
     <Compile Include="Lifecycle\LifecycleContext.cs" />
