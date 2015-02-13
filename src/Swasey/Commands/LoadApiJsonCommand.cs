@@ -22,7 +22,9 @@ namespace Swasey.Commands
 
             foreach (var path in ctx.ApiPathJsonMapping.Keys.ToList())
             {
-                var json = await context.Loader(new Uri(basePath, path));
+                var apiUriBuilder = new UriBuilder(basePath);
+                apiUriBuilder.Path += new Uri(path, UriKind.Relative);
+                var json = await context.Loader(apiUriBuilder.Uri);
                 if (string.IsNullOrWhiteSpace(json))
                     throw new SwaseyException("Invalid JSON for api [{0}]: '{1}'", path, json);
 
