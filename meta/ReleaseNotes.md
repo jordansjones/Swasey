@@ -1,3 +1,6 @@
+### New in 0.2.1 (Released 2015/02/13)
+* Fixed: Calling `SwaggerJsonLoader` with an resource relative path treats it as an absolute path
+
 ### New in 0.2.0 (Released 2015/02/13)
 * New: `SwaseyEnumWriter(string name, string content, IEnumDefinition definition)`
 * New: `SwaseyModelWriter(string name, string content, IModelDefinition definition)`
