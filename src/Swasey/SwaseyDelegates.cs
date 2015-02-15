@@ -15,13 +15,22 @@ namespace Swasey
 
     public delegate void SwaseyModelWriter(string name, string content, IModelDefinition definition);
 
-
     internal static class Defaults
     {
 
         public const string DefaultApiNamespace = "Service.Client.Api";
 
         public const string DefaultModelNamespace = "Service.Client.Model";
+
+        public static bool DefaultOperationFilter(dynamic op)
+        {
+            return true;
+        }
+
+        public static bool DefaultOperationParameterFilter(dynamic para)
+        {
+            return true;
+        }
 
         public static Task<string> DefaultSwaggerJsonLoader(Uri uri)
         {

@@ -21,5 +21,15 @@ namespace Swasey
             };
         }
 
+        public static string MapDataType(this string This)
+        {
+            string realValue;
+            if (!Constants.DataTypeMapping.TryGetValue(This, out realValue))
+            {
+                realValue = This;
+            }
+            return realValue;
+        }
+
     }
 }

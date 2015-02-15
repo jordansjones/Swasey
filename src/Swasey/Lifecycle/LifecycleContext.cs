@@ -38,6 +38,9 @@ namespace Swasey.Lifecycle
             ApiEnumTemplate = SwaseyEngine.Compile(opts.ApiEnumTemplate);
             ApiModelTemplate = SwaseyEngine.Compile(opts.ApiModelTemplate);
             ApiOperationTemplate = SwaseyEngine.Compile(opts.ApiOperationTemplate);
+
+            OperationFilter = opts.OperationFilter ?? Defaults.DefaultOperationFilter;
+            OperationParameterFilter = opts.OperationParameterFilter ?? Defaults.DefaultOperationParameterFilter;
         }
 
         internal LifecycleContext(ILifecycleContext copyFrom)
@@ -53,6 +56,9 @@ namespace Swasey.Lifecycle
             SwaggerVersion = copyFrom.SwaggerVersion;
             ResourceListingJson = copyFrom.ResourceListingJson;
 
+            OperationFilter = copyFrom.OperationFilter ?? Defaults.DefaultOperationFilter;
+            OperationParameterFilter = copyFrom.OperationParameterFilter ?? Defaults.DefaultOperationParameterFilter;
+
             NormalizationContext = new NormalizationContext(copyFrom.NormalizationContext);
 
             ServiceDefinition = new ServiceDefinition(copyFrom.ServiceDefinition);
@@ -61,8 +67,6 @@ namespace Swasey.Lifecycle
         }
 
         public Dictionary<string, dynamic> ApiPathJsonMapping { get; private set; }
-
-        public NormalizationContext NormalizationContext { get; private set; }
 
         public ServiceDefinition ServiceDefinition { get; internal set; }
 
@@ -86,6 +90,12 @@ namespace Swasey.Lifecycle
         public string ModelNamespace { get; private set; }
 
         public SwaseyModelWriter ModelWriter { get; private set; }
+
+        public NormalizationContext NormalizationContext { get; private set; }
+
+        public Func<dynamic, bool> OperationFilter { get; private set; }
+
+        public Func<dynamic, bool> OperationParameterFilter { get; private set; }
 
         public SwaseyOperationWriter OperationWriter { get; private set; }
 

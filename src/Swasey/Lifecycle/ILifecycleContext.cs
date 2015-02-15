@@ -31,6 +31,10 @@ namespace Swasey.Lifecycle
 
         NormalizationContext NormalizationContext { get; }
 
+        Func<dynamic, bool> OperationFilter { get; }
+
+        Func<dynamic, bool> OperationParameterFilter { get; }
+
         SwaseyOperationWriter OperationWriter { get; }
 
         dynamic ResourceListingJson { get; }

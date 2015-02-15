@@ -6,15 +6,15 @@ namespace Swasey.Model
     public enum ParameterType
     {
 
-        Path,
-
-        Query,
-
         Body,
+
+        Form,
 
         Header,
 
-        Form
+        Path,
+
+        Query
 
     }
 }

@@ -24,6 +24,7 @@ namespace Swasey.Tests.Helpers
         public static Task<string> GenerateApiJson(string path)
         {
             dynamic apiObject = null;
+            path = path.StartsWith("//") ? path.Substring(1) : path;
             if (ResourceListingVersion12.Apis_Store_Path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
             {
                 apiObject = GenerateStoreApiObject(path);

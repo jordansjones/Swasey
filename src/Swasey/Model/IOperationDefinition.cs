@@ -7,15 +7,31 @@ namespace Swasey.Model
     public interface IOperationDefinition : IServiceMetadata
     {
 
+        IReadOnlyList<IParameterDefinition> BodyParameters { get; }
+
         IServiceDefinition Context { get; }
 
         string Description { get; }
 
-        OperationPath FullPath { get; }
+        IReadOnlyList<IParameterDefinition> FormParameters { get; }
+
+        bool HasBodyParameters { get; }
 
         bool HasDescription { get; }
 
+        bool HasFormParameters { get; }
+
+        bool HasHeaderParameters { get; }
+
         bool HasParameters { get; }
+
+        bool HasPathParameters { get; }
+
+        bool HasQueryParameters { get; }
+
+        bool HasRequiredParameters { get; }
+
+        IReadOnlyList<IParameterDefinition> HeaderParameters { get; }
 
         HttpMethodType HttpMethod { get; }
 
@@ -24,6 +40,12 @@ namespace Swasey.Model
         IReadOnlyList<IParameterDefinition> Parameters { get; }
 
         OperationPath Path { get; }
+
+        IReadOnlyList<IParameterDefinition> PathParameters { get; }
+
+        IReadOnlyList<IParameterDefinition> QueryParameters { get; }
+
+        IReadOnlyList<IParameterDefinition> RequiredParameters { get; }
 
         QualifiedName ResourceName { get; }
 

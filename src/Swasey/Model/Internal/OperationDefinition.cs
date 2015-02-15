@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    [DebuggerDisplay("{HttpMethod}", Name = "[{ResourceName, nq}] {Name}")]
+    [DebuggerDisplay("[{ResourceName, nq}] {HttpMethod} {Name}")]
     internal class OperationDefinition : BaseDefinition, IOperationDefinition
     {
 
@@ -32,6 +32,11 @@ namespace Swasey.Model
             SetResponse(new ResponseDefinition(copyFrom.Response));
         }
 
+        public string Namespace
+        {
+            get { return ApiNamespace; }
+        }
+
         public List<ParameterDefinition> Parameters { get; private set; }
 
         public ResponseDefinition Response
@@ -44,17 +49,23 @@ namespace Swasey.Model
             }
         }
 
+        public IReadOnlyList<IParameterDefinition> BodyParameters
+        {
+            get { return Parameters.Where(x => x.Type == ParameterType.Body).ToList(); }
+        }
+
         public IServiceDefinition Context { get; set; }
 
         public string Description { get; set; }
 
-        public OperationPath FullPath
+        public IReadOnlyList<IParameterDefinition> FormParameters
         {
-            get
-            {
-                throw new NotImplementedException();
-//                return new OperationPath(BasePath, Path);
-            }
+            get { return Parameters.Where(x => x.Type == ParameterType.Form).ToList(); }
+        }
+
+        public bool HasBodyParameters
+        {
+            get { return Parameters.Any(x => x.Type == ParameterType.Body); }
         }
 
         public bool HasDescription
@@ -62,16 +73,44 @@ namespace Swasey.Model
             get { return !string.IsNullOrWhiteSpace(Description); }
         }
 
+        public bool HasFormParameters
+        {
+            get { return Parameters.Any(x => x.Type == ParameterType.Form); }
+        }
+
+        public bool HasHeaderParameters
+        {
+            get { return Parameters.Any(x => x.Type == ParameterType.Header); }
+        }
+
         public bool HasParameters
         {
             get { return Parameters.Any(); }
         }
 
+        public bool HasPathParameters
+        {
+            get { return Parameters.Any(x => x.Type == ParameterType.Path); }
+        }
+
+        public bool HasQueryParameters
+        {
+            get { return Parameters.Any(x => x.Type == ParameterType.Query); }
+        }
+
+        public bool HasRequiredParameters
+        {
+            get { return Parameters.Any(x => x.IsRequired); }
+        }
+
+        public IReadOnlyList<IParameterDefinition> HeaderParameters
+        {
+            get { return Parameters.Where(x => x.Type == ParameterType.Header).ToList(); }
+        }
+
         public HttpMethodType HttpMethod { get; set; }
 
         public QualifiedName Name { get; set; }
-
-        public string Namespace { get { return ApiNamespace; } }
 
         IReadOnlyList<IParameterDefinition> IOperationDefinition.Parameters
         {
@@ -79,6 +118,21 @@ namespace Swasey.Model
         }
 
         public OperationPath Path { get; private set; }
+
+        public IReadOnlyList<IParameterDefinition> PathParameters
+        {
+            get { return Parameters.Where(x => x.Type == ParameterType.Path).ToList(); }
+        }
+
+        public IReadOnlyList<IParameterDefinition> QueryParameters
+        {
+            get { return Parameters.Where(x => x.Type == ParameterType.Query).ToList(); }
+        }
+
+        public IReadOnlyList<IParameterDefinition> RequiredParameters
+        {
+            get { return Parameters.Where(x => x.IsRequired).ToList(); }
+        }
 
         public QualifiedName ResourceName { get; set; }
 

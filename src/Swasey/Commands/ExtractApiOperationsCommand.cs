@@ -11,8 +11,15 @@ namespace Swasey.Commands
     internal class ExtractApiOperationsCommand : ILifecycleCommand
     {
 
+        public Func<dynamic, bool> OperationFilter { get; private set; }
+
+        public Func<dynamic, bool> OperationParameterFilter { get; private set; }
+
         public Task<ILifecycleContext> Execute(ILifecycleContext context)
         {
+            OperationFilter = context.OperationFilter ?? Defaults.DefaultOperationFilter;
+            OperationParameterFilter = context.OperationParameterFilter ?? Defaults.DefaultOperationParameterFilter;
+
             var ctx = new LifecycleContext(context)
             {
                 State = LifecycleState.Continue
@@ -20,6 +27,8 @@ namespace Swasey.Commands
 
             foreach (var apiOp in ExtractApiOperations(context))
             {
+                if (!OperationFilter(apiOp.JObject)) continue;
+
                 NormalizationApiOperation op = ParseOperationData(apiOp);
                 op.ApiNamespace = context.ApiNamespace;
                 op.ModelNamespace = context.ModelNamespace;
@@ -37,6 +46,35 @@ namespace Swasey.Commands
             }
 
             return Task.FromResult<ILifecycleContext>(ctx);
+        }
+
+        private IEnumerable<dynamic> ExtractApiOperations(ILifecycleContext context)
+        {
+            foreach (var apiKv in context.ApiPathJsonMapping)
+            {
+                var apiDef = apiKv.Value;
+                var apiVersion = (string) apiDef.apiVersion;
+                var basePath = (string) apiDef.basePath;
+                var resourcePath = (string) apiDef.resourcePath;
+                if (!apiDef.ContainsKey("apis")) { continue; }
+
+                foreach (var api in apiDef.apis)
+                {
+                    if (api == null || !api.ContainsKey("path") || !api.ContainsKey("operations")) { continue; }
+                    var opPath = (string) api.path;
+                    foreach (var op in api.operations)
+                    {
+                        yield return new
+                        {
+                            ApiVersion = apiVersion,
+                            BasePath = basePath,
+                            OperationPath = opPath,
+                            ResourcePath = resourcePath,
+                            JObject = op
+                        };
+                    }
+                }
+            }
         }
 
         private NormalizationApiOperation ParseOperationData(dynamic extractedOp)
@@ -60,21 +98,14 @@ namespace Swasey.Commands
             return op;
         }
 
-        private NormalizationApiOperationResponse ParseResponse(dynamic op)
-        {
-            var dataType = SimpleNormalizationApiDataType.ParseFromJObject(op);
-            var resp = new NormalizationApiOperationResponse();
-            resp.CopyFrom(dataType);
-
-            return resp;
-        }
-
         private IEnumerable<NormalizationApiOperationParameter> ParseParameters(dynamic op)
         {
-            if (!op.ContainsKey("parameters")) goto NoMoreParameters;
+            if (!op.ContainsKey("parameters")) { goto NoMoreParameters; }
 
             foreach (var paramObj in op.parameters)
             {
+                if (!OperationParameterFilter(paramObj)) continue;
+
                 var param = new NormalizationApiOperationParameter
                 {
                     AllowsMultiple = paramObj.ContainsKey("allowMultiple") && (bool) paramObj.allowMultiple,
@@ -87,38 +118,17 @@ namespace Swasey.Commands
                 yield return param;
             }
 
-        NoMoreParameters:
-            yield break;
+            NoMoreParameters:
+            ;
         }
 
-        private IEnumerable<dynamic> ExtractApiOperations(ILifecycleContext context)
+        private NormalizationApiOperationResponse ParseResponse(dynamic op)
         {
-            foreach (var apiKv in context.ApiPathJsonMapping)
-            {
-                var apiDef = apiKv.Value;
-                var apiVersion = (string) apiDef.apiVersion;
-                var basePath = (string) apiDef.basePath;
-                var resourcePath = (string) apiDef.resourcePath;
-                if (!apiDef.ContainsKey("apis")) continue;
+            var dataType = SimpleNormalizationApiDataType.ParseFromJObject(op);
+            var resp = new NormalizationApiOperationResponse();
+            resp.CopyFrom(dataType);
 
-                foreach (var api in apiDef.apis)
-                {
-                    if (api == null || !api.ContainsKey("path") || !api.ContainsKey("operations")) continue;
-                    var opPath = (string) api.path;
-                    foreach (var op in api.operations)
-                    {
-                        yield return new
-                        {
-                            ApiVersion = apiVersion,
-                            BasePath = basePath,
-                            OperationPath = opPath,
-                            ResourcePath = resourcePath,
-                            JObject = op
-                        };
-                    }
-                }
-            }
-            yield break;
+            return resp;
         }
 
     }

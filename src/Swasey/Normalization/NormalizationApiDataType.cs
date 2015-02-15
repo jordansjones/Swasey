@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Swasey.Normalization
@@ -32,7 +33,13 @@ namespace Swasey.Normalization
 
         public string MaximumValue { get; set; }
 
-        public string TypeName { get; set; }
+        private string _typeName;
+
+        public string TypeName
+        {
+            get { return _typeName; }
+            set { _typeName = value.MapDataType(); }
+        }
 
         public void SetTypeName(string name)
         {

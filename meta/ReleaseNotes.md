@@ -1,3 +1,20 @@
+### New in 0.3.0 (Released 2015/02/14)
+* New: `GeneratorOptions.DataTypeMapping` - A dictionary used when processing data types
+* New: `GeneratorOptions.OperationFilter` - Called during processing of operations. When `false` is returned for an operation, code will not be generated for that operation.
+* New: `GeneratorOptions.OperationParameterFilter` - Called during processing of operation parameters. When `false` is returned, that parameter will be skipped.
+* New: `IOperationDefinition.HasBodyParameters` - returns `true` when any parameter is of type `body`
+* New: `IOperationDefinition.BodyParameters` - returns all parameters that are of type `body`
+* New: `IOperationDefinition.HasFormParameters` - returns `true` when any parameter is of type `form`
+* New: `IOperationDefinition.FormParameters` - returns all parameters that are of type `form`
+* New: `IOperationDefinition.HasHeaderParameters` - returns `true` when any parameter is of type `header`
+* New: `IOperationDefinition.HeaderParameters` - returns all parameters that are of type `header`
+* New: `IOperationDefinition.HasPathParameters` - returns `true` when any parameter is of type `path`
+* New: `IOperationDefinition.PathParameters` - returns all parameters that are of type `path`
+* New: `IOperationDefinition.HasQueryParameters` - returns `true` when any parameter is of type `query`
+* New: `IOperationDefinition.QueryParameters` - returns all parameters that are of type `query`
+* New: `IOperationDefinition.HasRequiredParameters` - returns `true` when any parameter is required
+* New: `IOperationDefinition.RequiredParameters` - returns all parameters that are required
+
 ### New in 0.2.1 (Released 2015/02/13)
 * Fixed: Calling `SwaggerJsonLoader` with an resource relative path treats it as an absolute path
 
