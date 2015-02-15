@@ -21,7 +21,11 @@ namespace Swasey.Normalization
 
         public bool IsEnumerableUnique { get; set; }
 
+        public bool IsModelType { get; set; }
+
         public bool IsNullable { get; set; }
+
+        public bool IsPrimitive { get; set; }
 
         public bool IsRequired { get; set; }
 
@@ -48,11 +52,14 @@ namespace Swasey.Normalization
 
         internal void CopyFrom(NormalizationApiDataType copyFrom)
         {
+            JObject = copyFrom.JObject;
             DefaultValue = copyFrom.DefaultValue;
             IsEnum = copyFrom.IsEnum;
             IsEnumerable = copyFrom.IsEnumerable;
             IsEnumerableUnique = copyFrom.IsEnumerableUnique;
+            IsModelType = copyFrom.IsModelType;
             IsNullable = copyFrom.IsNullable;
+            IsPrimitive = copyFrom.IsPrimitive;
             IsRequired = copyFrom.IsRequired;
             IsVoidType = copyFrom.IsVoidType;
             EnumValues = copyFrom.EnumValues;

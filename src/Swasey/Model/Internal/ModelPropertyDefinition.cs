@@ -10,7 +10,7 @@ namespace Swasey.Model
 
         public ModelPropertyDefinition(IModelPropertyDefinition copyFrom) : base(copyFrom)
         {
-            if (copyFrom == null) return;
+            if (copyFrom == null) { return; }
 
             Name = copyFrom.Name;
             Type = copyFrom.Type;
@@ -19,9 +19,10 @@ namespace Swasey.Model
             IsRequired = copyFrom.IsRequired;
         }
 
-        public QualifiedName Name { get; set; }
-
-        public DataType Type { get; set; }
+        public bool CanBeObserved
+        {
+            get { return (Type.IsEnumerable || Type.IsModelType) && !Type.IsEnum; }
+        }
 
         public string Description { get; set; }
 
@@ -33,6 +34,10 @@ namespace Swasey.Model
         public bool IsKey { get; set; }
 
         public bool IsRequired { get; set; }
+
+        public QualifiedName Name { get; set; }
+
+        public DataType Type { get; set; }
 
         public override string ToString()
         {

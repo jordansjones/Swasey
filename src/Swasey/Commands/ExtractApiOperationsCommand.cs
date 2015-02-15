@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Swasey.Lifecycle;
+using Swasey.Model;
 using Swasey.Normalization;
 
 namespace Swasey.Commands
@@ -105,15 +106,16 @@ namespace Swasey.Commands
             foreach (var paramObj in op.parameters)
             {
                 if (!OperationParameterFilter(paramObj)) continue;
+                if (!paramObj.ContainsKey("paramType")) continue;
 
-                var param = new NormalizationApiOperationParameter
-                {
-                    AllowsMultiple = paramObj.ContainsKey("allowMultiple") && (bool) paramObj.allowMultiple,
-                    Description = paramObj.ContainsKey("description") ? (string) paramObj.description : string.Empty,
-                    Name = paramObj.ContainsKey("name") ? (string) paramObj.name : string.Empty
-                };
-
+                var param = new NormalizationApiOperationParameter();
                 param.CopyFrom(SimpleNormalizationApiDataType.ParseFromJObject(paramObj));
+
+                param.AllowsMultiple = paramObj.ContainsKey("allowMultiple") && (bool) paramObj.allowMultiple;
+                param.Description = paramObj.ContainsKey("description") ? (string) paramObj.description : string.Empty;
+                param.Name = paramObj.ContainsKey("name") ? (string) paramObj.name : string.Empty;
+                param.ParameterType = GetParamType(paramObj);
+                param.IsRequired = paramObj.ContainsKey("required") && (bool) paramObj.required;
 
                 yield return param;
             }
@@ -129,6 +131,12 @@ namespace Swasey.Commands
             resp.CopyFrom(dataType);
 
             return resp;
+        }
+
+        private ParameterType GetParamType(dynamic op)
+        {
+            var p = ((string) op.paramType).Trim().ToLowerInvariant();
+            return p.ParseParameterType();
         }
 
     }

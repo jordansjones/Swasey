@@ -9,6 +9,7 @@ namespace Swasey
     internal static class Constants
     {
 
+        public const string DataType_string = "string";
         public const string DataType_Void = "void";
 
         public const string ParameterName_Version = "version";

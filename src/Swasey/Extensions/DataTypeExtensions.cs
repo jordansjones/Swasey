@@ -14,8 +14,11 @@ namespace Swasey
             return new DataType(This.TypeName)
             {
                 DefaultValue = This.DefaultValue,
+                IsEnum = This.IsEnum,
                 IsEnumerable = This.IsEnumerable,
                 IsEnumerableUnique = This.IsEnumerableUnique,
+                IsModelType = This.IsModelType,
+                IsPrimitive = This.IsPrimitive,
                 MaximumValue = This.MaximumValue,
                 MinimumValue = This.MinimumValue
             };

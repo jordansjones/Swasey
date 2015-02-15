@@ -1,3 +1,21 @@
+### New in 0.4.0 (Released 2015/02/14)
+* New: `DataType.IsEnum`
+* New: `DataType.IsModelType`
+* New: `DataType.IsPrimitive`
+* New: `DataType.IsString`
+* New: `IModelDefinition.DefaultValueProperties`
+* New: `IModelDefinition.HasDefaultValueProperties`
+* New: `IModelDefinition.HasKeyProperty`
+* New: `IModelDefinition.HasMaximumValueProperties`
+* New: `IModelDefinition.HasMinimumValueProperties`
+* New: `IModelDefinition.HasRequiredProperties`
+* New: `IModelDefinition.KeyProperty`
+* New: `IModelDefinition.MaximumValueProperties`
+* New: `IModelDefinition.MinimumValueProperties`
+* New: `IModelDefinition.RequiredProperties`
+* New: `IModelPropertyDefinition.CanBeObserved`
+* Fixed: Operation parameters missing `ParameterType`, `IsRequired`
+
 ### New in 0.3.0 (Released 2015/02/14)
 * New: `GeneratorOptions.DataTypeMapping` - A dictionary used when processing data types
 * New: `GeneratorOptions.OperationFilter` - Called during processing of operations. When `false` is returned for an operation, code will not be generated for that operation.

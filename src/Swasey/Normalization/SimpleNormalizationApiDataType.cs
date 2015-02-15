@@ -18,7 +18,10 @@ namespace Swasey.Normalization
         {
             if (prop.ContainsKey("$ref"))
             {
-                return new SimpleNormalizationApiDataType((string) prop["$ref"], prop);
+                return new SimpleNormalizationApiDataType((string) prop["$ref"], prop)
+                {
+                    IsModelType = true
+                };
             }
             SimpleNormalizationApiDataType type = null;
 
@@ -31,13 +34,18 @@ namespace Swasey.Normalization
                     type = ParseArrayFromJObject(prop);
                     break;
                 case "boolean":
-                    type = new SimpleNormalizationApiDataType(propType, prop);
+                    type = new SimpleNormalizationApiDataType(propType, prop)
+                    {
+                        IsPrimitive = true
+                    };
                     break;
                 case "integer":
                     type = ParseIntegerFromJObject(prop);
+                    type.IsPrimitive = true;
                     break;
                 case "number":
                     type = ParseNumberFromJObject(prop);
+                    type.IsPrimitive = true;
                     break;
                 default: // "string"
                     type = ParseStringFromJObject(prop);
@@ -116,19 +124,24 @@ namespace Swasey.Normalization
 
             var format = (string) prop.format;
             if (!String.IsNullOrWhiteSpace(format)) { format = format.ToLowerInvariant(); }
+            var isPrimitive = false;
 
             switch (format)
             {
                 case "date":
                 case "date-time":
                     format = "System.DateTime";
+                    isPrimitive = true;
                     break;
                 default:
                     // Otherwise just use the format
                     break;
             }
 
-            return new SimpleNormalizationApiDataType(format, prop);
+            return new SimpleNormalizationApiDataType(format, prop)
+            {
+                IsPrimitive = isPrimitive
+            };
         }
 
         internal static SimpleNormalizationApiDataType ParseArrayFromJObject(dynamic prop)

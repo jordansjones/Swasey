@@ -9,6 +9,8 @@ namespace Swasey.Model
 
         DataType Type { get; }
 
+        bool CanBeObserved { get; }
+
         string Description { get; }
 
         bool HasDescription { get; }

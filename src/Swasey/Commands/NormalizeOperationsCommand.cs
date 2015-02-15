@@ -32,6 +32,13 @@ namespace Swasey.Commands
                     .Select(NormalizeParameterDefinition)
                     .ToList()
                     .ForEach(x => op.AddParameter(x));
+
+                if (serviceDefinition.Operations.Any(x => x.ResourceName == op.ResourceName && x.Name == op.Name))
+                {
+                    var pathParams = op.Parameters.Where(x => x.Type == ParameterType.Path && x.IsRequired).OrderBy(x => x.Name);
+                    op.Name += string.Join("And", pathParams.Select(x => "By" + x.Name.UCFirst()));
+                }
+
                 serviceDefinition.AddOperation(op);
             }
 
@@ -77,6 +84,7 @@ namespace Swasey.Commands
                 var template = new UriTemplate(path, true);
                 template.SetParameter(versionParam.Name, op.ApiVersion);
                 path = template.Resolve();
+                op.Parameters.Remove(versionParam);
             }
 
             return new OperationPath(path);

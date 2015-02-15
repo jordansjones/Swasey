@@ -26,13 +26,21 @@ namespace Swasey.Commands
                         .Operations
                         .SelectMany(ExtractOperationEnums)
                 )
-                .ToList();
+                .ToLookup(x => x.Name);
 
             if (!enums.Any())
             {
                 goto ReturnResult;
             }
-            enums.ForEach(x => serviceDefinition.AddEnum(x));
+
+            foreach (var e in enums)
+            {
+                var x = e.FirstOrDefault();
+                if (x != null)
+                {
+                    serviceDefinition.AddEnum(x);
+                }
+            }
 
 
             ReturnResult:
@@ -79,7 +87,7 @@ namespace Swasey.Commands
                         throw new NotImplementedException(string.Format("'{0}' isn't handled", typeName));
                 }
 
-                ed.Values.Add(Kv(item, idx));
+                ed.Values.Add(item, idx);
             }
             return ed;
         }
@@ -109,10 +117,10 @@ namespace Swasey.Commands
             return new KeyValuePair<string, int>(key, val);
         }
 
-        private string NormalizeEnumName(EnumDefinition ed, string ename)
+        private string NormalizeEnumName(EnumDefinition ed, string ename, int count = 0)
         {
-            int count;
-            if (!_enumNames.TryGetValue(ename, out count))
+            int refCount = 0;
+            if (!_enumNames.TryGetValue(ename, out refCount))
             {
                 _enumNames.Add(ename, ++count);
                 return ename;
@@ -122,9 +130,9 @@ namespace Swasey.Commands
             ename = ed.ContextName + ed.Name;
             if (!isFirstAttempt)
             {
-                ename += count;
+                return ename;
             }
-            return NormalizeEnumName(ed, ename);
+            return NormalizeEnumName(ed, ename, count);
         }
 
     }

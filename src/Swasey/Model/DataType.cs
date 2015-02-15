@@ -16,7 +16,8 @@ namespace Swasey.Model
             }
 
             _value = value;
-            IsVoid = Constants.DataType_Void.ToUpperInvariant().Equals(_value.Trim().ToUpperInvariant());
+            IsString = Constants.DataType_string.Equals(_value.Trim().ToLowerInvariant());
+            IsVoid = Constants.DataType_Void.Equals(_value.Trim().ToLowerInvariant());
             IsEnumerable = false;
         }
 
@@ -28,11 +29,19 @@ namespace Swasey.Model
 
         public bool HasMinimumValue { get { return !string.IsNullOrWhiteSpace(MinimumValue); } }
 
+        public bool IsEnum { get; set; }
+
         public bool IsEnumerable { get; set; }
 
         public bool IsEnumerableUnique { get; set; }
 
+        public bool IsModelType { get; internal set; }
+
         public bool IsNullable { get; set; }
+
+        public bool IsPrimitive { get; internal set; }
+
+        public bool IsString { get; private set; }
 
         public bool IsVoid { get; private set; }
 
