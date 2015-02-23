@@ -116,29 +116,29 @@ Task("Build")
 	);
 });
 
-Task("UnitTests")
-    .IsDependentOn("Build")
-    .Does(() =>
-{
-    Information("Running Tests in {0}", solution);
-
-    if (!FileSystem.Exist(testResultsDir))
-    {
-        CreateDirectory(testResultsDir);
-    }
-
-    XUnit2(
-        solutionDir + "/**/bin/" + configuration + "/**/*.Tests*.dll",
-        new XUnit2Settings {
-            OutputDirectory = testResultsDir,
-            HtmlReport = true,
-            XmlReport = true
-        }
-    );
-});
+//Task("UnitTests")
+//    .IsDependentOn("Build")
+//    .Does(() =>
+//{
+//    Information("Running Tests in {0}", solution);
+//
+//    if (!FileSystem.Exist(testResultsDir))
+//    {
+//        CreateDirectory(testResultsDir);
+//    }
+//
+//    XUnit2(
+//        solutionDir + "/**/bin/" + configuration + "/**/*.Tests*.dll",
+//        new XUnit2Settings {
+//            OutputDirectory = testResultsDir,
+//            HtmlReport = true,
+//            XmlReport = true
+//        }
+//    );
+//});
 
 Task("CopyNugetPackageFiles")
-    .IsDependentOn("UnitTests")
+    .IsDependentOn("Build")
     .Does(() =>
 {
     if (!FileSystem.Exist(nugetPackagingDir))
