@@ -1,3 +1,6 @@
+### New in 0.5.1 (Released 2015/02/23)
+* Fixed: Enum Model properties are now correctly indicated
+
 ### New in 0.5.0 (Released 2015/02/23)
 * New: Better support for named enums
 * Removed: Model/Enum name normalization
