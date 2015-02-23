@@ -9,6 +9,7 @@ namespace Swasey.Normalization
 
         public NormalizationContext()
         {
+            Enums = new List<NormalizationApiModelEnum>();
             Models = new List<NormalizationApiModel>();
             Operations = new List<NormalizationApiOperation>();
         }
@@ -16,6 +17,11 @@ namespace Swasey.Normalization
         public NormalizationContext(NormalizationContext ctx)
             : this()
         {
+            if (ctx.Enums.Any())
+            {
+                Enums.AddRange(ctx.Enums);
+            }
+
             if (ctx.Models.Any())
             {
                 Models.AddRange(ctx.Models);
@@ -26,6 +32,8 @@ namespace Swasey.Normalization
                 Operations.AddRange(ctx.Operations);
             }
         }
+
+        public List<NormalizationApiModelEnum> Enums { get; private set; }
 
         public List<NormalizationApiModel> Models { get; private set; }
 

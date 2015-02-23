@@ -18,19 +18,32 @@ namespace Swasey.Commands
                 State = LifecycleState.Continue
             };
 
-            foreach (var modelTuple in ExtractModels(context))
+            foreach (var modelObj in ExtractModels(context))
             {
-                var model = ParseModelData(modelTuple);
-                model.ApiNamespace = context.ApiNamespace;
-                model.ModelNamespace = context.ModelNamespace;
+                var modelType = (string) modelObj.Model.type;
+                var isEnum = "enum".Equals(modelType, StringComparison.InvariantCultureIgnoreCase);
 
-                foreach (var prop in model.Properties)
+                if (isEnum)
                 {
-                    prop.ApiNamespace = context.ApiNamespace;
-                    prop.ModelNamespace = context.ModelNamespace;
+                    var model = ParseEnumData(modelObj);
+                    model.ApiNamespace = context.ApiNamespace;
+                    model.ModelNamespace = context.ModelNamespace;
+                    ctx.NormalizationContext.Enums.Add(model);
                 }
+                else
+                {
+                    var model = ParseModelData(modelObj);
+                    model.ApiNamespace = context.ApiNamespace;
+                    model.ModelNamespace = context.ModelNamespace;
 
-                ctx.NormalizationContext.Models.Add(model);
+                    foreach (var prop in model.Properties)
+                    {
+                        prop.ApiNamespace = context.ApiNamespace;
+                        prop.ModelNamespace = context.ModelNamespace;
+                    }
+
+                    ctx.NormalizationContext.Models.Add(model);
+                }
             }
 
             foreach (var model in ctx.NormalizationContext.Models.Where(x => x.RawSubTypes.Any()))
@@ -44,6 +57,32 @@ namespace Swasey.Commands
             }
 
             return Task.FromResult<ILifecycleContext>(ctx);
+        }
+
+        private NormalizationApiModelEnum ParseEnumData(dynamic item)
+        {
+            var apiVersion = (string) item.ApiVersion;
+            var resourceName = (string) item.ResourceName;
+            var resourcePath = (string) item.ResourcePath;
+            dynamic model = item.Model;
+
+            var normEnum = new NormalizationApiModelEnum
+            {
+                ApiVersion = apiVersion,
+                Name = (string) model.id,
+                ResourceName = resourceName,
+                ResourcePath = resourcePath
+            };
+
+            if (model.ContainsKey("description") && !string.IsNullOrWhiteSpace((string) model.description))
+            {
+                normEnum.Description = (string) model.description;
+            }
+
+            var values = (string[]) SimpleNormalizationApiDataType.ParseEnumFromJObject(model);
+            if (values.Any()) normEnum.Values.AddRange(values);
+
+            return normEnum;
         }
 
         private NormalizationApiModel ParseModelData(dynamic item)

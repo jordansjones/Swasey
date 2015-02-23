@@ -1,3 +1,7 @@
+### New in 0.5.0 (Released 2015/02/23)
+* New: Better support for named enums
+* Removed: Model/Enum name normalization
+
 ### New in 0.4.0 (Released 2015/02/14)
 * New: `DataType.IsEnum`
 * New: `DataType.IsModelType`

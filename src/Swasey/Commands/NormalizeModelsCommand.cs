@@ -33,7 +33,7 @@ namespace Swasey.Commands
                     ResourceName = normalModel.ResourcePath.ResourceNameFromPath()
                 };
 
-                modelDef.Name = NormalizeModelName(modelDef, modelDef.Name);
+//                modelDef.Name = NormalizeModelName(modelDef, modelDef.Name);
                 normalModelName.New = modelDef.Name;
 
                 modelDef.Properties.AddRange(ExtractModelProperties(normalModel.Properties));

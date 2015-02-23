@@ -20,7 +20,7 @@ namespace Swasey.Model
                 throw new ArgumentException("Invalid " + typeof (QualifiedName).Name + ".", "value");
             }
 
-            if (Char.IsLower(value[0]))
+            if (value.Length > 0 && Char.IsLower(value[0]))
             {
                 value = Char.ToUpper(value[0]) + value.Substring(1);
             }
@@ -36,7 +36,11 @@ namespace Swasey.Model
 
         public static bool IsValid(string candidate)
         {
-            return !string.IsNullOrWhiteSpace(candidate) && Char.IsLetter(candidate[0]);
+            if (!string.IsNullOrWhiteSpace(candidate))
+            {
+                return Char.IsLetter(candidate[0]);
+            }
+            return true;
         }
 
         public static bool TryParse(string candidate, out QualifiedName qualifiedName)

@@ -59,14 +59,8 @@ namespace Swasey.Normalization
 
             if (prop.ContainsKey("enum"))
             {
-                var count = prop["enum"].Count;
-                var values = new string[count];
-                for (var i = 0; i < count; i++)
-                {
-                    values[i] = (string) prop["enum"][i];
-                }
                 type.IsEnum = true;
-                type.EnumValues = values;
+                type.EnumValues = ParseEnumFromJObject(prop);
             }
 
             if (prop.ContainsKey("defaultValue"))
@@ -87,6 +81,20 @@ namespace Swasey.Normalization
             }
 
             return type;
+        }
+
+        internal static string[] ParseEnumFromJObject(dynamic obj)
+        {
+            if (!obj.ContainsKey("enum")) return new string[0];
+
+            var count = obj["enum"].Count;
+            var values = new string[count];
+            for (var i = 0; i < count; i++)
+            {
+                values[i] = (string) obj["enum"][i];
+            }
+
+            return values;
         }
 
         internal static SimpleNormalizationApiDataType ParseIntegerFromJObject(dynamic prop)

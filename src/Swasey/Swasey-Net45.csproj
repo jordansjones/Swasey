@@ -119,6 +119,7 @@
     <Compile Include="Normalization\BaseNormalizationEntity.cs" />
     <Compile Include="Normalization\NormalizationApiDataType.cs" />
     <Compile Include="Normalization\NormalizationApiModel.cs" />
+    <Compile Include="Normalization\NormalizationApiModelEnum.cs" />
     <Compile Include="Normalization\NormalizationApiModelProperty.cs" />
     <Compile Include="Normalization\NormalizationApiOperation.cs" />
     <Compile Include="Normalization\NormalizationApiOperationParameter.cs" />
