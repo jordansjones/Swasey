@@ -56,6 +56,16 @@ namespace Swasey.Commands
                 }
             }
 
+            var enumNames = ctx.NormalizationContext.Enums.Select(x => x.Name).ToList();
+            var modelNames = ctx.NormalizationContext.Models.Select(x => x.Name).ToList();
+
+            // Ensure that Enum Properties are properly indicated
+            ctx.NormalizationContext.Models
+                .SelectMany(x => x.Properties)
+                .Where(x => enumNames.Contains(x.TypeName) && !modelNames.Contains(x.TypeName))
+                .ToList()
+                .ForEach(x => x.IsEnum = true);
+
             return Task.FromResult<ILifecycleContext>(ctx);
         }
 
