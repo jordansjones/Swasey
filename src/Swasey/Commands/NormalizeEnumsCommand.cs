@@ -50,7 +50,7 @@ namespace Swasey.Commands
             {
                 ContextName = "Enums",
                 Description = normalEnum.Description,
-                Name = normalEnum.Name,
+                Name = normalEnum.Name.MapDataTypeName(),
                 ResourceName = "Enums"
             };
 

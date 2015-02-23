@@ -11,7 +11,7 @@ namespace Swasey
 
         public static DataType AsDataType(this NormalizationApiDataType This)
         {
-            return new DataType(This.TypeName)
+            return new DataType(This.TypeName.MapDataTypeName())
             {
                 DefaultValue = This.DefaultValue,
                 IsEnum = This.IsEnum,
@@ -24,7 +24,7 @@ namespace Swasey
             };
         }
 
-        public static string MapDataType(this string This)
+        public static string MapDataTypeName(this string This)
         {
             string realValue;
             if (!Constants.DataTypeMapping.TryGetValue(This, out realValue))

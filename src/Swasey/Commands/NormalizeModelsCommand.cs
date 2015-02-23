@@ -29,11 +29,9 @@ namespace Swasey.Commands
                 {
                     ContextName = normalModel.ResourceName,
                     Description = normalModel.Description,
-                    Name = normalModel.Name,
+                    Name = normalModel.Name.MapDataTypeName(),
                     ResourceName = normalModel.ResourcePath.ResourceNameFromPath()
                 };
-
-//                modelDef.Name = NormalizeModelName(modelDef, modelDef.Name);
                 normalModelName.New = modelDef.Name;
 
                 modelDef.Properties.AddRange(ExtractModelProperties(normalModel.Properties));
@@ -81,7 +79,7 @@ namespace Swasey.Commands
             {
                 yield return new ModelPropertyDefinition(normalProp.AsMetadata())
                 {
-                    Name = normalProp.Name,
+                    Name = normalProp.Name.MapDataTypeName(),
                     Description = normalProp.Description,
                     IsKey = normalProp.IsKey,
                     IsRequired = normalProp.IsRequired,

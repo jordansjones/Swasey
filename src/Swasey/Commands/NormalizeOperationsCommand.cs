@@ -97,7 +97,7 @@ namespace Swasey.Commands
                 DataType = normalParam.AsDataType(),
                 IsRequired = normalParam.IsRequired,
                 IsVariadic = normalParam.AllowsMultiple,
-                Name = normalParam.Name,
+                Name = normalParam.Name.MapDataTypeName(),
                 Type = normalParam.ParameterType
             };
         }

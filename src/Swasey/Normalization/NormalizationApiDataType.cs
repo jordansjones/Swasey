@@ -42,7 +42,7 @@ namespace Swasey.Normalization
         public string TypeName
         {
             get { return _typeName; }
-            set { _typeName = value.MapDataType(); }
+            set { _typeName = value.MapDataTypeName(); }
         }
 
         public void SetTypeName(string name)
