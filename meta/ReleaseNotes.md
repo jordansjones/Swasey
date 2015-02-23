@@ -1,3 +1,6 @@
+### New in 0.5.4 (Released 2015/02/23)
+* Attempt to fix the stupid nuget package
+
 ### New in 0.5.1 (Released 2015/02/23)
 * Fixed: Enum Model properties are now correctly indicated
 
