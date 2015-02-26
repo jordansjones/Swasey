@@ -1,3 +1,6 @@
+### New in 0.5.8 (Released 2015/02/26)
+* Fixed a bug where nullables weren't being set in the code generation model
+
 ### New in 0.5.7 (Released 2015/02/26)
 * Fixed a bug in the new DataType parsing
 

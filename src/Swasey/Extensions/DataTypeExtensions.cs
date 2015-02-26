@@ -17,6 +17,7 @@ namespace Swasey
                 IsEnum = This.IsEnum,
                 IsEnumerable = This.IsEnumerable,
                 IsEnumerableUnique = This.IsEnumerableUnique,
+                IsNullable = This.IsNullable,
                 IsModelType = This.IsModelType,
                 IsPrimitive = This.IsPrimitive,
                 MaximumValue = This.MaximumValue,
