@@ -36,11 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Handlebars">
-      <HintPath>..\..\packages\Handlebars.Net.1.2.1\lib\Handlebars.dll</HintPath>
+      <HintPath>..\..\packages\Handlebars.Net.1.2.6\lib\Handlebars.dll</HintPath>
     </Reference>
-    <Reference Include="Jil, Version=2.7.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Jil.2.7.2\lib\net45\Jil.dll</HintPath>
+    <Reference Include="Jil">
+      <HintPath>..\..\packages\Jil.2.8.1\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Sigil, Version=4.4.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -53,7 +52,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="Tavis.UriTemplates">
-      <HintPath>..\..\packages\Tavis.UriTemplates.0.6.1\lib\Net45\Tavis.UriTemplates.dll</HintPath>
+      <HintPath>..\..\packages\Tavis.UriTemplates.0.6.2\lib\Net45\Tavis.UriTemplates.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

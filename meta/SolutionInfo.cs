@@ -6,6 +6,6 @@
 using System.Reflection;
 
 [assembly: AssemblyProduct("Swasey")]
-[assembly: AssemblyVersion("0.2.1")]
-[assembly: AssemblyFileVersion("0.2.1")]
-[assembly: AssemblyInformationalVersion("0.2.1-build-0")]
+[assembly: AssemblyVersion("0.5.6")]
+[assembly: AssemblyFileVersion("0.5.6")]
+[assembly: AssemblyInformationalVersion("0.5.6-build-0")]
