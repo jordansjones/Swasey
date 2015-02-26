@@ -21,7 +21,7 @@ namespace Swasey.Model
 
         public bool CanBeObserved
         {
-            get { return (Type.IsEnumerable || Type.IsModelType) && !Type.IsEnum; }
+            get { return (Type.IsEnumerable || (Type.IsModelType && !Type.IsEnum)); }
         }
 
         public string Description { get; set; }

@@ -6,62 +6,20 @@ namespace Swasey.Normalization
     internal class SimpleNormalizationApiDataType : NormalizationApiDataType
     {
 
-        public SimpleNormalizationApiDataType(string typeName, dynamic jObject)
+        public SimpleNormalizationApiDataType(dynamic jObject)
         {
-            TypeName = typeName;
             JObject = jObject;
         }
 
         #region Utilities
 
-        internal static SimpleNormalizationApiDataType ParseFromJObject(dynamic prop)
+        internal static SimpleNormalizationApiDataType ParseFromJObject(object obj)
         {
-            if (prop.ContainsKey("$ref"))
-            {
-                return new SimpleNormalizationApiDataType((string) prop["$ref"], prop)
-                {
-                    IsModelType = true
-                };
-            }
-            SimpleNormalizationApiDataType type = null;
+            dynamic prop = obj;
+            var type = new SimpleNormalizationApiDataType(prop);
 
-            var propType = (string) prop.type;
-            if (!String.IsNullOrWhiteSpace(propType)) { propType = propType.ToLowerInvariant(); }
-
-            switch (propType)
-            {
-                case "array":
-                    type = ParseArrayFromJObject(prop);
-                    break;
-                case "boolean":
-                    type = new SimpleNormalizationApiDataType(propType, prop)
-                    {
-                        IsPrimitive = true
-                    };
-                    break;
-                case "integer":
-                    type = ParseIntegerFromJObject(prop);
-                    type.IsPrimitive = true;
-                    break;
-                case "number":
-                    type = ParseNumberFromJObject(prop);
-                    type.IsPrimitive = true;
-                    break;
-                default: // "string"
-                    type = ParseStringFromJObject(prop);
-                    break;
-            }
-
-            if (type == null)
-            {
-                throw new SwaseyException("Failed to parse property type: '{0}'", propType);
-            }
-
-            if (prop.ContainsKey("enum"))
-            {
-                type.IsEnum = true;
-                type.EnumValues = ParseEnumFromJObject(prop);
-            }
+            type.TryParseTypeFromJObject(obj);
+            type.TryParseEnumFromJObject(obj);
 
             if (prop.ContainsKey("defaultValue"))
             {
@@ -80,93 +38,147 @@ namespace Swasey.Normalization
                 type.IsNullable = (bool) prop.nullable;
             }
 
+            if (string.IsNullOrWhiteSpace(type.TypeName))
+            {
+                type.TypeName = "object";
+            }
+
             return type;
         }
 
-        internal static string[] ParseEnumFromJObject(dynamic obj)
+        public void TryParseTypeFromJObject(object obj)
         {
-            if (!obj.ContainsKey("enum")) return new string[0];
+            dynamic prop = obj;
 
-            var count = obj["enum"].Count;
+            var propType = (string) prop.type;
+            if (!String.IsNullOrWhiteSpace(propType)) { propType = propType.ToLowerInvariant(); }
+
+            switch (propType)
+            {
+                case "array":
+                    ParseArrayFromJObject(obj);
+                    break;
+                case "boolean":
+                    IsPrimitive = true;
+                    TypeName = propType;
+                    break;
+                case "integer":
+                    ParseIntegerFromJObject(obj);
+                    break;
+                case "number":
+                    ParseNumberFromJObject(obj);
+                    break;
+                case "string":
+                    ParseStringFromJObject(obj);
+                    break;
+                case "void":
+                    TypeName = propType;
+                    break;
+            }
+
+            if (prop.ContainsKey("$ref"))
+            {
+                TypeName = (string) prop["$ref"];
+                IsModelType = true;
+            }
+        }
+
+        public void TryParseEnumFromJObject(object obj)
+        {
+            dynamic prop = obj;
+            if (!prop.ContainsKey("enum")) return;
+
+            var count = prop["enum"].Count;
             var values = new string[count];
             for (var i = 0; i < count; i++)
             {
-                values[i] = (string) obj["enum"][i];
+                values[i] = (string) prop["enum"][i];
             }
 
-            return values;
+            IsEnum = true;
+            EnumValues = values;
         }
 
-        internal static SimpleNormalizationApiDataType ParseIntegerFromJObject(dynamic prop)
+        public void ParseIntegerFromJObject(dynamic prop)
         {
             const string int32Format = "int32";
+            const string int64Format = "int64";
 
-            var format = (string) prop.format;
+            var format = prop.ContainsKey("format") ? (string) prop.format : int64Format;
 
             format = int32Format.Equals(format, StringComparison.InvariantCultureIgnoreCase)
                 ? "int"
                 : "long";
 
-            return new SimpleNormalizationApiDataType(format, prop);
+            TypeName = format;
+            IsPrimitive = true;
         }
 
-        internal static SimpleNormalizationApiDataType ParseNumberFromJObject(dynamic prop)
+        public void ParseNumberFromJObject(dynamic prop)
         {
-            return new SimpleNormalizationApiDataType((string) prop.format, prop);
+            const string floatFormat = "float";
+            const string doubleFormat = "double";
+
+            var format = prop.ContainsKey("format") ? (string) prop.format : doubleFormat;
+
+            format = floatFormat.Equals(format, StringComparison.InvariantCultureIgnoreCase)
+                ? "float"
+                : "double";
+
+            TypeName = format;
+            IsPrimitive = true;
         }
 
-        internal static SimpleNormalizationApiDataType ParseStringFromJObject(dynamic prop)
+        public void ParseStringFromJObject(dynamic prop)
         {
             var propType = (string) prop.type;
             var normalPropType = propType;
-            if (!String.IsNullOrWhiteSpace(normalPropType)) { normalPropType = normalPropType.ToLowerInvariant(); }
+            if (!string.IsNullOrWhiteSpace(normalPropType)) { normalPropType = normalPropType.ToLowerInvariant(); }
+
+            var isPrimitive = false;
 
             if (!"string".Equals(normalPropType) && !prop.ContainsKey("format"))
             {
-                return new SimpleNormalizationApiDataType(propType, prop);
+                TypeName = propType;
             }
             if (!prop.ContainsKey("format"))
             {
-                return new SimpleNormalizationApiDataType("string", prop);
+                TypeName = "string";
+            }
+            else
+            {
+                var format = (string) prop.format;
+                if (!string.IsNullOrWhiteSpace(format)) { format = format.ToLowerInvariant(); }
+
+                switch (format)
+                {
+                    case "date":
+                    case "date-time":
+                        format = "System.DateTime";
+                        isPrimitive = true;
+                        break;
+                    default:
+                        // Otherwise just use the format
+                        break;
+                }
+                TypeName = format;
             }
 
-            var format = (string) prop.format;
-            if (!String.IsNullOrWhiteSpace(format)) { format = format.ToLowerInvariant(); }
-            var isPrimitive = false;
-
-            switch (format)
-            {
-                case "date":
-                case "date-time":
-                    format = "System.DateTime";
-                    isPrimitive = true;
-                    break;
-                default:
-                    // Otherwise just use the format
-                    break;
-            }
-
-            return new SimpleNormalizationApiDataType(format, prop)
-            {
-                IsPrimitive = isPrimitive
-            };
+            IsPrimitive = isPrimitive;
         }
 
-        internal static SimpleNormalizationApiDataType ParseArrayFromJObject(dynamic prop)
+        public void ParseArrayFromJObject(dynamic prop)
         {
-            if (!prop.ContainsKey("items"))
-            {
-                throw new SwaseyException("Expected 'items' property, but none found: '{0}'", prop);
-            }
-            var type = ParseFromJObject(prop.items);
-            type.IsEnumerable = true;
+            IsEnumerable = true;
+            IsEnumerableUnique = prop.ContainsKey("uniqueItems") && ((bool) prop.uniqueItems);
 
-            if (prop.ContainsKey("uniqueItems"))
-            {
-                type.IsEnumerableUnique = (bool) prop.uniqueItems;
-            }
 
-            return type;
+            if (!prop.ContainsKey("items")) return;
+
+            object items = prop.items;
+            var type = ParseFromJObject(items);
+
+            TypeName = type.TypeName;
         }
 
         #endregion

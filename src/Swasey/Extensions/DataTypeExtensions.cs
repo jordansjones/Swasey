@@ -27,7 +27,7 @@ namespace Swasey
         public static string MapDataTypeName(this string This)
         {
             string realValue;
-            if (!Constants.DataTypeMapping.TryGetValue(This, out realValue))
+            if (This == null || !Constants.DataTypeMapping.TryGetValue(This, out realValue))
             {
                 realValue = This;
             }

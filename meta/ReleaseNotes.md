@@ -1,3 +1,6 @@
+### New in 0.5.6 (Released 2015/02/26)
+* Fixed DataType parsing
+
 ### New in 0.5.4 (Released 2015/02/23)
 * Attempt to fix the stupid nuget package
 

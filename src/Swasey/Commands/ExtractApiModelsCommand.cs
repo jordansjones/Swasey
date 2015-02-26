@@ -89,7 +89,10 @@ namespace Swasey.Commands
                 normEnum.Description = (string) model.description;
             }
 
-            var values = (string[]) SimpleNormalizationApiDataType.ParseEnumFromJObject(model);
+            var type = new SimpleNormalizationApiDataType(model);
+            type.TryParseEnumFromJObject(model);
+
+            var values = type.EnumValues;
             if (values.Any()) normEnum.Values.AddRange(values);
 
             return normEnum;
