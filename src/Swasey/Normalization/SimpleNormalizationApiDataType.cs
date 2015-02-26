@@ -81,6 +81,12 @@ namespace Swasey.Normalization
                 TypeName = (string) prop["$ref"];
                 IsModelType = true;
             }
+            else if (string.IsNullOrEmpty(TypeName) && !string.IsNullOrWhiteSpace(propType))
+            {
+                // Assume that the property is a model type
+                TypeName = (string) prop.type;
+                IsModelType = true;
+            }
         }
 
         public void TryParseEnumFromJObject(object obj)

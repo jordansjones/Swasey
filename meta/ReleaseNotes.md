@@ -1,3 +1,6 @@
+### New in 0.5.7 (Released 2015/02/26)
+* Fixed a bug in the new DataType parsing
+
 ### New in 0.5.6 (Released 2015/02/26)
 * Fixed DataType parsing
 

@@ -78,8 +78,9 @@ namespace Swasey.Commands
             }
         }
 
-        private NormalizationApiOperation ParseOperationData(dynamic extractedOp)
+        private NormalizationApiOperation ParseOperationData(object obj)
         {
+            dynamic extractedOp = obj;
             var opObj = extractedOp.JObject;
 
             var op = new NormalizationApiOperation
