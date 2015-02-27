@@ -1,3 +1,6 @@
+### New in 0.5.9 (Released 2015/02/27)
+* Fixed: Operation path normalization now includes the path portion of the basePath swagger property
+
 ### New in 0.5.8 (Released 2015/02/26)
 * Fixed a bug where nullables weren't being set in the code generation model
 

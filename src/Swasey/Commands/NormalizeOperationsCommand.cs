@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using Swasey.Lifecycle;
@@ -76,7 +77,24 @@ namespace Swasey.Commands
 
         private OperationPath NormalizeOperationPath(NormalizationApiOperation op)
         {
-            var path = op.Path;
+            var pathBuilder = new StringBuilder('/');
+
+            var basePath = NormalizeBasePath(op.BasePath);
+            if (!string.IsNullOrWhiteSpace(basePath))
+            {
+                pathBuilder.Append(basePath);
+            }
+            if (!string.IsNullOrWhiteSpace(op.Path))
+            {
+                var opPath = op.Path;
+                if (opPath.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    opPath = opPath.Length == 1 ? string.Empty : opPath.Substring(1);
+                }
+                pathBuilder.Append(opPath);
+            }
+
+            var path = pathBuilder.ToString();
 
             var versionParam = op.Parameters.FirstOrDefault(x => x.Name.IndexOf(Constants.ParameterName_Version, StringComparison.InvariantCultureIgnoreCase) >= 0);
             if (versionParam != null)
@@ -88,6 +106,35 @@ namespace Swasey.Commands
             }
 
             return new OperationPath(path);
+        }
+
+        private string NormalizeBasePath(string basePath)
+        {
+            if (string.IsNullOrWhiteSpace(basePath)) return null;
+
+            try
+            {
+                var baseUri = new Uri(basePath, UriKind.RelativeOrAbsolute);
+                basePath = baseUri.IsAbsoluteUri ? baseUri.AbsolutePath : basePath;
+
+                var len = basePath.Length;
+                if (len == 1 && basePath.Equals("/", StringComparison.InvariantCultureIgnoreCase)) return null;
+                if (
+                    len == 2
+                    && basePath.StartsWith("/", StringComparison.InvariantCultureIgnoreCase)
+                    && basePath.EndsWith("/", StringComparison.InvariantCultureIgnoreCase)
+                    )
+                {
+                    return null;
+                }
+
+                basePath = basePath.StartsWith("/") ? basePath.Substring(1) : basePath;
+
+                return basePath.EndsWith("/") ? basePath : basePath + "/";
+
+            }
+            catch (UriFormatException) { }
+            return null;
         }
 
         private ParameterDefinition NormalizeParameterDefinition(NormalizationApiOperationParameter normalParam)
