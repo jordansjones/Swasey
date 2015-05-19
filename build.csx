@@ -13,8 +13,7 @@ var forcePackage    = HasArgument("forcePackage");
 var projectName = "Swasey";
 
 // "Root"
-var context =  GetContext();
-var baseDir = context.Environment.WorkingDirectory;
+var baseDir = Context.Environment.WorkingDirectory;
 var solution = baseDir.GetFilePath(projectName + ".sln");
 
 // Directories
@@ -34,10 +33,10 @@ var licenseFile = solutionDir.GetFilePath("LICENSE.txt");
 var readmeFile = solutionDir.GetFilePath("README.md");
 var releaseNotesFile = metaDir.GetFilePath("ReleaseNotes.md");
 
-var appVeyorEnv =  context.AppVeyor().Environment;
+var appVeyorEnv =  Context.AppVeyor().Environment;
 
 // Get whether or not this is a local build.
-var local = !context.BuildSystem().IsRunningOnAppVeyor;
+var local = !Context.BuildSystem().IsRunningOnAppVeyor;
 var isReleaseBuild = !local && appVeyorEnv.Repository.Tag.IsTag;
 
 // Release notes
@@ -56,6 +55,15 @@ Setup(() =>
 {
     // Executed BEFORE the first task.
     Information("Running tasks...");
+
+    if (!DirectoryExists(testResultsDir))
+    {
+        CreateDirectory(testResultsDir);
+    }
+    if (!DirectoryExists(nugetPackagingDir))
+    {
+        CreateDirectory(nugetPackagingDir);
+    }
 });
 
 Teardown(() =>
@@ -122,11 +130,6 @@ Task("UnitTests")
 {
     Information("Running Tests in {0}", solution);
 
-    if (!FileSystem.Exist(testResultsDir))
-    {
-        CreateDirectory(testResultsDir);
-    }
-
     XUnit(
         solutionDir + "/**/bin/" + configuration + "/**/*.Tests*.dll",
         new XUnitSettings {
@@ -141,10 +144,6 @@ Task("CopyNugetPackageFiles")
     .IsDependentOn("UnitTests")
     .Does(() =>
 {
-    if (!FileSystem.Exist(nugetPackagingDir))
-    {
-        CreateDirectory(nugetPackagingDir);
-    }
 
     var baseBuildDir = sourcesDir.Combine(projectName).Combine("bin").Combine(configuration);
 
@@ -159,9 +158,7 @@ Task("CopyNugetPackageFiles")
 
     foreach (var dirPair in dirMap)
     {
-        var files = FileSystem.GetDirectory(dirPair.Key)
-            .GetFiles(projectName + "*", SearchScope.Current)
-            .Select(x => x.Path);
+        var files = GetFiles(dirPair.Key + "/" + projectName + "*");
         CopyFiles(files, dirPair.Value);
     }
 
