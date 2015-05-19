@@ -9,6 +9,8 @@ namespace Swasey.Model
 
         IReadOnlyList<IParameterDefinition> BodyParameters { get; }
 
+        bool ConsumesOctetStream { get; }
+
         IServiceDefinition Context { get; }
 
         string Description { get; }

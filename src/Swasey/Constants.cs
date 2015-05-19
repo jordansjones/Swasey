@@ -12,6 +12,8 @@ namespace Swasey
         public const string DataType_string = "string";
         public const string DataType_Void = "void";
 
+        public const string MimeType_ApplicationOctetStream = "application/octet-stream";
+
         public const string ParameterName_Version = "version";
 
         public static readonly Dictionary<string, string> DataTypeMapping = new Dictionary<string, string>

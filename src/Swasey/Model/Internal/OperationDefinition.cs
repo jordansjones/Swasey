@@ -13,6 +13,7 @@ namespace Swasey.Model
 
         public OperationDefinition(OperationPath path, IServiceMetadata meta) : base(meta)
         {
+            ConsumesOctetStream = false;
             Path = path;
             Parameters = new List<ParameterDefinition>();
         }
@@ -20,6 +21,7 @@ namespace Swasey.Model
         public OperationDefinition(IOperationDefinition copyFrom)
             : this(copyFrom.Path, copyFrom.Metadata)
         {
+            ConsumesOctetStream = copyFrom.ConsumesOctetStream;
             Context = copyFrom.Context;
             Description = copyFrom.Description;
             HttpMethod = copyFrom.HttpMethod;
@@ -53,6 +55,8 @@ namespace Swasey.Model
         {
             get { return Parameters.Where(x => x.Type == ParameterType.Body).ToList(); }
         }
+
+        public bool ConsumesOctetStream { get; set; }
 
         public IServiceDefinition Context { get; set; }
 
