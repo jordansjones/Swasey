@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-using Handlebars;
+using HandlebarsDotNet;
 
 using Swasey.Helpers;
 
@@ -13,7 +13,7 @@ namespace Swasey
 
         static SwaseyEngine()
         {
-            Engine = new Lazy<IHandlebars>(() => Handlebars.Handlebars.Create());
+            Engine = new Lazy<IHandlebars>(() => Handlebars.Create());
 
             // Initialize built-in handlers
             RegisterHelper(new FileHeader(HelperTemplates.HelperTemplate_FileHeader.Compile()));

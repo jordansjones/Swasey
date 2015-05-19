@@ -124,8 +124,19 @@ Task("Build")
 	);
 });
 
+Task("InstallUnitTestRunner")
+    .Does(() =>
+{
+    NuGetInstall("xunit.runner.console", new NuGetInstallSettings {
+        ExcludeVersion = true,
+        OutputDirectory = solutionDir.Combine("tools"),
+        Version = "2.0.0"
+    });
+});
+
 Task("UnitTests")
     .IsDependentOn("Build")
+    .IsDependentOn("InstallUnitTestRunner")
     .Does(() =>
 {
     Information("Running Tests in {0}", solution);

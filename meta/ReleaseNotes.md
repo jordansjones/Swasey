@@ -1,3 +1,6 @@
+### New in 0.7.0 (Released 2015/05/19)
+* New: Updated dependencies... Yay!
+
 ### New in 0.6.0 (Released 2015/05/19)
 * New: `IOperationDefinition.ConsumesOctetStream` - returns `true` when operation consumes `application/octet-stream`.
 
