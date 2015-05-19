@@ -22,6 +22,7 @@ namespace Swasey.Commands
             {
                 var op = new OperationDefinition(NormalizeOperationPath(normalOp), normalOp.AsMetadata())
                 {
+                    ConsumesOctetStream = normalOp.SupportsStreaming,
                     Description = normalOp.Description,
                     HttpMethod = normalOp.HttpMethod,
                     Name = ExtractName(normalOp),

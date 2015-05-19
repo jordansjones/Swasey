@@ -96,8 +96,33 @@ namespace Swasey.Commands
 
             op.Parameters.AddRange(ParseParameters(opObj));
             op.Response = ParseResponse(opObj);
+            op.SupportsStreaming = ParseSupportsStreaming(opObj);
 
             return op;
+        }
+
+        private bool ParseSupportsStreaming(dynamic op)
+        {
+            if (!op.ContainsKey("consumes")) { goto ReturnFalse; }
+
+            try
+            {
+                foreach (var ctype in op.consumes)
+                {
+                    var ct = (string) ctype;
+                    if (Constants.MimeType_ApplicationOctetStream.Equals(ct, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+
+            ReturnFalse:
+            return false;
         }
 
         private IEnumerable<NormalizationApiOperationParameter> ParseParameters(dynamic op)

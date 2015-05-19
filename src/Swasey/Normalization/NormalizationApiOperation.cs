@@ -8,7 +8,10 @@ namespace Swasey.Normalization
     {
         private readonly List<NormalizationApiOperationParameter> _parameters = new List<NormalizationApiOperationParameter>();
 
-        public NormalizationApiOperation() {}
+        public NormalizationApiOperation()
+        {
+            SupportsStreaming = false;
+        }
 
         public NormalizationApiOperation(NormalizationApiOperation copyFrom) : base(copyFrom)
         {
@@ -19,6 +22,7 @@ namespace Swasey.Normalization
             Path = copyFrom.Path;
             ResourcePath = copyFrom.ResourcePath;
             Response = new NormalizationApiOperationResponse(copyFrom.Response);
+            SupportsStreaming = copyFrom.SupportsStreaming;
 
             if (copyFrom.Parameters.Any())
             {
@@ -44,6 +48,8 @@ namespace Swasey.Normalization
         public string Path { get; set; }
 
         public string ResourcePath { get; set; }
+
+        public bool SupportsStreaming { get; set; }
 
     }
 }
