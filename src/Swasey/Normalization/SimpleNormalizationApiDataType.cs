@@ -188,6 +188,8 @@ namespace Swasey.Normalization
             var type = ParseFromJObject(items);
 
             TypeName = type.TypeName;
+            IsPrimitive = type.IsPrimitive;
+            IsNullable = type.IsNullable;
         }
 
         #endregion

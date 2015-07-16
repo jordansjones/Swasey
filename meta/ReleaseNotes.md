@@ -1,3 +1,7 @@
+### New in 0.8.1 (Released 2015/07/16)
+* New: Enumerable primitive types will now set `IsPrimitive` appropriately
+* New: Enumerable nullable types will now set `IsNullable` appropriately
+
 ### New in 0.8.0 (Released 2015/07/16)
 * New: Updated dependencies... Yay?
 * Fixed: Correctly indicate that `byte` is a primitive.
