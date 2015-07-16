@@ -40,9 +40,9 @@ namespace Swasey.Tests.Helpers
 //                .GetParsedSyntaxNode<T>();
 //        }
 
-        public static SyntaxTree AsSyntaxTree(this string source, SourceCodeKind sourceKind = SourceCodeKind.Regular)
+        public static SyntaxTree AsSyntaxTree(this string source)
         {
-            return CSharpSyntaxTree.ParseText(source, ParseOptions.WithKind(sourceKind));
+            return CSharpSyntaxTree.ParseText(source, ParseOptions);
         }
 
         public static IServiceDefinition CreateServiceClient(this object This, string name)

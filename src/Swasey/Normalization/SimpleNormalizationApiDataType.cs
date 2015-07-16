@@ -163,6 +163,9 @@ namespace Swasey.Normalization
                         format = "System.DateTime";
                         isPrimitive = true;
                         break;
+                    case "byte":
+                        isPrimitive = true;
+                        break;
                     default:
                         // Otherwise just use the format
                         break;

@@ -1,3 +1,7 @@
+### New in 0.8.0 (Released 2015/07/16)
+* New: Updated dependencies... Yay?
+* Fixed: Correctly indicate that `byte` is a primitive.
+
 ### New in 0.7.0 (Released 2015/05/19)
 * New: Updated dependencies... Yay!
 
