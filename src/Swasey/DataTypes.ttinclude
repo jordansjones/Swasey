@@ -1,0 +1,22 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#+
+    public static List<string> DataTypes = new string[] {
+        "Byte",
+        "SByte",
+        "Int",
+        "UInt",
+        "Short",
+        "UShort",
+        "Long",
+        "ULong",
+        "Float",
+        "Double",
+        "Char",
+        "Bool",
+        "String",
+        "Decimal",
+        "Void"
+    }
+    .OrderBy(x => x)
+    .ToList();
+#>

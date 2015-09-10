@@ -71,6 +71,11 @@
     <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
     <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Constants.Primitives.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Constants.Primitives.tt</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\BaseEndpointExtensions.cs" />
     <Compile Include="Extensions\DataTypeExtensions.cs" />
     <Compile Include="Extensions\HttpMethodTypeExtensions.cs" />
@@ -92,6 +97,11 @@
     <Compile Include="Lifecycle\ILifecycleContext.cs" />
     <Compile Include="Lifecycle\LifecycleState.cs" />
     <Compile Include="Model\BasePath.cs" />
+    <Compile Include="Model\DataType.Primitives.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataType.Primitives.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\IEnumDefinition.cs" />
     <Compile Include="Model\IModelDefinition.cs" />
     <Compile Include="Model\IModelEntity.cs" />
@@ -161,7 +171,17 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Constants.Primitives.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Constants.Primitives.cs</LastGenOutput>
+    </Content>
+    <None Include="DataTypes.ttinclude" />
+    <Content Include="Model\DataType.Primitives.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataType.Primitives.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

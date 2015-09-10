@@ -1,0 +1,26 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#@ include file="DataTypes.ttinclude" #>
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
+namespace Swasey
+{
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    internal static partial class Constants
+    {
+
+<# foreach (var dt in DataTypes) { #>
+
+        public const string DataType_<#= dt #> = "<#= dt.ToLower() #>";
+        
+<# } #>
+
+    }
+}
