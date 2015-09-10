@@ -1,3 +1,21 @@
+### New in 0.8.2 (Released 2015/09/10)
+* New: Added "Is**" property to DataType for the following data types:
+    - bool
+    - byte
+    - char
+    - decimal
+    - double
+    - float
+    - int
+    - long
+    - sbyte
+    - short
+    - string
+    - uint
+    - ulong
+    - ushort
+    - void
+
 ### New in 0.8.1 (Released 2015/07/16)
 * New: Enumerable primitive types will now set `IsPrimitive` appropriately
 * New: Enumerable nullable types will now set `IsNullable` appropriately

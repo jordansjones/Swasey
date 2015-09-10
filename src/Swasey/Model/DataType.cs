@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public sealed class DataType : IEquatable<DataType>
+    public sealed partial class DataType : IEquatable<DataType>
     {
 
         private readonly string _value;
@@ -16,10 +16,11 @@ namespace Swasey.Model
             }
 
             _value = value;
-            IsString = Constants.DataType_string.Equals(_value.Trim().ToLowerInvariant());
-            IsVoid = Constants.DataType_Void.Equals(_value.Trim().ToLowerInvariant());
             IsEnumerable = false;
+            InitializePrimitiveShortcuts(_value.Trim().ToLowerInvariant());
         }
+
+        partial void InitializePrimitiveShortcuts(string type);
 
         public string DefaultValue { get; set; }
 
@@ -40,10 +41,6 @@ namespace Swasey.Model
         public bool IsNullable { get; set; }
 
         public bool IsPrimitive { get; internal set; }
-
-        public bool IsString { get; private set; }
-
-        public bool IsVoid { get; private set; }
 
         public string MinimumValue { get; set; }
 

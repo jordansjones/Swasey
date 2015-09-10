@@ -6,11 +6,8 @@ using System.Linq;
 namespace Swasey
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal static class Constants
+    internal static partial class Constants
     {
-
-        public const string DataType_string = "string";
-        public const string DataType_Void = "void";
 
         public const string MimeType_ApplicationOctetStream = "application/octet-stream";
 
