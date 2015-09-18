@@ -16,6 +16,7 @@ namespace Swasey.Model
             ConsumesOctetStream = false;
             Path = path;
             Parameters = new List<ParameterDefinition>();
+            ProducesOctetStream = false;
         }
 
         public OperationDefinition(IOperationDefinition copyFrom)
@@ -26,6 +27,7 @@ namespace Swasey.Model
             Description = copyFrom.Description;
             HttpMethod = copyFrom.HttpMethod;
             Name = copyFrom.Name;
+            ProducesOctetStream = copyFrom.ProducesOctetStream;
 
             copyFrom.Parameters
                 .Select(x => new ParameterDefinition(x))
@@ -127,6 +129,8 @@ namespace Swasey.Model
         {
             get { return Parameters.Where(x => x.Type == ParameterType.Path).ToList(); }
         }
+
+        public bool ProducesOctetStream { get; set; }
 
         public IReadOnlyList<IParameterDefinition> QueryParameters
         {

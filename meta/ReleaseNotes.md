@@ -1,3 +1,6 @@
+### New in 0.8.3 (Released 2015/09/18)
+* New: `IOperationDefinition.ProducesOctetStream` - returns `true` when operation produces `application/octet-stream`.
+
 ### New in 0.8.2 (Released 2015/09/10)
 * New: Added "Is**" property to DataType for the following data types:
     - bool

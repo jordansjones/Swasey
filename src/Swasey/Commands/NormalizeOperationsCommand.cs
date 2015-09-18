@@ -22,10 +22,11 @@ namespace Swasey.Commands
             {
                 var op = new OperationDefinition(NormalizeOperationPath(normalOp), normalOp.AsMetadata())
                 {
-                    ConsumesOctetStream = normalOp.SupportsStreaming,
+                    ConsumesOctetStream = normalOp.SupportsStreamingUpload,
                     Description = normalOp.Description,
                     HttpMethod = normalOp.HttpMethod,
                     Name = ExtractName(normalOp),
+                    ProducesOctetStream = normalOp.SupportsStreamingDownload,
                     ResourceName = normalOp.ResourcePath.ResourceNameFromPath(),
                     Response = NormalizeResponseDefinition(normalOp)
                 };

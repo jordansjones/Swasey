@@ -45,6 +45,8 @@ namespace Swasey.Model
 
         IReadOnlyList<IParameterDefinition> PathParameters { get; }
 
+        bool ProducesOctetStream { get; }
+
         IReadOnlyList<IParameterDefinition> QueryParameters { get; }
 
         IReadOnlyList<IParameterDefinition> RequiredParameters { get; }
