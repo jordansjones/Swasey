@@ -1,3 +1,6 @@
+### New in 0.8.4 (Released 2015/09/18)
+* New: Updated dependencies... Yay?
+
 ### New in 0.8.3 (Released 2015/09/18)
 * New: `IOperationDefinition.ProducesOctetStream` - returns `true` when operation produces `application/octet-stream`.
 
