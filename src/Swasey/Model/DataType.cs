@@ -30,6 +30,8 @@ namespace Swasey.Model
 
         public bool HasMinimumValue { get { return !string.IsNullOrWhiteSpace(MinimumValue); } }
 
+        public bool IsDateTime { get { return Constants.DataType_DateTime.Equals(_value, StringComparison.OrdinalIgnoreCase); } }
+
         public bool IsEnum { get; set; }
 
         public bool IsEnumerable { get; set; }

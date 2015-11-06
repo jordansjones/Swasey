@@ -18,5 +18,7 @@ namespace Swasey
             {"boolean", "bool"}
         };
 
+        public const string DataType_DateTime = "System.DateTime";
+
     }
 }

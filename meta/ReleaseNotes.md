@@ -1,3 +1,6 @@
+### New in 0.8.5 (Released 2015/11/06)
+* New: Added "IsDateTime" property to DataType
+
 ### New in 0.8.4 (Released 2015/09/18)
 * New: Updated dependencies... Yay?
 

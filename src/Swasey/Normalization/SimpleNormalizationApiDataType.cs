@@ -160,7 +160,7 @@ namespace Swasey.Normalization
                 {
                     case "date":
                     case "date-time":
-                        format = "System.DateTime";
+                        format = Constants.DataType_DateTime;
                         isPrimitive = true;
                         break;
                     case "byte":
