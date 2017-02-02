@@ -14,5 +14,6 @@ namespace Swasey.Normalization
             CopyFrom(copyFrom);
         }
 
+        public string Title20 { get; set; }
     }
 }

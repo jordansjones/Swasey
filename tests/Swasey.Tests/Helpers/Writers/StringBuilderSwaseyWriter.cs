@@ -16,7 +16,7 @@ namespace Swasey.Tests.Helpers
 
         public StringBuilder Builder { get; private set; }
 
-        public void Write(string name, string content, IOperationDefinition definition)
+        public void Write(string name, string content, IOperationDefinitionParent definition)
         {
             Builder.Append(content);
         }

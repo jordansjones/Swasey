@@ -18,7 +18,7 @@ namespace Swasey.Model
             Type = copyFrom.Type;
         }
 
-        public IOperationDefinition Context { get; set; }
+        public IOperationDefinitionParent Context { get; set; }
 
         public DataType DataType { get; set; }
 

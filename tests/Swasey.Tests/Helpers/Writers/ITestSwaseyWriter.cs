@@ -8,7 +8,7 @@ namespace Swasey.Tests.Helpers
     public interface ITestSwaseyWriter
     {
 
-        void Write(string name, string content, IOperationDefinition definition);
+        void Write(string name, string content, IOperationDefinitionParent definition);
 
         void Write(string name, string content, IEnumDefinition definition);
 

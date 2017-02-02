@@ -3,7 +3,8 @@
     public interface IResponseDefinition : IServiceMetadata
     {
 
-        IOperationDefinition Context { get; }
+        //IOperationDefinition Context { get; }
+        IOperationDefinitionParent Context { get; }
 
         DataType DataType { get; }
     }

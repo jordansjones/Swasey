@@ -9,7 +9,7 @@ namespace Swasey
 
     public delegate Task<string> SwaggerJsonLoader(Uri uri);
 
-    public delegate void SwaseyOperationWriter(string name, string content, IOperationDefinition definition);
+    public delegate void SwaseyOperationWriter(string name, string content, IOperationDefinitionParent definition);
 
     public delegate void SwaseyEnumWriter(string name, string content, IEnumDefinition definition);
 
@@ -47,7 +47,7 @@ namespace Swasey
             throw new NotImplementedException();
         }
 
-        public static void DefaultSwaseyOperationWriter(string name, string content, IOperationDefinition definition)
+        public static void DefaultSwaseyOperationWriter(string name, string content, IOperationDefinitionParent definition)
         {
             throw new NotImplementedException();
         }

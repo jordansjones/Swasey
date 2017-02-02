@@ -6,12 +6,13 @@ using System.Linq;
 namespace Swasey.Model
 {
     [DebuggerDisplay("[{ResourceName, nq}] {HttpMethod} {Name}")]
-    internal class OperationDefinition : BaseDefinition, IOperationDefinition
+    internal class OperationDefinition20 : BaseDefinition, IOperationDefinition20
     {
 
         private ResponseDefinition _response;
 
-        public OperationDefinition(OperationPath path, IServiceMetadata meta) : base(meta)
+        public OperationDefinition20(OperationPath20 path, IServiceMetadata meta) : base(meta)
+//        public OperationDefinition20(IServiceMetadata meta) : base(meta)
         {
             ConsumesOctetStream = false;
             Path = path;
@@ -19,7 +20,8 @@ namespace Swasey.Model
             ProducesOctetStream = false;
         }
 
-        public OperationDefinition(IOperationDefinition copyFrom)
+        public OperationDefinition20(IOperationDefinition20 copyFrom)
+//            : this(copyFrom.Metadata)
             : this(copyFrom.Path, copyFrom.Metadata)
         {
             ConsumesOctetStream = copyFrom.ConsumesOctetStream;
@@ -118,12 +120,12 @@ namespace Swasey.Model
 
         public QualifiedName Name { get; set; }
 
-        IReadOnlyList<IParameterDefinition> IOperationDefinition.Parameters
+        IReadOnlyList<IParameterDefinition> IOperationDefinition20.Parameters
         {
             get { return Parameters; }
         }
 
-        public OperationPath Path { get; private set; }
+        public OperationPath20 Path { get; private set; }
 
         public IReadOnlyList<IParameterDefinition> PathParameters
         {
@@ -149,20 +151,20 @@ namespace Swasey.Model
             get { return Response; }
         }
 
-        public OperationDefinition AddParameter(ParameterDefinition param)
+        public OperationDefinition20 AddParameter(ParameterDefinition param)
         {
             param.Context = this;
             Parameters.Add(param);
 
-            if (param.Type == ParameterType.Path)
-            {
-                Path.AddPathParameter(param);
-            }
+//            if (param.Type == ParameterType.Path)
+//            {
+//                Path.AddPathParameter(param);
+//            }
 
             return this;
         }
 
-        public OperationDefinition SetResponse(ResponseDefinition response)
+        public OperationDefinition20 SetResponse(ResponseDefinition response)
         {
             response.Context = this;
             Response = response;

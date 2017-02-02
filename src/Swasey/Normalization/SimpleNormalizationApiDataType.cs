@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Swasey.Normalization
@@ -27,11 +28,11 @@ namespace Swasey.Normalization
             }
             if (prop.ContainsKey("minimum"))
             {
-                type.MinimumValue = (string) prop.minimum;
+                type.MinimumValue = prop.minimum.ToString();
             }
             if (prop.ContainsKey("maximum"))
             {
-                type.MaximumValue = (string) prop.maximum;
+                type.MaximumValue = prop.maximum.ToString();
             }
             if (prop.ContainsKey("nullable"))
             {
@@ -49,6 +50,8 @@ namespace Swasey.Normalization
         public void TryParseTypeFromJObject(object obj)
         {
             dynamic prop = obj;
+
+            prop = prop.ContainsKey("schema") ? prop.schema : prop;
 
             var propType = (string) prop.type;
             if (!String.IsNullOrWhiteSpace(propType)) { propType = propType.ToLowerInvariant(); }
@@ -78,15 +81,26 @@ namespace Swasey.Normalization
 
             if (prop.ContainsKey("$ref"))
             {
-                TypeName = (string) prop["$ref"];
+                TypeName = SplitType((string)prop["$ref"]);
                 IsModelType = true;
             }
             else if (string.IsNullOrEmpty(TypeName) && !string.IsNullOrWhiteSpace(propType))
             {
                 // Assume that the property is a model type
-                TypeName = (string) prop.type;
+                TypeName = SplitType((string) prop.type);
                 IsModelType = true;
             }
+        }
+
+        //for Swagger 2.0 we need to split the $ref
+        private string SplitType(string type)
+        {
+            if (type[0] == '#')
+            {
+                var splitType = type.Split('/');
+                return splitType[splitType.Length - 1];
+            }
+            return type;
         }
 
         public void TryParseEnumFromJObject(object obj)
@@ -181,6 +195,9 @@ namespace Swasey.Normalization
             IsEnumerable = true;
             IsEnumerableUnique = prop.ContainsKey("uniqueItems") && ((bool) prop.uniqueItems);
 
+            //for Swagger 2.0; may need to break out to new class
+            if (prop.ContainsKey("schema"))
+                prop = prop.schema;
 
             if (!prop.ContainsKey("items")) return;
 

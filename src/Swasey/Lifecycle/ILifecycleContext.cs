@@ -49,5 +49,8 @@ namespace Swasey.Lifecycle
 
         string SwaggerVersion { get; }
 
+        //mine
+        dynamic Paths { get; set; }
+
     }
 }

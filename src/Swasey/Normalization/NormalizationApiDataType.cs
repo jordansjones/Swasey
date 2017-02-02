@@ -45,6 +45,8 @@ namespace Swasey.Normalization
             set { _typeName = value.MapDataTypeName(); }
         }
 
+        public string Title20 { get; set; }
+
         public void SetTypeName(string name)
         {
             TypeName = name;
@@ -66,6 +68,7 @@ namespace Swasey.Normalization
             MinimumValue = copyFrom.MinimumValue;
             MaximumValue = copyFrom.MaximumValue;
             TypeName = copyFrom.TypeName;
+            Title20 = Title20;
         }
 
     }

@@ -21,7 +21,8 @@ namespace Swasey
                 IsModelType = This.IsModelType,
                 IsPrimitive = This.IsPrimitive,
                 MaximumValue = This.MaximumValue,
-                MinimumValue = This.MinimumValue
+                MinimumValue = This.MinimumValue,
+                Title20 = This.Title20
             };
         }
 

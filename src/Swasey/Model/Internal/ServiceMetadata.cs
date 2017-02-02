@@ -28,6 +28,5 @@ namespace Swasey.Model
         public string ModelNamespace { get; private set; }
 
         public string ApiVersion { get; set; }
-
     }
 }

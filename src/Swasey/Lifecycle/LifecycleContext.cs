@@ -66,7 +66,12 @@ namespace Swasey.Lifecycle
             copyFrom.ApiPathJsonMapping.ToList().ForEach(x => ApiPathJsonMapping.Add(x.Key, x.Value));
         }
 
+        //don't need this anymore: it maps each 'path' to its operations (I think). 
+        //That is done for us in Swagger 2.0.
         public Dictionary<string, dynamic> ApiPathJsonMapping { get; private set; }
+
+        //this should work instead.
+        public dynamic Paths { get; set; }
 
         public ServiceDefinition ServiceDefinition { get; internal set; }
 
@@ -113,6 +118,5 @@ namespace Swasey.Lifecycle
         public LifecycleState State { get; internal set; }
 
         public string SwaggerVersion { get; internal set; }
-
     }
 }
