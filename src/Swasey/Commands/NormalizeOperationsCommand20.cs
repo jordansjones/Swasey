@@ -11,7 +11,7 @@ using Tavis.UriTemplates;
 
 namespace Swasey.Commands
 {
-    internal class NormalizeOperationsCommand : ILifecycleCommand
+    internal class NormalizeOperationsCommand20 : ILifecycleCommand
     {
 
         public Task<ILifecycleContext> Execute(ILifecycleContext context)
@@ -20,14 +20,14 @@ namespace Swasey.Commands
 
             foreach (var normalOp in context.NormalizationContext.Operations)
             {
-                var op = new OperationDefinition(NormalizeOperationPath(normalOp), normalOp.AsMetadata())
+                var op = new OperationDefinition20(NormalizeOperationPath(normalOp), normalOp.AsMetadata())
                 {
                     ConsumesOctetStream = normalOp.SupportsStreamingUpload,
                     Description = normalOp.Description,
                     HttpMethod = normalOp.HttpMethod,
                     Name = ExtractName(normalOp),
                     ProducesOctetStream = normalOp.SupportsStreamingDownload,
-                    ResourceName = normalOp.ResourcePath.ResourceNameFromPath(),
+                    ResourceName = normalOp.ResourcePath,
                     Response = NormalizeResponseDefinition(normalOp)
                 };
 
@@ -35,12 +35,6 @@ namespace Swasey.Commands
                     .Select(NormalizeParameterDefinition)
                     .ToList()
                     .ForEach(x => op.AddParameter(x));
-
-                if (serviceDefinition.Operations.Any(x => ((IOperationDefinition)x).ResourceName == op.ResourceName && ((IOperationDefinition)x).Name == op.Name))
-                {
-                    var pathParams = op.Parameters.Where(x => x.Type == ParameterType.Path && x.IsRequired).OrderBy(x => x.Name);
-                    op.Name += string.Join("And", pathParams.Select(x => "By" + x.Name.UCFirst()));
-                }
 
                 serviceDefinition.AddOperation(op);
             }
@@ -57,12 +51,6 @@ namespace Swasey.Commands
         private QualifiedName ExtractName(NormalizationApiOperation op)
         {
             var name = op.Name;
-            var resourceName = op.ResourcePath.ResourceNameFromPath();
-
-            if (name.StartsWith(resourceName))
-            {
-                name = name.Substring(resourceName.Length);
-            }
 
             if (name[0] == '_')
             {
@@ -77,7 +65,8 @@ namespace Swasey.Commands
             return new QualifiedName(name);
         }
 
-        private OperationPath NormalizeOperationPath(NormalizationApiOperation op)
+        //2.0 operations don't have a path so....
+        private OperationPath20 NormalizeOperationPath(NormalizationApiOperation op)
         {
             var pathBuilder = new StringBuilder('/');
 
@@ -107,7 +96,7 @@ namespace Swasey.Commands
                 op.Parameters.Remove(versionParam);
             }
 
-            return new OperationPath(path);
+            return new OperationPath20(path);
         }
 
         private string NormalizeBasePath(string basePath)
@@ -154,6 +143,9 @@ namespace Swasey.Commands
         private ResponseDefinition NormalizeResponseDefinition(NormalizationApiOperation op)
         {
             var dt = op.Response.AsDataType();
+
+            //this is a weird way of going about this.
+            dt.Title20 = op.Response.Title20;
             return new ResponseDefinition(op.Response.AsMetadata())
             {
                 DataType = dt

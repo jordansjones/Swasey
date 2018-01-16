@@ -9,7 +9,7 @@ namespace Swasey.Model
 
         public ServiceDefinition()
         {
-            Operations = new List<OperationDefinition>();
+            Operations = new List<IOperationDefinitionParent>();
             Entities = new List<BaseModelEntityDefinition>();
         }
 
@@ -21,7 +21,7 @@ namespace Swasey.Model
 
         public List<BaseModelEntityDefinition> Entities { get; private set; }
 
-        public List<OperationDefinition> Operations { get; private set; }
+        public List<IOperationDefinitionParent> Operations { get; private set; }
 
         ILookup<QualifiedName, IModelEntity> IServiceDefinition.Entities
         {
@@ -43,6 +43,11 @@ namespace Swasey.Model
             get { return Operations.OfType<IOperationDefinition>().ToLookup(x => x.ResourceName); }
         }
 
+        ILookup<QualifiedName, IOperationDefinition20> IServiceDefinition.ResourceOperations20
+        {
+            get { return Operations.OfType<IOperationDefinition20>().ToLookup(x => x.Name); }
+        }
+
         public ServiceDefinition AddEnum(EnumDefinition @enum)
         {
             Entities.Add(@enum);
@@ -56,6 +61,13 @@ namespace Swasey.Model
         }
 
         public ServiceDefinition AddOperation(OperationDefinition operation)
+        {
+            operation.Context = this;
+            Operations.Add(operation);
+            return this;
+        }
+
+        public ServiceDefinition AddOperation(OperationDefinition20 operation)
         {
             operation.Context = this;
             Operations.Add(operation);

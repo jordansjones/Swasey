@@ -1,3 +1,6 @@
+### New in 0.8.6 (Released 2017/02/02)
+* New: Added (partial?) support for Swagger 2.0
+
 ### New in 0.8.5 (Released 2015/11/06)
 * New: Added "IsDateTime" property to DataType
 

@@ -13,6 +13,8 @@ namespace Swasey.Model
         ILookup<QualifiedName, IModelDefinition> Models { get; }
 
         ILookup<QualifiedName, IOperationDefinition> ResourceOperations { get; }
+        ILookup<QualifiedName, IOperationDefinition20> ResourceOperations20 { get; }
+
 
     }
 }

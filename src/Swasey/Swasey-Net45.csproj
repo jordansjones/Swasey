@@ -59,16 +59,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ExtractApiModelsCommand20.cs" />
     <Compile Include="Commands\ExtractApiModelsCommand.cs" />
+    <Compile Include="Commands\ExtractApiOperationsCommand20.cs" />
     <Compile Include="Commands\ExtractApiOperationsCommand.cs" />
+    <Compile Include="Commands\GenerateApiSourcesCommand20.cs" />
     <Compile Include="Commands\GenerateApiSourcesCommand.cs" />
     <Compile Include="Commands\GenerateModelSourcesCommand.cs" />
     <Compile Include="Commands\LoadApiJsonCommand.cs" />
+    <Compile Include="Commands\LoadResourceListingJsonCommand20.cs" />
     <Compile Include="Commands\LoadResourceListingJsonCommand.cs" />
     <Compile Include="Commands\NormalizeEnumsCommand.cs" />
+    <Compile Include="Commands\NormalizeModelsCommand20.cs" />
     <Compile Include="Commands\NormalizeModelsCommand.cs" />
+    <Compile Include="Commands\NormalizeOperationsCommand20.cs" />
     <Compile Include="Commands\NormalizeOperationsCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand20.cs" />
     <Compile Include="Commands\ValidateSwaggerApiDefinitionCommand.cs" />
+    <Compile Include="Commands\ValidateSwaggerResourceListingCommand20.cs" />
     <Compile Include="Commands\ValidateSwaggerResourceListingCommand.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Constants.Primitives.cs">
@@ -112,6 +120,9 @@
     <Compile Include="Model\Internal\EnumDefinition.cs" />
     <Compile Include="Model\Internal\ModelDefinition.cs" />
     <Compile Include="Model\Internal\ModelPropertyDefinition.cs" />
+    <Compile Include="Model\Internal\OperationDefinition20.cs" />
+    <Compile Include="Model\IOperationDefinitionParent.cs" />
+    <Compile Include="Model\IOperationDefinition20.cs" />
     <Compile Include="Model\IOperationDefinition.cs" />
     <Compile Include="Model\IServiceMetadata.cs" />
     <Compile Include="Model\IParameterDefinition.cs" />
@@ -119,6 +130,7 @@
     <Compile Include="Model\IServiceDefinition.cs" />
     <Compile Include="Model\Internal\ServiceMetadata.cs" />
     <Compile Include="Model\Internal\ParameterDefinition.cs" />
+    <Compile Include="Model\OperationPath20.cs" />
     <Compile Include="Model\OperationPath.cs" />
     <Compile Include="Model\ServicePath.cs" />
     <Compile Include="Model\ParameterType.cs" />

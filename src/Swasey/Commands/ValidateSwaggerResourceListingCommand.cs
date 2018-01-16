@@ -14,7 +14,7 @@ namespace Swasey.Commands
         {
             var json = context.ResourceListingJson;
 
-            if (!json.ContainsKey("apiVersion") == null || string.IsNullOrWhiteSpace((string) json.apiVersion))
+            if (!json.ContainsKey("apiVersion") == null || string.IsNullOrWhiteSpace((string)json.apiVersion))
                 throw new SwaseyException("apiVersion is required");
 
             if (!json.ContainsKey("swaggerVersion") == null || string.IsNullOrWhiteSpace((string) json.swaggerVersion))
@@ -26,11 +26,11 @@ namespace Swasey.Commands
             var ctx = new LifecycleContext(context)
             {
                 State = LifecycleState.Continue,
-                SwaggerVersion = (string) json.swaggerVersion
+                SwaggerVersion = (string)json.swaggerVersion
             };
             ctx.ServiceMetadata = new ServiceMetadata(ctx.ServiceMetadata)
             {
-                ApiVersion = (string) json.apiVersion
+                ApiVersion = (string)json.apiVersion
             };
 
             foreach (var item in json.apis)
@@ -40,6 +40,8 @@ namespace Swasey.Commands
 
                 ctx.ApiPathJsonMapping.Add((string) item.path, null);
             }
+            
+            ctx.ApiPathJsonMapping.Add((string)json.paths, null);
 
             return Task.FromResult<ILifecycleContext>(ctx);
         }

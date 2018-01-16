@@ -6,7 +6,7 @@ namespace Swasey.Model
     public interface IParameterDefinition : IServiceMetadata
     {
 
-        IOperationDefinition Context { get; }
+        IOperationDefinitionParent Context { get; }
 
         DataType DataType { get; }
 

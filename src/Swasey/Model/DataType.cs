@@ -48,6 +48,8 @@ namespace Swasey.Model
 
         public string MaximumValue { get; set; }
 
+        public string Title20 { get; set; }
+
         public override string ToString()
         {
             return _value;

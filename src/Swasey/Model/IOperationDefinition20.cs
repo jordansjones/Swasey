@@ -4,12 +4,14 @@ using System.Linq;
 
 namespace Swasey.Model
 {
-    public interface IOperationDefinition : IOperationDefinitionParent
+    public interface IOperationDefinition20 : IOperationDefinitionParent
     {
 
         IReadOnlyList<IParameterDefinition> BodyParameters { get; }
 
         bool ConsumesOctetStream { get; }
+
+//        IServiceDefinition Context { get; }
 
         string Description { get; }
 
@@ -35,9 +37,11 @@ namespace Swasey.Model
 
         HttpMethodType HttpMethod { get; }
 
+//        QualifiedName Name { get; }
+
         IReadOnlyList<IParameterDefinition> Parameters { get; }
 
-        OperationPath Path { get; }
+        OperationPath20 Path { get; }
 
         IReadOnlyList<IParameterDefinition> PathParameters { get; }
 
@@ -46,5 +50,10 @@ namespace Swasey.Model
         IReadOnlyList<IParameterDefinition> QueryParameters { get; }
 
         IReadOnlyList<IParameterDefinition> RequiredParameters { get; }
+
+//        QualifiedName ResourceName { get; }
+
+//        IResponseDefinition Response { get; }
+
     }
 }
