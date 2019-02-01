@@ -5,11 +5,10 @@
         <title>Swasey</title>
         <version>@version@</version>
         <authors>Jordan S. Jones</authors>
-        <licenseUrl>https://github.com/jordansjones/Swasey/blob/master/LICENSE.txt</licenseUrl>
+        <license type="file">LICENSE.txt</license>
         <projectUrl>https://github.com/jordansjones/Swasey</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Highly opinionated template-driven engine to generate client code by parsing Swagger Resource Declarations.</description>
-        <releaseNotes>@releaseNotes@</releaseNotes>
         <tags>rest swagger</tags>
         <copyright>Copyright 2015 Jordan S. Jones</copyright>
         <dependencies>

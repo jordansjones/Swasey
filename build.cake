@@ -186,16 +186,21 @@ Task("CreateNugetPackage")
     .IsDependentOn("CopyNugetPackageFiles")
     .Does(() =>
 {
+    var settings = new NuGetPackSettings {
+        Version = semVersion,
+        ReleaseNotes = releaseNotes.Notes.ToArray(),
+        BasePath = nugetPackagingDir,
+        OutputDirectory = packagingRoot,
+        Symbols = true,
+        NoPackageAnalysis = false,
+        KeepTemporaryNuSpecFile = false
+    };
+    var properties = settings.Properties != null ? settings.Properties : new Dictionary<string, string>();
+    properties["Configuration"] = configuration;
+    settings.Properties = properties;
     NuGetPack(
         nuspecFile,
-        new NuGetPackSettings {
-            Version = semVersion,
-            ReleaseNotes = releaseNotes.Notes.ToArray(),
-            BasePath = nugetPackagingDir,
-            OutputDirectory = packagingRoot,
-            Symbols = false,
-            NoPackageAnalysis = false
-        }
+        settings
     );
 });
 

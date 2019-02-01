@@ -1,3 +1,6 @@
+### New in 0.8.7 (Released 2019/02/01)
+* New: More detail in Qualified Name exceptions (thanks @CodyBatt)
+
 ### New in 0.8.6 (Released 2017/02/02)
 * New: Added (partial?) support for Swagger 2.0
 
