@@ -17,7 +17,7 @@ namespace Swasey.Model
 
             if (!IsValid(value))
             {
-                throw new ArgumentException("Invalid " + typeof (QualifiedName).Name + ".", "value");
+                throw new ArgumentException("Invalid " + typeof (QualifiedName).Name + ": " + value, "value");
             }
 
             if (value.Length > 0 && Char.IsLower(value[0]))
