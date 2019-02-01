@@ -1,5 +1,7 @@
 # Ignore everything
 *
-# But not these files
+
+# But not these
+!packages.config*
 !.gitignore
 !nuget.exe

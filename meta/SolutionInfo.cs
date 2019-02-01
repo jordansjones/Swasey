@@ -6,7 +6,7 @@
 using System.Reflection;
 
 [assembly: AssemblyProduct("Swasey")]
-[assembly: AssemblyVersion("0.8.6")]
-[assembly: AssemblyFileVersion("0.8.6")]
-[assembly: AssemblyInformationalVersion("0.8.6-build-0")]
+[assembly: AssemblyVersion("0.8.7")]
+[assembly: AssemblyFileVersion("0.8.7")]
+[assembly: AssemblyInformationalVersion("0.8.7-build-0")]
 
